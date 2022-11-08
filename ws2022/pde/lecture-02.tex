@@ -1,0 +1,288 @@
+\section{Theory of Sobolev-Spaces}
+
+To come up with methodologies that overcome these limitations, we require some further theoretical concepts.
+One important one being Sobolev spaces, introduced by S. L. Sobolev at Moscow State University around 1950.
+
+
+\subsection{The Necessity of Additional Function Spaces}
+
+\begin{definition}
+	We recall the following function spaces:
+	\begin{enumerate}
+		\item \(C^k\parentheses*{\Omega} := \braces*{f: \Omega \to \R : k\text{-times continuous differentiable}}\),
+		\item \(C^\infty\parentheses*{\Omega} := \braces*{f: \Omega \to \R : \text{any derivative is continuous}}\),
+		\item \(C_0^\infty\parentheses*{\Omega} := \braces*{f: \Omega \to \R : f \in C^\infty\parentheses*{\Omega}\text{ and }\supp f \subset K \subset \Omega, K\text{ compact}}\),
+		\item \(L^p\parentheses*{\Omega} := \braces*{f: \Omega \to \R : \text{Lebesgue-integrable and }\int_\Omega \absolute*{f\parentheses*{x}}^p \d x < \infty}\)
+		\item \(L^\infty\parentheses*{\Omega} := \braces*{f: \Omega \to \R : \text{Lebesgue-integrable and }\absolute*{f\parentheses*{x}} < \infty\text{ for almost every }x \in \Omega}\)
+	\end{enumerate}
+	and the \(L^p\) norms
+	\[
+		\norm*{f}_1 := \int_\Omega \absolute*{f\parentheses*{x}}\d x, \quad \norm*{f}_2 := \parentheses*{\int_\Omega \absolute*{f\parentheses*{x}}^2 \d x}^{\frac{1}{2}}, \quad \norm*{f}_p := \parentheses*{\int_\Omega \absolute*{f\parentheses*{x}}^p \d x}^{\frac{1}{p}}
+	\]
+	\[
+		\norm*{f}_\infty := \inf\braces*{C \ge 0 : \absolute*{f\parentheses*{x}} \le C\text{ for almost every }x \in \Omega}.
+	\]
+\end{definition}
+
+\begin{remark}
+	\begin{enumerate}
+		\item Notice that \(\norm*{f}_\infty = \max_{x \in \Omega}\absolute*{f\parentheses*{x}}\), if \(f \in C\parentheses*{\Omega}\).
+		\item \(L^2\parentheses*{\Omega}\) with \(\norm*{\cdot}_2\) is complete (contains all limits of Cauchy sequences) and has a scalar product
+		\[
+			\angles*{f, g} = \int_\Omega f\parentheses*{x}g\parentheses*{x}\d x
+		\]
+		such that \(\absolute*{\angles*{f, g}} \le \norm*{f}_2 \norm*{g}_2\).
+		Consequently, \(L^2\parentheses*{\Omega}\) is a Hilbert space.
+		This is not possible with \(\norm*{\cdot}_\infty\).
+		\item We have the following situation:
+
+		\begin{table}[h]
+			\centering
+			\begin{tabular}{r|ccc}
+				\toprule
+				& completeness & norm induced by scalar product & strictly continuous functions\\
+				\midrule
+				\(C^0\parentheses*{\Omega}\) with \(\norm*{\cdot}_\infty\) & yes & no & yes\\
+				\(L^2\parentheses*{\Omega}\) with \(\norm*{\cdot}_2\) & yes & yes & no\\
+				\bottomrule
+			\end{tabular}
+			\caption{}
+			\label{tab:2-1}
+		\end{table}
+
+		Sobolev spaces fix this situation to some extend, as we will see below.
+	\end{enumerate}
+\end{remark}
+
+
+\subsection{Weak Derivatives}
+
+\begin{definition}
+	Let \(\Omega \subset \R^n\) and \(u \in L^2\parentheses*{\Omega}\).
+	A function \(v \in L^2\parentheses*{\Omega}\) is called \emph{weak derivative} of order \(\parentheses*{\alpha_1, \ldots, \alpha_n} \in \N_0^n\) if it satisfies
+	\[
+		\int_\Omega v\parentheses*{x}\varphi\parentheses*{x}\d x = \parentheses*{-1}^{\alpha_1}\cdots\parentheses*{-1}^{\alpha_n}\int_\Omega u\parentheses*{x}\partial_{x_1}^{\alpha_1}\cdots\partial_{x_n}^{\alpha_n}\varphi\parentheses*{x}\d x \quad \forall\varphi \in C_0^\infty\parentheses*{\Omega},
+	\]
+	which is equivalent to saying that ``\(v\) satisfies the partial integration relation with \(u\)''.
+\end{definition}
+
+\begin{remark}
+	\begin{enumerate}
+		\item For \(n = 1\) with \(\Omega = \brackets*{a, b}\) we find
+		\[
+			\int_a^b v\parentheses*{x}\varphi\parentheses*{x}\d x = -\int_a^b u\parentheses*{x}\varphi'\parentheses*{x}\d x \quad \forall \varphi \in C_0^\infty\parentheses*{\brackets*{a ,b}}
+		\]
+		for the first derivative.
+		\item If the classical derivative \(u'\) exists, it is also the weak derivative.
+		\item A weak derivative \(v\) corresponds to the distributional derivative, but we also ask for \(v \in L^2\parentheses*{\Omega}\).
+	\end{enumerate}
+\end{remark}
+
+\begin{example}
+	Let \(u: \brackets*{a, b} \to \R\) be a continuous, piecewise differentiable function with \(N\) kinks at \(a < x_1 < \cdots < x_N < b\) such that a \(u\) is obviously not in \(C^1\parentheses*{\brackets*{a, b}}\) but has a weak derivative.
+	Indeed, to show that, we have to find a function \(v \in L^2\parentheses*{\brackets*{a, b}}\) such that
+	\[
+		\int_a^b v\parentheses*{x}\varphi\parentheses*{x}\d x \stackrel{!}{=} -\int_a^b u\parentheses*{x}\varphi'\parentheses*{x}\d x \quad \forall \varphi \in C_0^\infty\parentheses*{\brackets*{a ,b}}.
+	\]
+	Respecting the kinks and using the notation \(x_0 := a\) and \(x_{N + 1} := b\), we can compute the right-hand side
+	\begin{align*}
+		-\int_a^b u\parentheses*{x}\varphi'\parentheses*{x}\d x &= -\sum_{i = 1}^N \int_{x_i}^{x_{i + 1}}u\parentheses*{x}\varphi'\parentheses*{x}\d x\\
+		&= \sum_{i = 0}^N \parentheses*{\int_{x_i}^{x_{i + 1}}u'\parentheses*{x}\varphi\parentheses*{x}\d x - \brackets*{u\parentheses*{x}\varphi\parentheses*{x}}_{x_i}^{x_{i + 1}}}\\
+		&= \sum_{i = 0}^N \int_{x_i}^{x_{i + 1}}u'\parentheses*{x}\varphi\parentheses*{x}\d x - \sum_{i = 0}^N \brackets*{u\parentheses*{x}\varphi\parentheses*{x}}_{x_i}^{x_{i + 1}}\\
+		&= \sum_{i = 0}^N \int_{x_i}^{x_{i + 1}}u'\parentheses*{x}\varphi\parentheses*{x}\d x,
+	\end{align*}
+	where the classical derivative \(u'\) is well-defined on each open sub-interval \(\parentheses*{x_i, x_{i + 1}}\) and the boundary terms vanish because \(\varphi\) is continuous and \(\varphi\parentheses*{a} = \varphi\parentheses*{b} = 0\).
+	Consequently, we identify the weak derivative
+	\[
+		v\parentheses*{x} = \begin{cases}
+			u'\parentheses*{x}, & \text{if }x \in \parentheses*{x_i, x_{i + 1}}, i = 0, \ldots, N,\\
+			\text{undefined}, & \text{if }x = x_i, i = 1, \ldots, N.
+		\end{cases}
+	\]
+	Obviously \(v\) is piecewise continuous, but discontinuous (as undefined) at the positions \(x_1, \ldots, x_N\).
+	In total, \(v \in L^2\parentheses*{\brackets*{a, b}}\), as sets f zero measure are irrelevant.
+\end{example}
+
+\begin{example}
+	The Heaviside function
+	\[
+		u: \R \to \R, \quad x \mapsto \begin{cases}
+			1, & \text{if }x > 0,\\
+			0, & \text{if }x < 0
+		\end{cases}
+	\]
+	is not weakly differentiable.
+	The distributional derivative is \(u' = \delta_0\) (the Dirac distribution localized at \(0\)) satisfies the partial integration relation, but \(\delta \not\in L^2\parentheses*{\Omega}\).
+\end{example}
+
+\begin{remark}
+	\begin{enumerate}
+		\item The weak derivative generalizes the classical derivative in a natural way.
+		\item We will abbreviate the general derivative \(\partial_{x_1}^{\alpha_1}\cdots\partial_{x_n}^{\alpha_n} =: D^\alpha\) with \(\alpha = \parentheses*{\alpha_1, \ldots, \alpha_n} \in \N_0^n\) denoting a multi-index with \(\absolute*{\alpha} = \sum_{i = 1}^n \alpha_i\) and \(D^0 u = u\).
+		\item From now on we will always mean weak derivative when we write \(u'\) or \(D^\alpha\).
+	\end{enumerate}
+\end{remark}
+
+
+\subsection{Introduction of Sobolev-Spaces}
+
+Noew we are in the position to introduce Sobolev-spaces.
+
+\begin{definition}
+	Let \(\Omega \subset \R^n\) and \(m \ge 1\).
+	We define by
+	\[
+		H^m\parentheses*{\Omega} := \braces*{u \in L^2\parentheses*{\Omega} : D^\alpha u \in L^2\parentheses*{\Omega}\text{ for all }\alpha \in \N_0^n\text{ with }\absolute*{\alpha} \le m}
+	\]
+	a linear function space with the norm
+	\[
+		\norm*{u}_m := \parentheses*{\sum_{\absolute*{\alpha} \le m}\norm*{D^\alpha u}_{L^2\parentheses*{\Omega}}^2}^{\frac{1}{2}}
+	\]
+	for \(u \in H^m\parentheses*{\Omega}\) and associated scalar product
+	\[
+		\angles*{u, v}_m := \sum_{\absolute*{\alpha} \le m}\angles*{D^\alpha u, D^\alpha v}_{L^2\parentheses*{\Omega}}
+	\]
+	for \(u, v \in H^m\parentheses*{\Omega}\).
+	This space is called \emph{Sobolev-space} of order \(m\).
+	We define \(H^0\parentheses*{\Omega}\) as \(L^2\parentheses*{\Omega}\).
+\end{definition}
+
+\begin{remark}
+	\begin{enumerate}
+		\item The norm \(\norm*{\cdot}_{L^2\parentheses*{\Omega}}\) and the scalar product \(\angles*{\cdot, \cdot}_{L^2\parentheses*{\Omega}}\) are the standard norm and scalar product of the \(L^2\)-space, see above.
+		From now on we will write \(\norm*{\cdot}_0\) and \(\angles*{\cdot, \cdot}_0\) for these items, as \(L^2\parentheses*{\Omega} \equiv H^0\parentheses*{\Omega}\).
+		\item Sobolev-spaces are complete.
+		They ensure that most ``intuitive'' limits of sequences of functions \(\braces*{u_j}_{j = 1, 2, \ldots}\) are elements of the same, shared function space in the sense that \(\lim_{j \to \infty}u_j = u \in H^m\parentheses*{\Omega}\).
+		\item Every \(u \in H^m\parentheses*{\Omega}\) can be approximated to any accuracy by a sequence of \(C_0^\infty\parentheses*{\Omega}\)-functions \(\braces*{u_j}_{j = 1, 2, \ldots}\).
+		This property is called the density of \(C_0^\infty\) in \(H^m\).
+		This is analogous to the relation between the numbers in \(\Q\) and in \(\R\).
+		\item One important case for pedagogical convenience is \(n = 1\) and one weak derivative \(m = 1\).
+		For \(\Omega = \brackets*{a, b}\) we have
+		\[
+			H^1\parentheses*{\brackets*{a, b}} = \braces*{u \in L^2\parentheses*{\brackets*{a, b}} : u' \in L^2\parentheses*{\brackets*{a, b}}\text{ weakly}}
+		\]
+		and
+		\begin{align*}
+			\norm*{u}_1 &:= \sqrt{\norm*{u}_{L^2\parentheses*{\Omega}}^2 + \norm*{u'}_{L^2\parentheses*{\Omega}}^2} = \sqrt{\angles*{u, u}_{L^2\parentheses*{\Omega}} + \angles*{u', u'}_{L^2\parentheses*{\Omega}}} = \sqrt{\int_a^b u^2\parentheses*{x}\d x + \int_a^b u'^2\parentheses*{x}\d x}\\
+			\angles*{u, v}_1 &:= \angles*{u, v}_{L^2\parentheses*{\Omega}} + \angles*{u', v'}_{L^2\parentheses*{\Omega}} = \int_a^b u\parentheses*{x}v\parentheses*{x}\d x + \int_a^b u'\parentheses*{x}v'\parentheses*{x}\d x.
+		\end{align*}
+	\end{enumerate}
+\end{remark}
+
+
+\subsection{Regularity}
+
+Question: How regular are functions in \(H^m\parentheses*{\Omega}\)?
+Continuous?
+Differntiable in the classical sense?
+Unsurprisingly, the answer depends crucially on the domain \(\Omega\).
+Here, we restrict ourselves to the following case.
+
+\begin{definition}
+	An open, bounded, connected subset \(\Omega \subset \R^n\) (i.e., a domain) is called \emph{Lipschitz domain}, if \(\partial\Omega\) is locally (in a suitable direction) the graph of a Lipschitz function.
+\end{definition}
+
+\begin{example}
+	Common polygons in \(\R^2\) and polyhedrons in \(\R^3\) are Lipschitz domains, so are smooth domains, e.g., circles and spheres.
+	Cusped corners are not Lipschitz, for example:
+	\begin{figure}[h]
+		\centering
+		\begin{tikzpicture}
+			\clip (-2,-2) rectangle (2,2);
+			\draw (2,2) circle (2);
+			\draw (2,-2) circle (2);
+			\draw (-2,-2) circle (2);
+			\draw (-2,2) circle (2);
+			\node at (0,0) {\(\Omega\)};
+		\end{tikzpicture}
+		\caption{A domain with cusped corners that is not a Lipschitz domain}
+		\label{fig:2-1}
+	\end{figure}
+\end{example}
+
+\begin{theorem}
+	Let \(\Omega \subset \R^n\) be a Lipschitz domain.
+	If \(m, k \in \N_0\) satisfy
+	\[
+		m - \frac{n}{2} > k,
+	\]
+	then \(C^\infty\parentheses*{\Omega} \subset H^m\parentheses*{\Omega} \subset C^k\parentheses*{\Omega}\).
+	That is, every function \(u \in H^m\parentheses*{\Omega}\) corresponds (almost everywhere) to a function from \(C^k\parentheses*{\Omega}\).
+	Moreover the following embedding \(\norm*{u}_\infty \le C\norm*{u}_m\) holds.
+\end{theorem}
+
+\begin{remark}
+	\begin{enumerate}
+		\item The higher the value of \(m\) (i.e., the more weak derivatives), the more classical derivatives \(k\) Sobolev functions have.
+		However, in higher space dimensions \(n\) this becomes more restrictive.
+		\item A function \(u \in H^m\parentheses*{\Omega}\) is certainly continuous, i.e. \(u \in C^k\parentheses*{\Omega}\) for \(k = 0\), if
+		\[
+			u \in \begin{cases}
+				H^1\parentheses*{\Omega}, & \text{for 1D (i.e., }n = 1\text{)},\\
+				H^2\parentheses*{\Omega}, & \text{for 2D and 3D (i.e., }n = 2, 3\text{)}.
+			\end{cases}
+		\]
+	\end{enumerate}
+\end{remark}
+
+\begin{example}
+	We saw in that for continuous, piecewise differentiable functions \(u\) on \(\Omega = \brackets*{a, b} \subset \R\) the weak derivative exist, hence \(u \in H^1\parentheses*{\brackets*{a, b}}\).
+	However, on, e.g., \(\brackets*{-1, 1}\), the function \(u\parentheses*{x} = \absolute*{x}^{\frac{3}{4}}\) is also in \(H^1\parentheses*{\brackets*{-1, 1}}\), even though the classical derivative is singular at the origin.
+	Indeed, we have \(u \in L^2\parentheses*{\brackets*{-1, 1}}\) (obvious, as \(u\) is continuous and \(\Omega\) bounded), and for its first derivative
+	\[
+		u'\parentheses*{x} = \frac{3}{4}\absolute*{x}^{-\frac{1}{4}}.
+	\]
+	The squared integral of \(u'\parentheses*{x}\) on \(\brackets*{-1, 1}\) is thus
+	\[
+		\int_{-1}^1 \absolute*{u'\parentheses*{x}}^2 \d x = \frac{9}{16}\int_{-1}^1 \absolute*{x}^{-\frac{1}{2}}\d x = \frac{9}{8}\int_0^1 \frac{1}{\sqrt{x}}\d x = \frac{9}{8}\brackets*{2\sqrt{x}}_0^1 = \frac{9}{4} < \infty,
+	\]
+	verifying that \(u' \in L^2\parentheses*{\brackets*{-1, 1}}\) and thus \(u \in H^1\parentheses*{\brackets*{-1, 1}}\).
+	This example shows that \(H^1\parentheses*{\Omega}\) also contains functions that are not Lipschitz.
+\end{example}
+
+\begin{example}
+	For \(n = 2\) and \(\Omega = \braces*{\parentheses*{x, y} \in \R^2 : \sqrt{x^2 + y^2} \le \frac{1}{2}}\), the Sobolev-space \(H^1\parentheses*{\Omega}\) contains discontinuous (unbounded) functions.
+	For example, in polar coordinates \(\parentheses*{r, \varphi}\), consider the isotropic function \(u\parentheses*{r, \varphi} = \absolute*{\ln\parentheses*{r}}^\gamma\) with \(\gamma < \frac{1}{2}\), which is unbounded at \(0\) as \(\lim_{r \to 0}u\parentheses*{r} = \infty\).
+	However, it holds that
+	\begin{align*}
+		u \in L^2\parentheses*{\Omega}:& \quad \int_\Omega u^2 \d x = \int_0^{2\pi}\int_0^{\frac{1}{2}}\parentheses*{\absolute*{\ln r}^\gamma}^2 r\d r\d\varphi < \infty,\\
+		\partial_r u \in L^2\parentheses*{\Omega}:& \quad \int_\Omega \parentheses*{\partial_r u}^2 \d x = \int_0^{2\pi}\int_0^{\frac{1}{2}}\parentheses*{\partial_r\parentheses*{\absolute*{\ln r}^\gamma}}^2 r\d r\d\varphi < \infty.
+	\end{align*}
+	The first integral is difficult, for the second one we use the classic chain rule \(\partial\parentheses*{\absolute*{\ln r}^\gamma} = \gamma\absolute*{\ln r}^{\gamma - 1}\sgn\parentheses*{\ln r}\frac{1}{r}\) for almost every \(r\) to eventually obtain
+	\[
+		\int_\Omega \parentheses*{\partial_r u}^2 \d x = 2\pi\frac{\gamma^2}{2\gamma - 1}\parentheses*{\lim_{r \to 0}\absolute*{\ln r}^{2\gamma - 1} - \ln\frac{1}{2}} < \infty
+	\]
+	for \(2\gamma - 1 < 0\).
+	Similarly, for \(n = 3\) with \(\Omega = \braces*{\parentheses*{x, y, z} \in \R^3 : \sqrt{x^2 + y^2 + z^2} \le \frac{1}{2}}\) we find that the discontinuous function \(u\parentheses*{r} = \ln r\) (in spherical coordinates \(\parentheses*{r, \theta, \varphi}\)) is in \(H^1\parentheses*{\Omega}\).
+	Indeed as above
+	\begin{align*}
+		u \in L^2\parentheses*{\Omega}:& \quad \int_\Omega u^2 \d x = 4\pi\int_0^{\frac{1}{2}}\parentheses*{\ln r}^2 r^2 \d r < \infty,\\
+		\partial_r u \in L^2\parentheses*{\Omega}:& \quad \int_\Omega \parentheses*{\partial_r u}^2 \d x = 4\pi\int_0^{\frac{1}{2}}\parentheses*{\partial_r\parentheses*{\absolute*{\ln r}}}^2 r^2 \d r < \infty.
+	\end{align*}
+\end{example}
+
+\begin{remark}
+	\begin{enumerate}
+		\item Obviously, we have \(H^l\parentheses*{\Omega} \subset H^k\parentheses*{\Omega}\) for \(l > k\) and \(\norm*{u}_k \le \norm*{u}_l\).
+		\item For vector-valued function \(u\parentheses*{x} = \parentheses*{u_1\parentheses*{x}, \ldots, u_N\parentheses*{x}}^T \in \R^N\) we write \(u \in \parentheses*{H^m\parentheses*{\Omega}}^N\) if for all components \(u_i \in H^m\parentheses*{\Omega}, i = 1, \ldots, N\).
+	\end{enumerate}
+\end{remark}
+
+
+\subsection{Traces}
+
+For (unique) solutions of PDEs on bounded domains \(\Omega \subset \R^n\), we need to prescribe conditions on the boundary \(\partial\Omega \subset \R^{n - 1}\).
+However, it is (a-priori) not clear if even point evaluations on \(\partial\Omega\) for \(u \in L^2\parentheses*{\Omega}\) are well-defined, because \(\partial\Omega\) is a null-set of \(\Omega\).
+
+\begin{theorem}
+	Let \(\Omega \subset \R^n\) be a Lipschitz domain and \(u \in H^1\parentheses*{\Omega}\).
+	The restriction \(v: \partial\Omega \to \R\) of \(u\) to the boundary \(\partial\Omega\) of \(\Omega\) is called \emph{trace} of \(u\).
+	It holds that \(v \in L^2\parentheses*{\partial\Omega}\) and \(\norm*{v}_{L^2\parentheses*{\partial\Omega}} \le C\norm*{u}_1\).
+\end{theorem}
+
+\begin{definition}
+	For \(m \ge 1\) we write
+	\[
+		H_0^m\parentheses*{\Omega} := \braces*{u \in H^m\parentheses*{\Omega} : \left.u\right|_{\partial\Omega} = 0\text{ (in the trace sense)}}.
+	\]
+\end{definition}

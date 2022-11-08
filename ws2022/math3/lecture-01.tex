@@ -1,0 +1,770 @@
+\section{Lebesgue-Integration}
+
+
+\subsection{Vorbemerkung zur Maßtheorie}
+
+Es gibt verschiedene Situationen, in denen wir Mengen messen wollen.
+Eine ist das Bestimmen von \emph{Flächen} und \emph{Volumen} im \(\R^n\).
+Das geschieht mit dem Lebesgue-Maß.
+Diese Maß ist natürlich verschiebungs-invariant, d.h. eine Fläche von einem Quadratmeter hat überall dasselbe Maß, egal wohin wir sie verschieben.
+Sobald wir uns Sicherheit im Messen von Mengen erarbeitet haben, können wir das Lebesgue-Integral einführen, welches gewisse Schwierigkeiten des Riemann-Integrals bereinigt.
+Die Lebesgue'schen Grenzwertsätze erlauben es, Integrale von Funktionenfolgen zu bestimmen.
+Und wir können die sogenannten \(L^p\)-Normen einführen, die es u.a. ermöglichen, Funktionen in integralen Normen abzuschätzen.
+Das ist für die Analysis und die numerische Analysis grundlegend.
+
+Eine andere Situation ist das Bestimmen von \emph{Wahrscheinlichkeiten}.
+Werfen wir einen Dart-Pfeil auf ein Ziel, so ist die Wahrscheinlichkeit, dass eine Fläche von einem Quadratmeter getroffen wird, vermutlich desto größer, je näher die Fläche am Ziel liegt.
+Ein Wahrscheinlichkeitsmaß ist also in der Regel nicht verschiebungs-invariant.
+Ein Hauptziel von Vorlesungen zur Wahrscheinlichkeitstheorie (stochastischen Analysis) ist der zentrale Grenzwertsatz, der besagt, dass der Mittelwert einer identisch verteilten, unabhängigen Folge von Zufallsvariablen normalverteilt ist.
+
+Eine weitere Situation tritt beim \emph{Lösen partieller Differentialgleichungen} auf.
+Um Lösungen zu beschreiben, braucht man in der Regel Maße, die auf Punkten oder Kurven konzentriert sind.
+Das führt uns in der Vorlesung Mathematische Grundlagen IV zur Theorie der Distributionen, Faltungen und Fundamentallösungen.
+
+Da Mengen eine überraschend komplizierte Gestalt haben können, beschränkt sich das Lebesgue-Maß auf die Klasse sogenannter \emph{Lebesgue-messbarer Mengen}.
+
+
+\subsection{Lebesgue-Maß}
+
+Für den Rest dieses Abschnitts schränken wir und auf das Lebesgue-Maß ein, und bezeichnen es der Kürze halber einfach als \emph{Maß}.
+Wir betrachten Funktionen \(f: \parentheses*{a, b} \to \left[0, \infty\right)\).
+Mit einer Zerlegung \(Z = \parentheses*{x_0, \ldots, x_m}\) von \(\parentheses*{a, b}\),
+\[
+	a = x_0 < \cdots < x_m = b,
+\]
+sind die Obersumme \(O_Z\parentheses*{f}\) und Untersumme \(U_Z\parentheses*{f}\) definiert:
+\begin{align}
+	O_Z^R\parentheses*{f} &:= \sum_{i = 1}^n \parentheses*{\sup_{x_{i - 1} < x < x_i}f\parentheses*{x}}\parentheses*{x_i - x_{i - 1}},\label{equation:1}\\
+	U_Z^R\parentheses*{f} &:= \sum_{i = 1}^n \parentheses*{\inf_{x_{i - 1} < x < x_i}f\parentheses*{x}}\parentheses*{x_i - x_{i - 1}}.\label{equation:2}
+\end{align}
+Damit sind also die besten Annäherungen des Flächeninhaltes unter \(f\)
+\begin{equation}
+	O^R\parentheses*{f} := \inf_{Z \in \mathcal{Z}}O_Z^R\parentheses*{f}, \quad \text{beziehungsweise} \quad U^R\parentheses*{f} := \sup_{Z \in \mathcal{Z}}U_Z^R\parentheses*{f},
+\end{equation}
+wobei \(\mathcal{Z}\) alle möglichen Zerlegungen von \(\parentheses*{a, b}\) enthält.
+Wir nennen \(f\) \emph{Riemann-integrierbar}, wenn
+\begin{equation}
+	U^R\parentheses*{f} = O^R\parentheses*{f} < \infty.
+\end{equation}
+In diesem Fall schreiben wir
+\[
+	\int_a^b f := \int_a^b f\parentheses*{x}\d x := U^R\parentheses*{f}.
+\]
+Wir betrachten nun eine Folge \(\braces*{f_k}_{k = 1}^\infty\) von Riemann-integrierbaren Funktionen, die an jeder Stelle \(x \in \parentheses*{a, b}\) konvergiert.
+Das heißt, es existiert \(f\), sodass
+\[
+	\lim_{k \to \infty}f_k\parentheses*{x} = f\parentheses*{x}
+\]
+für alle \(x \in \parentheses*{a, b}\).
+Dann stellen sich die Fragen:
+Ist \(f\) Riemann-integrierbar?
+Und falls ja, gilt
+\begin{equation}
+	\lim_{k \to \infty}\int_a^b f_k = \int_a^b f\text{?}
+\end{equation}
+Leider ist dies oft nicht der Fall.
+Das klassische Gegenbeispiel ist die Dirichlet-Funktion \(f = \chi_Q\), wobei \(\chi_A\) die charakteristische Funktion zu einer Menge \(A\),
+\begin{equation}\label{equation:6}
+	\chi_A\parentheses*{x} = \begin{cases}
+		1, & \text{falls }x \in A,\\
+		0, & \text{falls }x \not\in A
+	\end{cases}
+\end{equation}
+und \(Q = \Q \cap \parentheses*{0, 1}\) die Menge der rationalen Zahlen zwischen Null und Eins ist.
+Da \(Q\) abzählbar ist, also
+\[
+	Q = \braces*{q_1, q_2, \ldots},
+\]
+können wir die Funktionenfolge \(\braces*{f_k}\) mit
+\[
+	f_k\parentheses*{x} = \begin{cases}
+		1, & \text{falls }x \in \braces*{q_1, \ldots, q_k},\\
+		0, & \text{sonst}
+	\end{cases}
+\]
+definieren.
+Dann gilt
+\begin{equation}\label{equation:7}
+	\lim_{k \to \infty}f_k\parentheses*{x} = \chi_Q\parentheses*{x}
+\end{equation}
+für alle \(x \in \parentheses*{0, 1}\), sowie
+\begin{equation}\label{equation:8}
+	O^R\parentheses*{f_k} = U^R\parentheses*{f_k} = 0,
+\end{equation}
+aber
+\[
+	0 = U^R\parentheses*{\chi_Q} \ne O^R\parentheses*{\chi_Q} = 1\text{!}
+\]
+Intuitiv würden wir wegen \eqref{equation:7} und \eqref{equation:8} folgern,
+\[
+	\int_0^1 \chi_Q = 0.
+\]
+Dies folgt hauptsächlich daraus, dass die Menge \(Q\) so klein ist.
+(Während \(Q\) abzählbar ist, gibt es überabzählbar viele reelle Zahlen!)
+Wir möchten also die Größe einer Menge genau messen können.
+Dafür führen wir das \emph{Lebesgue-Maß} ein.
+
+\emph{Motivation der Lebesgue'schen Maßtheorie im \(\R^n\):}
+\begin{itemize}
+	\item Wir wollen die Größe einer Menge messen.
+	\item Wir wollen im \(\R^n\) integrieren.
+\end{itemize}
+
+Ein Maß \(\lambda\) ist eine Verallgemeinerung der Länge eines Intervalles in \(\R\), des Flächeninhaltes eines Rechteckes in \(\R^2\), und im Allgemeinen des Rauminhaltes eines Quaders \(I = \parentheses*{a_1, b_1} \times \cdots \times \parentheses*{a_n, b_n} \subset \R^n\).
+Es ordnet jeder Teilmenge in einem Mengensystem \(\mathcal{S}\) in \(\R^n\) eine nicht negative reelle Zahl zu und sollte intuitiv die vier folgenden Eigenschaften haben:
+\begin{enumerate}
+	\item \emph{(Konsistenz mit dem Volumenmaß)} Für jeden Quader \(I = \parentheses*{a_1, b_1} \times \cdots \times \parentheses*{a_n, b_n}\) gilt
+	\begin{equation}\label{equation:9}
+		\lambda\parentheses*{I} = \vol\parentheses*{I} := \parentheses*{b_1 - a_1}\cdots\parentheses*{b_n - a_n}.
+	\end{equation}
+	\item \emph{(Translations-Invarianz)} Seien \(y \in \R^n\), \(A \subset \R^n\) und \(A + y := \braces*{x + y : x \in A}\).
+	Dann gilt
+	\begin{equation}
+		\lambda\parentheses*{A + y} = \lambda\parentheses*{A}.
+	\end{equation}
+	\item \emph{(Monotonie)} Wenn \(B \subset A\), dann gilt
+	\begin{equation}\label{equation:11}
+		\lambda\parentheses*{B} \le \lambda\parentheses*{A}.
+	\end{equation}
+	\item \emph{(\(\sigma\)- oder abzählbare Additivität)} Seien \(\braces*{A_1, A_2, \ldots}\) paarweise disjunkte Mengen.\footnote{Die Mengen \(\braces*{A_1, A_2, \ldots}\) sind \emph{paarweise disjunkt}, wenn \(A_i \cap A_j = \emptyset\) für alle \(i \ne j\).}
+	Dann ist
+	\begin{equation}\label{equation:12}
+		\lambda\parentheses*{\bigcup_{k = 1}^\infty A_k} = \sum_{k = 1}^\infty \lambda\parentheses*{A_k}.
+	\end{equation}
+\end{enumerate}
+
+Das \emph{äußere Lebesgue-Maß} \(\lambda^*: \mathcal{P}\parentheses*{\R^n} \to \left[0, \infty\right)\), welches durch\footnote{Für eine Menge \(A\) bezeichnet \(\mathcal{P}\parentheses*{A} \equiv 2^A\) die Potenzmenge, d.h. die Menge aller Untermengen.}
+\[
+	\lambda^*\parentheses*{A} := \inf\braces*{\sum_{k = 1}^\infty \vol\parentheses*{I_k} : A \subset \bigcup_{k = 1}^\infty I_k\text{, wobei jedes }I_k\text{ ein Quader ist}}
+\]
+definiert ist, scheint ein sinnvoller Kandidat für ein Maß zu sein.
+Es besitzt die ersten drei Eigenschaften, aber es erfüllt nur
+\begin{equation}\label{equation:13}
+	\lambda^*\parentheses*{\bigcup_{k = 1}^\infty A_k} \le \sum_{k = 1}^\infty \lambda^*\parentheses*{A_k}.
+\end{equation}
+Denn es gibt disjunkte Mengen \(A\) und \(B\), so dass
+\begin{equation}\label{equation:14}
+	\lambda^*\parentheses*{A \cup B} < \lambda^*\parentheses*{A} + \lambda^*\parentheses*{B},
+\end{equation}
+oder äquivalent gibt es (nicht unbedingt disjunkte) Mengen \(A\) und \(B\), so dass\footnote{\(B \setminus A := \braces*{x \in B : x \not\in A}\).}
+\begin{equation}\label{equation:15}
+	\lambda^*\parentheses*{A} < \lambda^*\parentheses*{A \cap B} + \lambda^*\parentheses*{A \setminus B}.
+\end{equation}
+Solche Beispiele liegen sehr tief.\footnote{Z.B. das Banach Tarski Paradox von 1924, bei welchem eine Kugel in zwei Teile zerlegt wird, welche jeweils das Maß der Originalkugel besitzen.}
+Tatsächlich gibt es kein einziges Maß, das auf der ganzen Potenzmenge \(\mathcal{S} = \mathcal{P}\parentheses*{\R^n} \equiv 2^{\R^n}\) definiert ist und diese vier Eigenschaften hat.
+Deshalb schließen wir Mengen solcher Art im Folgenden aus.
+Die übrigen Mengen nennen wir \emph{Lebesgue-messbar}.
+
+\begin{definition}[Lebesgue-messbare Menge]
+	Eine Menge \(M\) heißt \emph{Lebesgue-messbar}, falls
+	\[
+		\lambda^*\parentheses*{A} = \lambda^*\parentheses*{A \cap M} + \lambda\parentheses*{A \setminus M}
+	\]
+	für alle Mengen \(A \subseteq \R^n\).
+	Sei \(\mathcal{L}\) das System der Lebesgue-messbaren Mengen, definieren wir das \emph{Lebesgue-Maß} \(\lambda: \mathcal{L} \to \left[0, \infty\right)\) durch
+	\[
+		\lambda\parentheses*{M} = \lambda^*\parentheses*{M}.
+	\]
+\end{definition}
+
+Dieses Mengensystem \(\mathcal{L}\) ist ausreichend zu betrachten, weil wir Mengen wie \(A\) und \(B\) in \eqref{equation:14} und \eqref{equation:15} im Weiteren nicht begegnen werden.
+
+\begin{proposition}
+	Die Lebesgue-messbaren Mengen \(\mathcal{L}\) bilden eine \emph{\(\sigma\)-Algebra} über \(\R^n\), das heißt:
+	\begin{enumerate}
+		\item \(\emptyset \in \mathcal{L}\),
+		\item ist \(M \in \mathcal{L}\), so ist auch \(\R^n \setminus M \in \mathcal{L}\), und
+		\item ist \(M_k \in \mathcal{L}\) für alle \(k \in \N\), so ist auch
+		\[
+			\bigcup_{k = 1}^\infty M_k \in \mathcal{L}.
+		\]
+	\end{enumerate}
+	Außerdem erfüllt das Lebesgue-Maß die vier Eigenschaften \eqref{equation:9} -- \eqref{equation:12}.
+\end{proposition}
+
+Um nun beantworten zu können, wie klein die Menge \(Q\) ist, müssen wir zunächst kontrollieren, ob \(Q\) messbar ist.
+Weil wir wegen \eqref{equation:7} und \eqref{equation:8} erwarten, dass das Maß von \(Q\) Null ist, betrachten wir sogenannte Nullmengen:
+Eine Menge \(A \subset \R^n\) heißt \emph{(Lebesgue-)Nullmenge}, falls \(\lambda^*\parentheses*{A} = 0\).
+
+\begin{lemma}
+	Jede Nullmenge ist messbar.
+\end{lemma}
+
+\begin{proof}
+	Sei \(M \subset \R^n\) mit \(\lambda^*\parentheses*{M} = 0\) und \(A \subset \R^n\) eine beliebige Menge.
+	Es folgt
+	\[
+		\lambda^*\parentheses*{A} \le \lambda^*\parentheses*{A \cap M} + \lambda^*\parentheses*{A \setminus M}
+	\]
+	aus \eqref{equation:13}.
+	Wegen Monotonie \eqref{equation:11} folgt \(\lambda^*\parentheses*{A \cap M} = 0\) aus \(\lambda^*\parentheses*{M} = 0\) und \(A \cap M \subseteq M\), sowie \(\lambda^*\parentheses*{A \setminus M} \le \lambda^*\parentheses*{A}\) aus \(A \setminus M \subseteq A\).
+	Also gilt
+	\[
+		\lambda^*\parentheses*{A} \ge \lambda^*\parentheses*{A \setminus M} = \lambda^*\parentheses*{A \cap M} + \lambda^*\parentheses*{A \setminus M}.
+	\]
+\end{proof}
+
+\begin{example}
+	Die Menge \(Q\) sowie alle abzählbaren Mengen sind Mullmengen:
+	Sei \(M = \braces*{x_1, x_2, \ldots}\) eine beliebige abzählbare Menge in \(\R\) und betrachte die Überdeckung
+	\[
+		M \subset \bigcup_{k = 1}^\infty \brackets*{x_k, x_k + \varepsilon \cdot 2^{-k}}
+	\]
+	für alle \(\varepsilon > 0\).
+	Dann
+	\[
+		\lambda^*\parentheses*{M} \le \vol\parentheses*{\bigcup_{k = 1}^\infty \brackets*{x_k, x_k + \varepsilon \cdot 2^{-k}}} \le \varepsilon\sum_{k = 1}^\infty 2^{-k} = \varepsilon,
+	\]
+	woraus wir folgern, dass \(M\) eine Nullmenge sein muss.
+\end{example}
+
+\begin{remark}\label{remark:5}
+	Abzählbare Vereinigungen von Nullmengen sind wieder Nullmengen.
+	Demnach ist zum Beispiel die Menge \(\Q\) auch eine Nullmenge.
+\end{remark}
+
+
+\subsection{Lebesgue-Integration}
+
+Sei \(f: M \to W\), wobei der Wertbereich \(W \subseteq \R\) und \(M \subset \R^n\) eine messbare Menge ist.
+Zuerst betrachten wir den Fall \(\lambda\parentheses*{M} < \infty\) und \(W = \brackets*{a, b} \subset \left[0, \infty\right)\), also eine begrenzte nicht negative Funktion auf einer Definitionsmenge von endlichem Maß.
+Um ihr Integral zu definieren, betrachten wir im ersten Schritt Funktionen, die wir inuitiv genau integrieren können.
+
+\emph{Schritt 1:} Für den Fall der Riemann-Integration haben wir die \emph{Treppenfunktionen} betrachtet.
+Dies ist eine Funktion, die sich als eine lineare Kombination von charakteristischen Funktion (s. \eqref{6}) schreiben lässt:
+\begin{equation}\label{equation:16}
+	\psi\parentheses*{x} = \sum_{i = 1}^m y_i \chi_{Q_i}\parentheses*{x},
+\end{equation}
+wobei jedes \(Q_i \subset M\) ein Quader ist.
+Das Integral von \(\psi\) ist also trivialerweise
+\begin{equation}
+	\int_M \psi = \sum_{i = 1}^m y_i \vol\parentheses*{Q_i}.
+\end{equation}
+Nun, da wir aber das Maß von mehr als nur Quadern kennen, können wir die Treppenfunktion \eqref{equation:16} verallgemeinern, indem wir ihre Quader durch messbare Mengen ersetzen.
+
+\emph{Schritt 2:} Eine soche Funktion heißt eine \emph{einfache Funktion}.
+Eine Funktion \(f: M \to W\) nennt man eine einfache Funktion, wenn
+\begin{enumerate}
+	\item \(W = \braces*{y_1, \ldots, y_m}\),
+	\item die Urbilder \(M_i := f^{-1}\parentheses*{\braces*{y_i}} := \braces*{x \in M : f\parentheses*{x} = y_i}\) messbar sind, i.e. \(M_i \in \mathcal{L}\).
+\end{enumerate}
+Daher lässt sich eine einfache Funktion folgendermaßen schreiben:
+\begin{equation}
+	\phi\parentheses*{x} = \sum_{i = 1}^m y_i \chi_{M_i}\parentheses*{x}.
+\end{equation}
+Das Integral von \(\phi\) ist also mit
+\begin{equation}\label{equation:19}
+	\int_M \phi := \sum_{i = 1}^m y_i \lambda\parentheses*{M_i}
+\end{equation}
+sinnvoll definiert.
+
+\begin{remark}
+	Gleichung \eqref{equation:19} ist tatsächlich eine neue Definition, da zum Beispiel \(\chi_Q\) eine einfache Funktion ist, die wir aber bisher als nicht integrierbar angesehen haben.
+	Das heißt, \(y_1 = 0\), \(y_2 = 1\) und \(M_1 = \parentheses*{0, 1} \setminus \Q\), \(M_2 = Q\) und
+	\[
+		\int_0^1 \chi_Q = 0 \cdot \underbrace{\lambda\parentheses*{\parentheses*{0, 1} \setminus \Q}}_{= \lambda\parentheses*{\parentheses*{0, 1}} = 1} + 1 \cdot \underbrace{\lambda\parentheses*{Q}}_{= 0} = 0.
+	\]
+\end{remark}
+
+\emph{Schritt 3:} Als nächstes definieren wir das Integral einer nicht einfachen Funktion.
+So wie wir in \eqref{equation:1} und \eqref{equation:2} Annäherungen mit Treppenfunktionen von oben und unten betrachtet haben, definieren wir nun soche Annäherungen mit einfachen Funktionen neu.
+Diese einfachen Funktionen können mittels einer Zerlegung des Wertbereiches (statt der Definitionsmenge wie in der Herleitung des Riemann-Integrals) gebildet werden.
+Dafür brauchen wir die \emph{Urbilder} von \(A \subseteq W\):
+\[
+	f^{-1}\parentheses*{A} := \braces*{x \in M : f\parentheses*{x} \in A}.
+\]
+Seien \(\braces*{y_0, \ldots, y_m}\) eine Zerlegung des Wertbereiches \(W = \braces*{a, b}\) und \(M_i\) die Mengen
+\[
+	M_i = f^{-1}\parentheses*{\left[y_{i - 1}, y_i\right)}, \quad i \in \braces*{1, \ldots, m}.
+\]
+Dann sind
+\[
+	\phi_U := \sum_{i = 1}^m y_{i - 1}\chi_{M_i} \quad \text{und} \quad \phi_O := \sum_{i = 1}^m y_i \chi_{M_i}
+\]
+Funktionen, die sich \(f\) von unten beziehungsweise oben annähern.
+Aber diese sind nicht unbedingt einfache Funktionen, weil die Urbilder nicht unbedingt messbar sind!
+Wir beschränken uns also auf solche Funktionen.
+
+\begin{definition}[Lebesgue-messbare Funktion]
+	Die Funktion \(f: M \to W\) heißt \emph{Lebesgue-messbar}, falls \(f^{-1}\parentheses*{\left[y_1, y_2\right)}\) messbar für alle Intervalle \(\left[y_1, y_2\right) \subseteq W\) ist.
+\end{definition}
+
+\begin{remark}
+	Eine äquivalente Definition ist, dass \(f\) Lebesgue-messbar heißt, falls \(f^{-1}\parentheses*{\parentheses*{-\infty, y}}\) messbar für alle \(y \in W\) ist.
+	Die Äquivalenz folgt aus der Tatsache, dass das Mengensystem der messbaren Mengen eine \(\sigma\)-Algebra bildet.
+\end{remark}
+
+Wir werden keine andere Art von Messbarkeit betrachten, also sagen wir im Folgenden lediglich \emph{messbar} statt Lebesgue-messbar.
+Die besten Annäherungen sind so wie in \eqref{equation:3} mittels Infimum und Supremum definiert:
+\begin{align}
+	O\parentheses*{f} &:= \inf\braces*{\int_M \phi : \phi\text{ ist eine einfache Funktion mit }\phi \ge f},\\
+	U\parentheses*{f} &:= \sup\braces*{\int_M \phi : \phi\text{ ist eine einfache Funktion mit }\phi \le f}.
+\end{align}
+Es stellt sich heraus, dass messbare Funktionen genau die Funktionen sind, für die dieses neue Integral wohldefiniert ist.
+
+\begin{proposition}
+	Sei \(f: M \to W\) Lebesgue-messbar mit \(\lambda\parentheses*{M} < \infty\) und \(W \subset \left[0, \infty\right)\) beschränkt, dann gilt \(O\parentheses*{f} = U\parentheses*{f}\), und wir schreiben wie zuvor
+	\[
+		\int_M f := \int_M f\parentheses*{x}\d x := U\parentheses*{f}.
+	\]
+\end{proposition}
+
+Außerdem haben wir das Problem nicht mehr, dass eine Funktionenfolge von integrierbaren Funktionen gegen eine nicht integrierbare Funktion konvergieren kann.
+Um dieses Ergebnis im Allgemeinen zu erklären, brauchen wir die folgende Definition.
+
+\begin{definition}[Fast überall bzw. ``a.e.'']
+	Eine Relation gilt \emph{fast überall} oder \emph{an fast jeder Stelle} (abgekürzt \emph{a.e.} aus dem Englischen ``almost everywhere'') auf \(M\), falls es eine Nullmenge \(M_0\) gibt, so dass die Relation auf \(M \setminus M_0\) gilt.
+\end{definition}
+
+\begin{example}
+	Sei \(f: \brackets*{0, 1} \to \brackets*{0, 1}\) eine messbare Funktion und \(g := f + \chi_Q\).
+	Dann gilt
+	\[
+		f = g \quad \text{a.e.}
+	\]
+	Daraus folgt zum Beispiel
+	\[
+		\int_0^1 f = \int_0^1 g.
+	\]
+\end{example}
+
+\begin{proposition}\label{proposition:12}
+	Sei \(\braces*{f_1, f_2, \ldots}\) eine Folge von Lebesgue-messbaren Funktionen auf \(M\), die an fast jeder Stelle gegen die Funktion \(f\) konvergiert.
+	Dann ist \(f\) Lebesgue-messbar.
+\end{proposition}
+
+\begin{proof}
+	Zu zeigen ist, dass die Urbilder \(f^{-1}\parentheses*{\parentheses*{-\infty, y}}\) messbar für jedes \(y \in \R\) sind.
+	Wir müssen nur die Stellen betrachten, an denen die Funktionenfolge konvergiert, weil die anderen Stellen nur eine Nullmenge bilden und die immer messbar sind.
+	Zuerst nehmen wir ein beliebiges \(x \in f^{-1}\parentheses*{\parentheses*{-\infty, y}}\).
+	Wegen der Konvergenz gibt es zwei natürliche Zahlen \(m, j\), so dass
+	\[
+		f_k\parentheses*{x} < y - \frac{1}{m}
+	\]
+	für alle \(k \ge j\).
+	Also gilt
+	\begin{equation}\label{equation:22}
+		x \in \bigcup_{k = j}^\infty f_k^{-1}\parentheses*{\parentheses*{-\infty, y - \frac{1}{m}}} =: M_{m, j}\parentheses*{y}.
+	\end{equation}
+	Da jede Funktion \(f_k\) messbar ist und das Mengensystem der messbaren Mengen eine \(\sigma\)-Algebra bildet, ist \(M_{m, j}\parentheses*{y}\) messbar.
+	Ebenso lässt sich für jedes \(x\) ein Paar \(m\) und \(j\) finden, so dass \eqref{equation:22} gilt.
+	Daher gilt
+	\[
+		f^{-1}\parentheses*{\parentheses*{-\infty, y}} \subseteq \bigcup_{m = 1}^\infty \bigcup_{j = 1}^\infty M_{m, j}\parentheses*{y} =: M\parentheses*{y}.
+	\]
+	Nochmals folgern wir, dass \(M\parentheses*{y}\) messbar ist, da das Mengensystem der messbaren Mengen eine \(\sigma\)-Algebra bildet.
+	Das heißt, dass wir aus \(x \in f^{-1}\parentheses*{\parentheses*{-\infty, y}}\) die Aussage \(x \in M\parentheses*{y}\) folgern und daher \(M\parentheses*{y} \subseteq f^{-1}\parentheses*{\parentheses*{-\infty, y}}\).
+	Jetzt können wir \(f^{-1}\parentheses*{\parentheses*{-\infty, y}} = M\parentheses*{y}\) folgern, indem wir zeigen, dass \(f^{-1}\parentheses*{\parentheses*{-\infty, y}} \supseteq M\parentheses*{y}\) gilt.
+	Sei \(x\) ein beliebiges Element von \(M\parentheses*{y}\).
+	Es gibt also ein Paar \(m\) und \(j\), so dass \(x \in M_{m, j}\parentheses*{y}\).
+	Aber das heißt, dass
+	\[
+		f_k\parentheses*{x} < y - \frac{1}{m}
+	\]
+	für alle \(k \ge j\) und demnach
+	\[
+		f\parentheses*{x} = \lim_{k \to \infty}f_k\parentheses*{x} \le y - \frac{1}{m} < y,
+	\]
+	also \(x \in f^{-1}\parentheses*{\parentheses*{-\infty, y}}\).
+\end{proof}
+
+Dieses Integral kann nun auch ganz einfach für Funktionen verallgemeinert werden, deren Definitionsmenge unendliches Maß hat und deren Wertebereich nicht nur \(\left[0, \infty\right)\) ist.
+
+\begin{definition}\label{definition:13}
+	Sei \(f: M \to W\) eine Lebesgue-messbare Funktion.
+	\begin{enumerate}
+		\item Wenn \(\lambda\parentheses*{M} = \infty\), ist das Integral mit
+		\begin{align*}
+			\int_M f := \sup\Bigg\{\int_M \phi : &\phi\text{ ist eine einfache Funktion mit }\phi \le f\\
+			&\text{und es gibt ein }M_0\text{ mit }\lambda\parentheses*{M_0} < \infty\text{, so dass }\left.\phi\right|_{M \setminus M_0} \equiv 0
+		\end{align*}
+		definiert.
+		\item Wenn \(W \not\subseteq \left[0, \infty\right)\) (\(f\) kann also auch negative Werte annehmen), ist das Integral mit
+		\[
+			\int_M f := \int_M f_+ - \int_M f_-
+		\]
+		definiert, wobei
+		\[
+			f_+\parentheses*{x} := \max\braces*{f\parentheses*{x}, 0} \quad \text{und} \quad f_-\parentheses*{x} := -\min\braces*{f\parentheses*{x}, 0}.
+		\]
+		\item Die Funktion \(f\) heißt \emph{Lebesgue-integrierbar}, falls
+		\[
+			\int_M \absolute*{f} < \infty.
+		\]
+	\end{enumerate}
+\end{definition}
+Das Lebesgue-Integral ist tatsächlich eine Verallgemeinerung des Riemann-Integrals.
+
+\begin{proposition}
+	Sei \(f\) Riemann-integrierbar.
+	Dann ist \(f\) messbar, und die Riemann- und Lebesgue-Integrale stimmen überein.
+\end{proposition}
+
+Das Lebesgue-Integral besitzt außerdem die erwartete Eigenschaft von Linearität.
+
+\begin{proposition}[Linearität des Lebesgue-Integrales]
+	Seien \(f\) und \(g\) Lebesgue-messbare Funktionen auf \(M\) und \(\alpha\) und \(\beta\) reelle Zahlen.
+	Dann gilt
+	\begin{equation}
+		\int_M \parentheses*{\alpha f + \beta g} = \alpha\int_M f + \beta\int_M g.
+	\end{equation}
+\end{proposition}
+
+Es könnte aber immer geschehen, dass der Limes der Integrale einer Funktionenfolge nicht das Integral des Limes der Funktionenfolge ist.
+Der durchschlagende Erfolg der Lebesgue'schen Theorie basiert auf den folgenden drei Theoremen über die Integrale von Funktionenfolgen:
+
+\begin{proposition}[Lebesgues Satz von der monotonen Konvergenz]\label{proposition:16}
+	Sei \(E \subset \R^n\) messbar, und \(\parentheses*{f_k}_{k \in \N}\) eine Folge messbarer Funktionen mit
+	\begin{equation}
+		0 \le f_1\parentheses*{x} \le f_2\parentheses*{x} \le \cdots
+	\end{equation}
+	und Grenzwert
+	\begin{equation}
+		f\parentheses*{x} := \lim_{k \to \infty}f_k\parentheses*{x}
+	\end{equation}
+	für alle \(x \in E\).
+	Dann ist \(f\) auf \(E\) messbar, und es gilt
+	\begin{equation}\label{equation:26}
+		\lim_{k \to \infty}\int_E f_k = \int_E f.
+	\end{equation}
+\end{proposition}
+
+\begin{lemma}[Fatous Lemma]\label{lemma:17}
+	Sei \(E \subset \R^n\) messbar, und \(\parentheses*{f_k}_{k \in \N}\) eine Folge nicht negativer messbarer Funktionen.
+	Setze
+	\begin{equation}
+		f\parentheses*{x} := \liminf_{k \to \infty}f_k\parentheses*{x}
+	\end{equation}
+	für \(x \in E\).
+	Dann ist \(f\) auf \(E\) messbar, und es gilt
+	\begin{equation}
+		\int_E \le \liminf_{k \to \infty}\int_E f_k.
+	\end{equation}
+\end{lemma}
+
+\begin{proposition}[Lebesgues Satz von der majorisierten Konvergenz]
+	Sei \(E \subset \R^n\) messbar und \(\parentheses*{f_k}_{k \in \N}\) eine Folge von Lebesgue-messbaren Funktionen auf \(E\) und \(g\) eine Lebesgue-integrierbare Funktion auf \(E\) mit \(\absolute*{f_k} \le g\) fast überall auf \(E\) für alle \(k \ge 1\).
+	Wenn \(f_k\) an fast jeder Stelle gegen eine Funktion \(f\) konvergiert, dann ist \(f\) Lebesgue-integrierbar und
+	\begin{equation}
+		\lim_{k \to \infty}\int_E f_k = \int_E f.
+	\end{equation}
+\end{proposition}
+
+\begin{example}
+	Seien \(E = \brackets*{0, 1}\) und
+	\[
+		f_k\parentheses*{x} = k\chi_{\brackets*{0, \frac{1}{k}}}.
+	\]
+	Dann konvergiert die Funktionenfolge \(\braces*{f_k}\) zwar fast überall gegen \(f\parentheses*{x} \equiv 0\), aber
+	\[
+		\lim_{k \to \infty}\int_0^1 f_k = 1.
+	\]
+	Hier wäre die Funktion \(g\parentheses*{x} := \frac{1}{x}\) eine Majorante, die aber nicht integrierbar ist.
+\end{example}
+
+Wir beweisen zum Abschluss den Satz der monotonen Konvergenz.
+Beim Beweis spielen viele der eingeführten Techniken zusammen.
+
+\begin{proof}
+	\emph{(von Satz \ref{proposition:16})} Nach Satz \ref{proposition:12} ist \(f\) messbar.
+	Nach Definition \ref{definition:13} gilt
+	\[
+		\int_E f = \sup\braces*{\int_E \phi : \phi \le f, \phi\text{ einfach}}.
+	\]
+	Wähle eine feste nicht-negative einfache Funktion \(\phi\), so dass \(0 \le \phi \le f\).
+	Da \(\phi\) einfach ist, schreibt sich \(\phi\) als \(\phi = \sum_{i = 1}^m y_i \chi_{M_i}\).
+	Wähle zudem eine beliebige Konstante \(0 < c < 1\), und setze
+	\[
+		E_k := \braces*{x \in E : f_k\parentheses*{x} \ge c\phi\parentheses*{x}}.
+	\]
+	Dann gilt \(E_1 \le \cdots \le E_k\) und \(\bigcup_{k = 1}^\infty E_k = E\) (bis auf eine Nullmenge).
+	Außerdem gilt
+	\begin{equation}
+		\int_E f_k \ge \int_{E_k}f_k \ge c\int_{E_k}\phi.
+	\end{equation}
+	Daraus folgt
+	\[
+		\lim_{k \to \infty}\int_E f_k \ge c\lim_{k \to \infty}\int_{E_k}\phi = c\int_E \phi
+	\]
+	und mit \(c \to 1\)
+	\[
+		\lim_{k \to \infty}\int_E f_k \ge \int_E \phi,
+	\]
+	also
+	\[
+		\int_E f = \sup_\phi \int_E \phi \le \lim_{k \to \infty}\int_E f_k.
+	\]
+	Selbstverständlich gilt auch
+	\[
+		\lim_{k \to \infty}\int_E f_k \le \int_E f,
+	\]
+	also die Gleichheit \eqref{equation:26}.
+\end{proof}
+
+
+\subsection{Die $L^p$-Räume}
+
+Wir nennen eine messbare Funktion \(f\) \emph{\(p\)-integrierbar auf \(M\)}, falls
+\[
+	\int_M \absolute*{f}^p < \infty.
+\]
+Dieses \(p\) kann gewissermaßen beschreiben, wie die Funktion \(f\) aussieht.
+
+\begin{example}
+	Sei \(f\parentheses*{x} := \absolute*{x}^{-\alpha}\) für \(\alpha \in \parentheses*{0, 1}\).
+	\begin{enumerate}
+		\item Wenn \(M = \parentheses*{-1, 1}\), ist \(f\) \(p\)-integrierbar für \(p < \frac{1}{\alpha}\).
+		Also beschreibt \(p\), welche Singularitäten die Funktion haben kann.
+		\item Wenn \(M = \parentheses*{1, \infty}\) ist \(f\) \(p\)-integrierbar für \(p > \frac{1}{\alpha}\).
+		Also beschreibt \(p\), wie schnell die Funktion für \(x \to \infty\) gegen Null konvergiert.
+	\end{enumerate}
+\end{example}
+
+Die wichtigsten Fälle sind \(p \in \braces*{1, 2, \infty}\), aber in anderen Vorlesungen werden wir auch Gleichungen betrachten, deren Lösung \(p\)-integrierbar für weitere \(p\) ist.
+
+Da nach Satz \ref{proposition:15} Lebesgue-Integration linear ist, hat die Menge der integrierbaren Funktionen die Struktur eines Vektorraums.
+Dies gilt auch für \(p > 1\), da
+\[
+	\absolute*{f + g}^p \le \parentheses*{\absolute*{f} + \absolute*{g}}^p \le \parentheses*{2\max\braces*{\absolute*{f}, \absolute*{g}}}^p = 2^p \max\braces*{\absolute*{f}^p, \absolute*{g}^p} \le 2^p \parentheses*{\absolute*{f}^p + \absolute*{g}^p},
+\]
+und demnach gilt
+\[
+	\int_M \absolute*{f + g}^p \le 2^p \parentheses*{\int_M \absolute*{f}^p + \int_M \absolute*{g}^p}.
+\]
+Also wenn \(f\) und \(g\) \(p\)-integrierbar sind, ist ebenso \(f + g\) \(p\)-integrierbar.
+
+Eine mögliche Norm für den Vektorraum der \(p\)-integrierbaren Funktionen ergibt sich natürlicherweise:
+\[
+	\norm*{f}_p := \parentheses*{\int_M \absolute*{f}^p}^{\frac{1}{p}}.
+\]
+Diese Norm wird die \emph{\(p\)-Norm} ernannt.
+Aber erfüllt \(\norm*{\cdot}_p\) überhaupt die Voraussetzungen einer Norm?
+Zum Einen muss eine Norm für jedes \(\alpha \in \R\)
+\[
+	\norm*{\alpha f}_p = \absolute*{\alpha}\norm*{f}_p
+\]
+erfüllen.
+Dies gilt trivialerweise.
+Zum Zweiten muss eine Norm
+\[
+	\norm*{f}_p = 0 \iff f = 0
+\]
+erfüllen.
+Dies folgt jedoch nicht unmittelbar, da \(\norm*{f}_p = 0\) für \emph{alle} \(f\) gilt, die \emph{fast überall} Null sind.
+Wir können aber sagen, dass eine solche Funktion ``so gut wie Null sei'', indem wir die Äquivalenzrelation ``\(\simeq\)'' mit
+\[
+	f \simeq 0 \iff f = 0 \quad \text{a.e.}
+\]
+einführen.
+Im Allgemeinen ist die Äquivalenzrelation mit
+\[
+	f \simeq g \iff f = g \quad \text{a.e.}
+\]
+definiert.
+Damit zerfällt die Menge der \(p\)-integrierbaren Funktionen in Äquivalenzklassen
+\[
+	\brackets*{f}_\simeq := \braces*{g : g\text{ ist }p\text{-integrierbar und }f \simeq g}.
+\]
+Nun gilt
+\[
+	\norm*{f}_p = 0 ßiff f \in \brackets*{0}_\simeq.
+\]
+
+\begin{definition}[\(L^p\)-Raum]
+	Die Menge der Äquivalenzklassen bezüglich \(\simeq\) der \(p\)-integrierbaren Funktionen auf \(M\),
+	\[
+		L^p\parentheses*{M} := \braces*{\brackets*{f}_\simeq : \int_M \absolute*{f}^p < \infty},
+	\]
+	heißt \emph{\(L^p\)-Raum}.
+	Die \(p\)-Norm einer Äquivalenzklasse ist mit
+	\begin{equation}
+		\norm*{\brackets*{f}_\simeq}_p := \norm*{f}_p
+	\end{equation}
+	definiert.
+	Selbst wenn wir tatsächlich \(\brackets*{f}_\simeq\) meinen, schreiben wir ab jetzt lediglich \(f\).
+\end{definition}
+
+Leicht nachzuprüfen sind:
+\begin{enumerate}
+	\item \(L^p\parentheses*{M}\) ist ein Vektorraum,
+	\item mit \eqref{equation:22} ist die \(p\)-Norm einer Äquivalenzklasse eindeutig definiert.
+\end{enumerate}
+Wenn die Definitionsmenge \(M\) im Zusammenhang klar ist, schreiben wir lediglich \(L^p\).
+
+Letztlich muss eine Norm die Dreiecksungleichung erfüllen.
+Um dies zu zeigen, brauchen wir die folgenden drei Lemmas.
+
+\begin{lemma}[Young-Ungleichung]
+	Für vier positive reelle Zahlen \(a, b, p, q > 0\) mit
+	\[
+		\frac{1}{p} + \frac{1}{q} = 1
+	\]
+	gilt
+	\begin{equation}\label{equation:32}
+		ab \le \frac{a^p}{p} + \frac{b^q}{q}.
+	\end{equation}
+\end{lemma}
+
+\begin{proof}
+	Dies folgt aus der Tatsache, dass \(\ln x\) monoton wachsend und konkav ist, denn
+	\[
+		\ln\parentheses*{ab} = \ln a + \ln b = \frac{1}{p}\ln a^p + \frac{1}{q}\ln b^q \le \ln\parentheses*{\frac{a^p}{p} + \frac{b^q}{q}}.
+	\]
+\end{proof}
+
+\begin{lemma}[Hölder-Ungleichung]
+	Seien \(1 < p < \infty\) und \(q\) mit
+	\begin{equation}\label{equation:33}
+		\frac{1}{p} + \frac{1}{q} = 1.
+	\end{equation}
+	Falls \(f \in L^p\) und \(g \in L^q\), gelten \(fg \in L^1\) und
+	\begin{equation}\label{equation:34}
+		\norm*{fg}_1 \le \norm*{f}_p \norm*{g}_q.
+	\end{equation}
+\end{lemma}
+
+\begin{proof}
+	Es reicht aus, den Fall \(\norm*{f}_p > 0, \norm*{g}_q > 0\) zu betrachten.
+	Aus der Young-Ungleichung folgt
+	\[
+		\int_M \frac{\absolute*{f\parentheses*{x}}}{\norm*{f}_p}\frac{\absolute*{g\parentheses*{x}}}{\norm*{g}_q}\d x \stackrel{\eqref{equation:32}}{\le} \int_M \parentheses*{\frac{1}{p}\frac{\absolute*{f\parentheses*{x}}^p}{\norm*{f}_p^p} + \frac{1}{q}\frac{\absolute*{g\parentheses*{x}}^q}{\norm*{g}_q^q}} = \frac{1}{p} + \frac{1}{q} \stackrel{\eqref{equation:33}}{=} 1.
+	\]
+\end{proof}
+
+\begin{lemma}[Minkowski-Ungleichung]
+	Seien \(1 \le p < \infty\) und \(f, g \in L^p\).
+	Dann gilt
+	\[
+		\norm*{f + g}_p \le \norm*{f}_p + \norm*{g}_p.
+	\]
+\end{lemma}
+
+\begin{proof}
+	Der Fall \(p = 1\) ist wegen der Dreiecksungleichung des Absolutbetrages klar.
+	Sei \(1 < p < \infty\) und \(q\) wie zuvor mit \(\frac{1}{p} + \frac{1}{q} = 1\).
+	Die Summe \(f + g \in L^p\) erfüllt mit Hilfe der Dreiecksungleichung des Absolutbetrages
+	\begin{equation}\label{equation:35}
+		\norm*{f + g}_p^p = \int_M \absolute*{f + g}\absolute*{f + g}^{p - 1} \le \norm*{f\absolute*{f + g}^{p - 1}}_1 + \norm*{g\absolute*{f + g}^{p - 1}}_1.
+	\end{equation}
+	Nun möchten wir die Hölder-Ungleichung verwenden, aber wir müssen erst kontrollieren, ob \(\parentheses*{f + g}^{p - 1} \in L^q\) gilt.
+	Tatsächlich, wenn \(h \in L^p\) liegt, gilt
+	\begin{equation}\label{equation:36}
+		\norm*{h^{p - 1}}_q = \parentheses*{\int_M \absolute*{h}^{pq - q}}^{\frac{1}{q}} = \parentheses*{\int_M \absolute*{h}^p}^{1 - \frac{1}{p}} = \norm*{h}_p^{p - 1} < \infty.
+	\end{equation}
+	Also können wir mit der Hölder-Ungleichung aus \eqref{equation:35} folgern:
+	\begin{align*}
+		\norm*{f + g}_p^p &\stackrel{\eqref{equation:34}}{\le} \norm*{f}_p \norm*{\parentheses*{f + g}^{p - 1}}_q + \norm*{g}_p \norm*{\parentheses*{f + g}^{p - 1}}_q\\
+		&\stackrel{\eqref{equation:36}}{=} \norm*{f}_p \norm*{f + g}_p^{p - 1} + \norm*{g}_p \norm*{f + g}_p^{p - 1}\\
+		&= \parentheses*{\norm*{f}_p + \norm*{g}_p}\norm*{f + g}_p^{p - 1}.
+	\end{align*}
+\end{proof}
+
+\begin{lemma}
+	Für \(1 \le p \le \infty\) ist \(L^p\) ein normierter Vektorraum.
+\end{lemma}
+
+\begin{proof}
+	Für \(1 \le p < \infty\) folgt das aus der Minkowski-Ungleichung.
+	Für \(p = \infty\) führen wir die Norm
+	\begin{equation}
+		\norm*{f}_\infty := \esssup_{x \in M}\absolute*{f\parentheses*{x}} := \inf\braces*{\sup_{x \in M \setminus M_0}\absolute*{f\parentheses*{x}} : M_0 \subseteq M\text{ und }\lambda\parentheses*{M_0} = 0}
+	\end{equation}
+	ein.\footnote{Hier bezeichnet ``\(\esssup\)'' das \emph{wesentliche Supremum} (englisch ``essential supremum'').}
+	Dabei müssen wir darauf achten, dass wir uns mit Äquivalenzklassen von Funktionen beschäftigen.
+	In einer einzelnen Äquivalenzklasse können die äquivalenten Funktionen verschiedene Werte auf einer Nullmenge annehmen.
+	Man prüft leicht nach, dass dies tatsächlich die Voraussetzungen einer Norm erfüllt.
+\end{proof}
+
+Nun können wir drei verschiedene Arten von Konvergenz definieren:
+
+\begin{definition}[Konvergenz von Funktionen]
+	Sei \(\braces*{f_k}\) eine Folge von messbaren Funktionen.
+	\begin{enumerate}
+		\item Die Funktionenfolge konvergiert \emph{gleichmäßig auf \(M\)} gegen \(f\), falls
+		\[
+			\lim_{k \to \infty}\sup_{x \in M}\absolute*{f_k\parentheses*{x} - f\parentheses*{x}} = 0.
+		\]
+		Wir schreiben auch ``\(f_k \to f\) gleichmäßig''.
+		\item Die Funktionenfolge konvergiert \emph{fast überall} (oder ``\emph{almost everywhere}'') \emph{punktweise} gegen \(f\), falls
+		\[
+			\lim_{k \to \infty}\absolute*{f_k\parentheses*{x} - f\parentheses*{x}} = 0 \quad \text{a.e.}
+		\]
+		Wir schreiben auch ``\(f_k \to f\) a.e.''.
+		\item Die Funktionenfolge ist eine \emph{Cauchy-Folge}, falls für jedes \(\varepsilon \in \parentheses*{0, \infty}\) es ein \(N \in \N\) gibt, so dass
+		\[
+			\norm*{f_k - f_\ell}_p < \varepsilon
+		\]
+		für alle \(k, \ell \ge N\).
+		Wir schreiben auch ``\(f_k \to f\) a.e.''.
+		\item Die Funktionenfolge konvergiert in \(L^p\parentheses*{M}\) gegen \(f\), falls
+		\[
+			\lim_{k \to \infty}\norm*{f_k - f}_p = 0.
+		\]
+		Wir schreiben auch ``\(f_k \to f\) in \(L^p\parentheses*{M}\)''.
+	\end{enumerate}
+\end{definition}
+
+Für die \(L^p\)-Räume sind natürlich die letzten Arten von Konvergenz am wichtigsten.
+Tatsächlich ist die letzte gewünschte Eigenschaft eines normierten Vektorraums, dass jede Cauchy-Folge eine konvergente Folge in \(L^p\) ist.
+Ist dies der Fall, heißt der Raum \emph{vollständig} oder ein \emph{Banach-Raum}.
+Wir können dort zum Beispiel den Banach'schen Fixpunktsatz als Konvergenzkriterium verwenden.
+
+\begin{proposition}[Riesz-Fischer]
+	Für \(1 \le p \le \infty\) sind die \(L^p\)-Räume vollständig.
+\end{proposition}
+
+\begin{proof}
+	Der Beweis für \(1 \le p < \infty\) ist eine zweifache Anwendung von Fatous Lemma \ref{lemma:17}:
+	Sei \(\parentheses*{f_n}_{n \in \N}\) eine Cauchy-Folge in \(L^p\).
+	O.B.d.A. gelte
+	\begin{equation}
+		\norm*{f_n - f_{n + 1}} < 2^{-n}.
+	\end{equation}
+	Setze
+	\begin{equation}
+		g_k := \sum_{n = 1}^k \absolute*{f_{n + 1} - f_n}, \quad g := \lim_{k \to \infty}g_k.
+	\end{equation}
+	Die \(g_k\) sind gleichmäßig beschränkt in \(L^p\), denn
+	\begin{equation}
+		\norm*{g_k} \le \sum_{n = 1}^k 2^{-n} = \frac{1 - 2^{k + 1}}{1 - \frac{1}{2}} - 1 \le 1.
+	\end{equation}
+	Aus Fatous Lemma folgt
+	\[
+		\int\absolute*{g}^p \le \liminf_{k \to \infty}\int\absolute*{g_k}^p \le 1,
+	\]
+	also \(\norm*{g}_p \le 1\).
+	Damit ist \(g\) fast überall beschränkt, \(\absolute*{g\parentheses*{x}} < \infty\) a.e.
+	Die Reihe
+	\begin{equation}
+		S\parentheses*{x} := f_1\parentheses*{x} + \sum_{n = 1}^\infty \parentheses*{f_{n + 1}\parentheses*{x} - f_n\parentheses*{x}}
+	\end{equation}
+	konvergiert also a.e. absolut.
+	In diesem Fall setze \(f\parentheses+{x} := S\parentheses*{x}\).
+	Natürlich konvergiert die Folge \(\parentheses*{f_k}\) a.e. gegen \(f\).
+	Wir zeigen nun, dass \(f\) in \(L^p\) liegt.
+	Sei dafür \(\varepsilon > 0\) fest.
+	Wähle \(N\) so groß, dass für \(n, m > N\)
+	\[
+		\norm*{f_n - f_m}_p \le \varepsilon.
+	\]
+	Mit Fatous Lemma folgt
+	\[
+		\int\absolute*{f - f_m}^p \le \liminf_{n \to \infty}\int\absolute*{f_n - f_m}^p \le \varepsilon^p.
+	\]
+	Also liegt \(f - f_m\) in \(L^p\), und wegen \(\norm*{f}_p \le \norm*{f - f_m}_p + \norm*{f}_p\) liegt auch \(f\) in \(L^p\).
+
+	Der Beweis für \(p = \infty\) ist einfacher und braucht keine weiteren Hilfsmittel:
+	Sei \(\parentheses*{f_n}_{n \in \N}\) eine \(L^\infty\)-Cauchy-Folge.
+	Setze
+	\begin{align*}
+		A_k &:= \braces*{x : \absolute*{f_k\parentheses*{x}} > \norm*{f_k}_\infty},\\
+		B_{m, n} &:= \braces*{x : \absolute*{f_m\parentheses*{x} - f_n\parentheses*{x}} > \norm*{f_m - f_n}_\infty}.
+	\end{align*}
+	Das sind Nullmengen und mit Bemerkung \ref{remark:5} ist auch
+	\[
+		E := \parentheses*{\bigcup_{k = 1}^\infty A_k} \cup \parentheses*{\bigcup_{m, n = 1}^\infty B_{m, n}}
+	\]
+	eine Nullmenge.
+	Auf dem Komplement von \(E\) konvergieren die \(f_n\) gleichmäßig gegen \(f\).
+	Die Funktion \(f\) ist a.e. beschränkt, und somit in \(L^\infty\).
+\end{proof}

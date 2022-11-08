@@ -1,0 +1,233 @@
+\documentclass{exercise}
+
+\include{preamble}
+
+\title{Hausaufgabe 2}
+\author{René Dopichay (356986) \quad Joshua Feld (406718)\\Thilo Kloos (410343) \quad Shunta Takushima (430043)}
+\professor{Prof. Torrilhon \& Dr. Speck}
+\course{Mathematische Grundlagen III}
+
+\begin{document}
+	\maketitle
+
+
+	\section{}
+
+	\begin{quote}
+		The curve \(y\parentheses*{x}\) describing a hanging chain of length \(L > \absolute*{b - a}\) with end points \(A = \parentheses*{a, 0}\) and \(B = \parentheses*{b, 0}\) can be found by solving a bounded optimization problem for functionals.
+		Here, the potential energy of the chain is given by
+		\[
+			F\parentheses*{y} = \int_a^b \rho gy\parentheses*{x}\sqrt{1 + {y'}^2\parentheses*{x}}\d x
+		\]
+		where \(\rho\) denotes the mass density per length and \(g\) denotes the gravity acceleration.
+		The length of the chain is constant:
+		\[
+			G\parentheses*{y} = \int_a^b \sqrt{1 + {y'}^2\parentheses*{x}}\d x = L.
+		\]
+		The curve \(y\parentheses*{x}\) thus has minimal \(F\parentheses*{y}\) under the constraint \(G\parentheses*{y} = L\), where \(F\) and \(G\) are both considered functionals on the vector space \(D = \braces*{v \in C\parentheses*{\brackets*{a, b}, \R} : v\parentheses*{a} = v\parentheses*{b} = 0}\).
+		Note also that the boundary conditions are \(v\parentheses*{a} = v\parentheses*{b} = 0\).
+
+		Show that the chain profile
+		\[
+			y\parentheses*{x} = q\cosh\parentheses*{\frac{x - \mu}{q}} + \frac{\lambda}{\rho g}, \quad q \in \R^+
+		\]
+		for some \(\mu, \lambda \in \R\) is a solution to the Euler-Lagrange equation, which is connected to the variation \(\delta\parentheses*{F - \lambda G}\parentheses*{y; v} = 0\) with \(\lambda \in \R\).
+	\end{quote}
+
+	We have
+	\[
+		\parentheses*{F - \lambda G}\parentheses*{y} = \int_a^b \parentheses*{\rho gy\parentheses*{x}\sqrt{1 + {y'}^2\parentheses*{x}} - \lambda\sqrt{1 + {y'}^2\parentheses*{x}}}\d x.
+	\]
+	The Euler-Lagrange equation is given by
+	\begin{equation}\label{eq:1-1}
+		\delta\parentheses*{F - \lambda G}\parentheses*{y; v} = \frac{\partial\parentheses*{F - \lambda G}}{\partial y} - \frac{\d}{\d x}\parentheses*{\frac{\partial\parentheses*{F - \lambda G}}{\partial y'}} = \rho g\sqrt{1 + {y'}^2} - \frac{\d}{\d x}\parentheses*{\rho gy - \lambda}\frac{y'}{\sqrt{1 + {y'}^2}} \stackrel{!}{=} 0.
+	\end{equation}
+	The derivative of \(y\) is given by
+	\[
+		y'\parentheses*{x} = \sinh\frac{x - \mu}{q}
+	\]
+	and thus
+	\[
+		\sqrt{1 + {y'}^2\parentheses*{x}} = \sqrt{1 + \sinh^2 \frac{x - \mu}{q}} = \cosh\frac{x - \mu}{q}.
+	\]
+	Plugging this into the equation \eqref{eq:1-1} we obtain
+	\begin{align*}
+		\delta\parentheses*{F - \lambda G}\parentheses*{y; v} &= \rho g\cosh\frac{x - \mu}{q} - \frac{\d}{\d x}\parentheses*{\parentheses*{\rho g\parentheses*{q\cosh\frac{x - \mu}{q} + \frac{\lambda}{\rho g}} - \lambda}\frac{\sinh\frac{x - \mu}{q}}{\cosh\frac{x - \mu}{q}}}\\
+		&= \rho g\cosh\frac{x - \mu}{q} - \frac{\d}{\d x}\parentheses*{\rho gq\cosh\parentheses*{\frac{x - \mu}q}\frac{\sinh\frac{x - \mu}{q}}{\cosh\frac{x - \mu}{q}}}\\
+		&= \rho g\cosh\frac{x - \mu}{q} - \frac{\d}{\d x}\parentheses*{\rho gq\sinh\frac{x - \mu}{q}}\\
+		&= \rho g\cosh\frac{x - \mu}{q} - \rho g\cosh\frac{x - \mu}{q}\\
+		&= 0.
+	\end{align*}
+	Indeed, this prooves that the chain profile
+	\[
+		y\parentheses*{x} = q\cosh\parentheses*{\frac{x - \mu}{q}} + \frac{\lambda}{\rho g}, \quad q \in \R^+
+	\]
+	for some \(\mu, \lambda \in \R\) is a solution to the Euler-Lagrange equation.
+
+
+	\section{}
+
+	\begin{quote}
+		Let us assume the same notation as in the lecture.
+		\begin{enumerate}
+			\item Write down the general form of \(\Phi_f\parentheses*{t_j, y^j, h}\) for a 3-stage explicit Runge-Kutta method.
+			\item What are the restrictions on \(\alpha_i\), \(\beta_{i, j}\) and \(\gamma_i\) such that the method is of third order?
+			\item Check that
+			\[
+				\renewcommand\arraystretch{1.2}
+				\begin{array}{c|ccc}
+					0 & 0 & 0 & 0\\
+					\frac{1}{3} & \frac{1}{3} & 0 & 0\\
+					\frac{2}{3} & 0 & \frac{2}{3} & 0\\
+					\hline
+					& \frac{1}{4} & 0 & \frac{3}{4}
+				\end{array}
+			\]
+			is the tableau of a third-order method.
+		\end{enumerate}
+	\end{quote}
+
+	\begin{enumerate}
+		\item Let
+		\begin{align*}
+			k_1\parentheses*{t_j, y^j, h} &= f\parentheses*{t_j + \alpha_1 h, y^j},\\
+			k_2\parentheses*{t_j, y^j, h} &= f\parentheses*{t_j + \alpha_2 h, y^j + h\beta_{2, 1}k_1},\\
+			k_3\parentheses*{t_j, y^j, h} &= f\parentheses*{t_j + \alpha_3 h, y^j + h\parentheses*{\beta_{3, 1}k_1 + \beta_{3, 2}k_2}}.
+		\end{align*}
+		Then the general form of \(\Phi_f\parentheses*{t_j, y^j, h}\) for a 3-stage explicit Runge-Kutta method is given by
+		\[
+			\Phi_f\parentheses*{t_j, y^j, h} = \gamma_1 k_1\parentheses*{t_j, y^j, h} + \gamma_2 k_2\parentheses*{t_j, y^j, h} + \gamma_3 k_3\parentheses*{t_j, y^j, h}.
+		\]
+		\item We will calculate the first two partial derivatives of the functions \(k_i\parentheses*{t_j, y^j, h}, i = 1, 2, 3\) with respect to \(h\) (for a more readable result, we will write \(k_i = k_i\parentheses*{t_j, y^j, h}\)):
+		\begin{align*}
+			\frac{\partial k_1}{\partial h} &= \alpha_1 f_t\parentheses*{t_j + \alpha_1 h, y^j},\\
+			\frac{\partial^2 k_1}{\partial h^2} &= \alpha_1^2 f_{tt}\parentheses*{t_j + \alpha_1 h, y^j},\\
+			\frac{\partial k_2}{\partial h} &= \alpha_2 f_t\parentheses*{t_j + \alpha_2 h, y^j + h\beta_{2, 1}k_1} + \beta_{2, 1}\parentheses*{k_1 + h\frac{\partial k_1}{\partial h}}f_y\parentheses*{t_j + \alpha_2 h, y^j + h\beta_{2, 1}k_1},\\
+			\frac{\partial^2 k_2}{\partial h^2} &= \alpha_2^2 f_{tt}\parentheses*{t_j + \alpha_2 h, y^j + h\beta_{2, 1}k_1} + 2\alpha_2 \beta_{2, 1}\parentheses*{k_1 + h\frac{\partial k_1}{\partial h}}f_{ty}\parentheses*{t_j + \alpha_2 h, y^j + h\beta_{2, 1}k_1}\\
+			&\quad + \beta_{2, 1}^2 \parentheses*{k_1 + h\frac{\partial k_1}{\partial h}}^2 f_{yy}\parentheses*{t_j + \alpha_2 h, y^j + h\beta_{2, 1}k_1}\\
+			&\quad + \beta_{2, 1}\parentheses*{2\frac{\partial k_1}{\partial h} + h\frac{\partial^2 k_1}{\partial h^2}}f_y\parentheses*{t_j + \alpha_2 h, y^j + h\beta_{2, 1}k_1},\\
+			\frac{\partial k_3}{\partial h} &= \alpha_3 f_t\parentheses*{t_j + \alpha_3 h, y^j + h\parentheses*{\beta_{3, 1}k_1 + \beta_{3, 2}k_2}}\\
+			&\quad + \parentheses*{\beta_{3, 1}k_1 + \beta_{3, 2}k_2 + h\parentheses*{\beta_{3, 1}\frac{\partial k_1}{\partial h} + \beta_{3, 2}\frac{\partial k_2}{\partial h}}}f_y\parentheses*{t_j + \alpha_3 h, y^j + h\parentheses*{\beta_{3, 1}k_1 + \beta_{3, 2}k_2}},\\
+			\frac{\partial^2 k_3}{\partial h^2} &= \alpha_3^2 f_{tt}\parentheses*{t_j + \alpha_3 h, y^j + h\parentheses*{\beta_{3, 1}k_1 + \beta_{3, 2}k_2}}\\
+			&\quad + 2\alpha_3\parentheses*{\beta_{3, 1}k_1 + \beta_{3, 2}k_2 + h\parentheses*{\beta_{3, 1}\frac{\partial k_1}{\partial h} + \beta_{3, 2}\frac{\partial k_2}{\partial h}}}f_{ty}\parentheses*{t_j + \alpha_3 h, y^j + h\parentheses*{\beta_{3, 1}k_1 + \beta_{3, 2}k_2}}\\
+			&\quad + \parentheses*{\beta_{3, 1}k_1 + \beta_{3, 2}k_2 + h\parentheses*{\beta_{3, 1}\frac{\partial k_1}{\partial h} + \beta_{3, 2}\frac{\partial k_2}{\partial h}}}^2 f_{yy}\parentheses*{t_j + \alpha_3 h, y^j + h\parentheses*{\beta_{3, 1}k_1 + \beta_{3, 2}k_2}}\\
+			&\quad + \parentheses*{2\parentheses*{\beta_{3, 1}\frac{\partial k_1}{\partial h} + \beta_{3, 2}\frac{\partial k_2}{\partial h}} + h\parentheses*{\beta_{3, 1}\frac{\partial^2 k_1}{\partial h^2} + \beta_{3, 2}\frac{\partial^2 k_2}{\partial h^2}}}f_y\parentheses*{t_j + \alpha_3 h, y^j + h\parentheses*{\beta_{3, 1}k_1 + \beta_{3, 2}k_2}}.
+		\end{align*}
+		We want to do a Taylor expansion for \(\Phi_f\parentheses*{t_j, y^j, h}\) around the point \(h = 0\).
+		For this we need to evaluate all of the functions \(k_i, i = 1, 2, 3\) and their partial derivatives at this point (for a more readable result, we will write \(f = f\parentheses*{t_j, y^j}\), \(f_t = f_t\parentheses*{t_j, y^j}\) and \(f_y = f_y\parentheses*{t_j, y^j}\)):
+		\begin{align*}
+			k_1\parentheses*{t_j, y^j, 0} &= f,\\
+			\frac{\partial k_1}{\partial h}\parentheses*{t_j, y^j, 0} &= \alpha_1 f_t,\\
+			\frac{\partial^2 k_1}{\partial h^2}\parentheses*{t_j, y^j, 0} &= \alpha_1^2 f_{tt},\\
+			k_2\parentheses*{t_j, y^j, 0} &= f,\\
+			\frac{\partial k_2}{\partial h}\parentheses*{t_j, y^j, 0} &= \alpha_2 f_t + \beta_{2, 1}ff_y,\\
+			\frac{\partial^2 k_2}{\partial h^2}\parentheses*{t_j, y^j, 0} &= \alpha_2^2 f_{tt} + 2\alpha_2 \beta_{2, 1} ff_{ty} + \beta_{2, 1}^2 f^2 f_{yy} + 2\alpha_1 \beta_{2, 1}f_t f_y,\\
+			k_3\parentheses*{t_j, y^j, 0} &= f,\\
+			\frac{\partial k_3}{\partial h}\parentheses*{t_j, y^j, 0} &= \alpha_3 f_t + \parentheses*{\beta_{3, 1} + \beta_{3, 2}}ff_y,\\
+			\frac{\partial^2 k_3}{\partial h^2}\parentheses*{t_j, y^j, 0} &= \alpha_3^2 f_{tt} + 2\alpha_3 \parentheses*{\beta_{3, 1} + \beta_{3, 2}}ff_{ty} + \parentheses*{\beta_{3, 1} + \beta_{3, 2}}^2 f^2 f_{yy}\\
+			&\quad + 2\parentheses*{\alpha_1 \beta_{3, 1}f_t + \alpha_2 \beta_{3, 2}f_t + \beta_{3, 2}\beta_{2, 1}ff_y}f_y.
+		\end{align*}
+		Now that we have all the function values that we need, we can perform the Taylor expansion
+		\begin{align*}
+			\Phi_f\parentheses*{t_j, y^j, h} &= \Phi\parentheses*{t_j, y^j, 0} + h\Phi_f'\parentheses*{t_j, y^j, 0} + \frac{1}{2}h^2 \Phi_f''\parentheses*{t_j, y^j, 0} + \mathcal{O}\parentheses*{h^3}\\
+			&= \parentheses*{\gamma_1 + \gamma_2 + \gamma_3}f\\
+			&\quad + h\parentheses*{\gamma_1 \alpha_1 f_t + \gamma_2 \parentheses*{\alpha_2 f_t + \beta_{2, 1}ff_y} + \gamma_3 \parentheses*{\alpha_3 f_t + \parentheses*{\beta_{3, 1} + \beta_{3, 2}}ff_y}}\\
+			&\quad + \frac{1}{2}h^2 \Bigl(\gamma_1 \alpha_1^2 f_{tt} + \gamma_2\parentheses*{\alpha_2^2 f_{tt} + 2\alpha_2 \beta_{2, 1}ff_{ty} + \beta_{2, 1}^2 f_y^2 f_{yy} + 2\alpha_1 \beta_{2, 1}f_t f_y}\\
+			&\quad + \gamma_3 \Bigl(\alpha_3^2 f_{tt} + 2\alpha_3 \parentheses*{\beta_{3, 1} + \beta_{3, 2}}ff_{ty} + \parentheses*{\beta_{3, 1} + \beta_{3, 2}}^2 f^2 f_{yy}\\
+			&\quad + 2\parentheses*{\alpha_1 \beta_{3, 1}f_t + \alpha_2 \beta_{3, 2}f_t + \beta_{2, 1}\beta_{3, 2}ff_y}f_y\Bigr)\Bigr).
+		\end{align*}
+		Expanding \(y\parentheses*{t_j + h}\) around \(h\) gives us
+		\begin{align*}
+			\frac{y\parentheses*{t_j + h} - y\parentheses*{t_j}}{h} = f + \frac{1}{2}h\parentheses*{f_t + ff_y} + \frac{1}{6}h^2 \parentheses*{f_{tt} + 2ff_{ty} + f^2 f_{yy} + f_t f_y + ff_y^2} + \mathcal{O}\parentheses*{h^3}.
+		\end{align*}
+		Comparing the coefficients of \(\Phi_f\parentheses*{t_j, y^j, h}\) and \(\frac{y\parentheses*{t_j + h} - y\parentheses*{t_j}}{h}\), results in the conditions
+		{
+			\setlength{\belowdisplayskip}{5pt}
+			\begin{align*}
+				\gamma_1 + \gamma_2 + \gamma_3 &= 1, & \gamma_1 \alpha_1 + \gamma_2 \alpha_2 + \gamma_3 \alpha_3 &= \frac{1}{2}, & \gamma_2 \beta_{2, 1} + \gamma_3 \parentheses*{\beta_{3, 1} + \beta_{3, 2}} &= \frac{1}{2},\\
+				\gamma_1 \alpha_1^2 + \gamma_2 \alpha_2^2 + \gamma_3 \alpha_3^2 &= \frac{1}{3}, & \gamma_2 \alpha_2 \beta_{2, 1} + \gamma_3 \alpha_3 \parentheses*{\beta_{3, 1} + \beta_{3, 2}} &= \frac{1}{3}, & \gamma_2 \beta_{2, 1}^2 + \gamma_3 \parentheses*{\beta_{3, 1} + \beta_{3, 2}}^2 &= \frac{1}{3},
+			\end{align*}
+			\[
+				\gamma_2 \alpha_1 \beta_{2, 1} + \gamma_3 \parentheses*{\alpha_1 \beta_{3, 1} + \alpha_2 \beta_{3, 2}} = \frac{1}{6}, \quad \gamma_3 \beta_{2, 1}\beta_{3, 2} = \frac{1}{6}.
+			\]
+		}
+		\item For the given tableau we obtain the values \(\alpha_1 = 0, \alpha_2 = \frac{1}{3}, \alpha_3 = \frac{2}{3}\), \(\beta_{2, 1} = \frac{1}{3}, \beta_{3, 1} = 0, \beta_{3, 2} = \frac{2}{3}\), and \(\gamma_1 = \frac{1}{4}, \gamma_2 = 0, \gamma_3 = \frac{3}{4}\).
+		We can now check all of the conditions, that we found in the previous subtask, to verify that this table is that of a third-order method:
+		{
+			\setlength{\belowdisplayskip}{5pt}
+			\begin{align*}
+				\frac{1}{4} + 0 + \frac{3}{4} &= 1, & \frac{1}{4} \cdot 0 + 0 \cdot \frac{1}{3} + \frac{3}{4} \cdot \frac{2}{3} &= \frac{1}{2}, & 0 \cdot \frac{1}{3} + \frac{3}{4} \cdot \parentheses*{0 + \frac{2}{3}} &= \frac{1}{2},\\
+				\frac{1}{4} \cdot 0^2 + 0 \cdot \parentheses*{\frac{1}{3}}^2 + \frac{3}{4} \cdot \parentheses*{\frac{2}{3}}^2 &= \frac{1}{3}, & 0 \cdot \frac{1}{3} \cdot \frac{1}{3} + \frac{3}{4} \cdot \parentheses*{0 + \frac{2}{3}} &= \frac{1}{3}, & 0 \cdot \parentheses*{\frac{1}{3}}^2 + \frac{3}{4} \parentheses*{0 + \frac{2}{3}}^2 &= \frac{1}{3},
+			\end{align*}
+			\[
+				0 \cdot 0 \cdot \frac{1}{3} + \frac{3}{4} \cdot \parentheses*{0 \cdot 0 + \frac{1}{3} \cdot \frac{2}{3}} = \frac{1}{6}, \quad \frac{3}{4} \cdot \frac{1}{3} \cdot \frac{2}{3} = \frac{1}{6}.
+			\]
+		}
+	\end{enumerate}
+
+
+
+	\section{}
+
+	\begin{quote}
+		Gegeben sei ein Einschrittverfahren mit
+		\begin{align*}
+			x^{j + 1} &= x^j + h\phi\parentheses*{t_j, x^j, h},\\
+			\phi\parentheses*{t, x, h} &= \frac{3}{2}f\parentheses*{t + \frac{h}{2}, x + \frac{h}{2}f\parentheses*{t, x}} + af\parentheses*{t + bh, x + chf\parentheses*{t, x}}.
+		\end{align*}
+		\begin{enumerate}
+			\item Geben Sie das Runge-Kutta Tableau (Butcher-Tableau, Butcher-Schema) für dieses Verfahren an.
+			Ist das Verfahren explizit oder implizit?
+			\item Für welche Werte von \(\parentheses*{a, b, c}\) ist die Konsistenzordnung des Verfahrens mindestens \(1\)?
+			\item Für welche Werte von \(\parentheses*{a, b, c}\) ist die Konsistenzordnung des Verfahrens mindestens \(2\)?
+			Sie können die Ordnungsbedingungen aus der Vorlesung verwenden.
+			\item Nun sei \(f\parentheses*{t, x} = f\parentheses*{x}\).
+			Wie ändern sich die Bedingungen and \(\parentheses*{a, b, c}\) für das Verfahren von mindestens zweiter Ordnung?
+		\end{enumerate}
+	\end{quote}
+
+	\begin{enumerate}
+		\item Das Runge-Kutta Tableau ist für dieses Einschrittverfahren gegeben durch:
+		\[
+			\renewcommand\arraystretch{1.2}
+			\begin{array}{c|ccc}
+				0 & 0 & 0 & 0\\
+				\frac{1}{2} & \frac{1}{2} & 0 & 0\\
+				b & c & 0 & 0\\
+				\hline
+				& 0 & \frac{3}{2} & a
+			\end{array}
+		\]
+		Da \(a_{i, j} = 0\) für alle \(i < j\), ist \(A\) eine untere Dreiecksmatrix und somit ist das Verfahren explizit.
+		\item
+		\begin{align*}
+			\phi\parentheses*{t, x, 0} &= f\parentheses*{t, x}\\
+			\iff \frac{3}{2}f\parentheses*{t, x} + af\parentheses*{t, x} &= f\parentheses*{t, x}\\
+			\iff \frac{3}{2} + a &= 1\\
+			\iff a &= -\frac{1}{2}.
+		\end{align*}
+		Für \(\parentheses*{-\frac{1}{2}, b, c}, b, c \in \R\) hat das Verfahren also mindestens die Konsistenzordnung \(1\).
+		\item Ähnlich wie in Aufgabe 2 b) führen wir zwei Taylor-Entwicklungen durch:
+		\[
+			\phi\parentheses*{t_j, x^j, h} = \parentheses*{\frac{3}{2} + a}f\parentheses*{t_j, x^j} + h\parentheses*{\parentheses*{\frac{3}{4} + ab}f_t\parentheses*{t_j, x^j} + \parentheses*{\frac{3}{4} + ac}f_x\parentheses*{t_j, x^j}f\parentheses*{t_j, x^j}} + \mathcal{O}\parentheses*{h^2}
+		\]
+		und
+		\[
+			\frac{x\parentheses*{t_j + h} - x\parentheses*{t_j}}{h} = f\parentheses*{t_j, x^j} + \frac{1}{2}h\parentheses*{f_t\parentheses*{t_j, x^j} + f\parentheses*{t_j, x^j}f_x\parentheses*{t_j, x^j}} + \mathcal{O}\parentheses*{h^2}.
+		\]
+		Vergleichen wir nun die Koeffizienten, so erhalten wir die Bedingungen
+		\[
+			1 = \frac{3}{2} + a \iff a = -\frac{1}{2}a, \quad \frac{1}{2} = \frac{3}{4} + ab \iff b = \frac{1}{2}, \quad \frac{1}{2} = \frac{3}{4} + ac \iff c = \frac{1}{2}.
+		\]
+		Für \(\parentheses*{-\frac{1}{2}, \frac{1}{2}, \frac{1}{2}}\) hat das Verfahren also mindestens die Konsistenzordnung \(2\).
+		\item Da \(f\parentheses*{t, x} = f\parentheses*{x}\), gilt \(f_t\parentheses*{x} = 0\) und wir erhalten die Taylor-Entwicklungen
+		\[
+			\phi\parentheses*{t_j, x^j, h} = \parentheses*{\frac{3}{2} + a}f\parentheses*{t_j, x^j} + h\parentheses*{\frac{3}{4} + ac}f_x\parentheses*{t_j, x^j}f\parentheses*{t_j, x^j} + \mathcal{O}\parentheses*{h^2}
+		\]
+		und
+		\[
+			\frac{x\parentheses*{t_j + h} - x\parentheses*{t_j}}{h} = f\parentheses*{t_j, x^j} + \frac{1}{2}hf\parentheses*{t_j, x^j}f_x\parentheses*{t_j, x^j} + \mathcal{O}\parentheses*{h^2}.
+		\]
+		Aus einem erneuten Koeffizientenvergleich folgt in diesem Fall, dass das Verfahren für die Parameter \(\parentheses*{-\frac{1}{2}, b, \frac{1}{2}}, b \in \R\) mindestens die Konsistenzordnung \(2\) hat.
+	\end{enumerate}
+\end{document}

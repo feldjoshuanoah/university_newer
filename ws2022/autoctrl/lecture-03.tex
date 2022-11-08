@@ -1,0 +1,142 @@
+\section{Dynamisches Verhalten von Übertragungsgliedern}
+
+
+\subsection{Modelle für die Dynamik von Übertragungsgliedern}
+
+
+\subsection{Aufstellen von Differentialgleichungen}\label{sec:3-2}
+
+
+\subsection{Linearisierung nichtlinearer Differentialgleichungen}
+
+Systeme, die sich wie das in Kap. \ref{sec:3-2} vorgestellte Beispiel vollständig mit linearen Differentialgleichungen beschreiben lassen, stellen in der regelungstechnischen Praxis eine Ausnahme dar.
+Es kommt sehr viel häufiger vor, dass zur korrekten Erfassung der dynamischen Vorgänge auch nichtlineare Differentialgleichungen berücksichtigt werden müssen.
+
+Die Analyse nichtlinearer Differentialgleichungen ist im Vergleich zur Untersuchung linearer Differentialgleichungen eine deutlich anspruchsvollere Aufgabe.
+Dies ist in der großen Vielfalt möglicher nichtlinearer Differentialgleichungen begründet, die eine Schematisierung der Untersuchungsmethoden erheblich erschwert.
+
+Da in der Regelungstechnik meist jedoch nur eine kleine Umgebung in der Nähe eines Arbeitspunktes relevant ist, liegt es nahe, auch die nichtlinearen Differentialgleichungen mit den in Kap \ref{sec:3-2} vorgestellten Mitteln zu linearisieren und damit den mathematischen Untersuchungsmethoden für lineare Differentialgleichungen zugänglich zu machen.
+Die genaue Vorgehensweise soll an einem Beispiel erläutert werden.
+
+Es wird angenommen, dass ein beliebiges System durch die folgende nichtlineare Differentialgleichung beschrieben wird:
+\begin{equation}\label{eq:3-24}
+	\ddot{Y} = A \cdot \dot{Y}^2 + B \cdot Y \cdot U, \quad A, B = \text{konst.}
+\end{equation}
+Wie in Kap. \ref{sec:3-2} steht \(Y\) für die Ausgangs- und \(U\) für die Eingangsgröße des Systems. Der in Gleichung \eqref{eq:3-24} dargestellte Zusammenhang kann auch in der Kurzform
+\begin{equation}
+	\ddot{Y} = f\parentheses*{Y, \dot{Y}, U}
+\end{equation}
+wiedergegeben werden, wobei sofort deutlich wird, dass die zweimal differenzierte Größe \(\ddot{Y}\) von der Ausgangsgröße \(Y\), ihrer ersten Ableitung \(\dot{Y}\) und der Eingangsgröße \(U\) abhängt, die für die vorzunehmende Linearisierung als unabhängige Variablen betrachtet werden können.
+
+Die Linearisierung von Gleichung \eqref{eq:3-24} erfolgt an einem geeigneten Arbeitspunkt, der im Folgenden als gegeben angenommen wird.
+Dazu wird eine Taylorreihe gebildet, die nach dem linearen Glied abgebrochen wird:
+\[
+	\ddot{y} = \brackets*{\frac{\partial f}{\partial Y}}_{Y = Y_0} \cdot y + \brackets*{\frac{\partial f}{\partial\dot{Y}}}_{\dot{Y} = \dot{Y}_0} \cdot \dot{y} + \brackets*{\frac{\partial f}{\partial U}}_{U = U_0} \cdot u,
+\]
+wobei
+\begin{align}
+	\begin{split}
+		y &= Y - Y_0,\\
+		\dot{y} &= \dot{Y} - \dot{Y}_0,\\
+		\ddot{y} &= \ddot{Y} - \ddot{Y}_0,\\
+		u &= U - U_0
+	\end{split}
+\end{align}
+gesetzt wurde und die Größen \(\ddot{Y}_0\), \(\dot{Y}_0\), \(Y_0\) und \(U_0\) die entsprechenden Werte am Arbeitspunkt darstellen.
+
+Das Berechnen der einzelnen Ableitungen, das Einsetzen derselben und das Sortieren nach Eingangs- und Ausgangsgrößen führt anschließend auf die gesuchte Linearisierung
+\begin{equation}
+	\underbrace{1}_{a_2} \cdot \ddot{y} \underbrace{- 2 \cdot A \cdot \dot{Y}_0}_{a_1} \cdot \dot{y} \underbrace{- B \cdot U_0}_{a_0} \cdot y = \underbrace{B \cdot Y_0}_{b_0} \cdot u.
+\end{equation}
+Die Größen \(a_0\), \(a_1\), \(a_2\) und \(b_0\) sind die konstanten Koeffizienten der linearisierten Differentialgleichung.
+
+
+\subsection{Lösen linearer Differentialgleichungen mit konstanten Koeffizienten}
+
+Die wenigsten Differentialgleichungen für Regelkreise oder Glieder von Regelkreisen werden mit dem Ziel aufgestellt, sie vollständig zu lösen.
+Meist benügt man sich mit der Lösung für ein oder mehrere Standard-Eingangsfunktionen (Rampen-, Sprung-, Impulsfunktion) oder untersucht Eigenschaften der Lösung wie Stabilität, Dämpfung usw.
+In diesem Rahmen ist die Kenntnis von Verfahren zur Lösung linearer Differentialgleichungen mit konstanten Koeffizienten notwendig.
+
+Die allgemeine Form der Differentialgleichung \(n\)-ter Ordnung ist
+\begin{equation}
+	a_n y^{\parentheses*{n}} + \ldots + a_1 \dot{y} + a_0 y = b_0 u + b_1 \dot{y} + \ldots + b_m u^{\parentheses*{m}}.
+\end{equation}
+Die rechte Seite kann bei vorgegebenen \(u\parentheses*{t}\) zur Störfunktion \(y_e\parentheses*{t}\) zusammengefasst werden mit
+\begin{equation}
+	y_e = b_0 u + b_1 \dot{u} + \ldots + b_m u^{\parentheses*{m}}.
+\end{equation}
+Die Lösung besteht aus der Lösung \(y_h\) für die homogene Differentiagleichung und einer partikulären Lösung.
+
+Zur Lösung der homogenen Differentialgleichung
+\begin{equation}
+	a_n y^{\parentheses*{n}} + \ldots + a_1 \dot{y} + a_0 y = 0
+\end{equation}
+benötigt man die Wurzeln der zugehörigen charakteristischen Gleichung (des charakteristischen Polynoms)
+\begin{equation}
+	a_n \cdot \lambda^n + \cdots a_1 \cdot \lambda + a_0 = 0.
+\end{equation}
+Ein solches Polynom \(n\)-ten Grades mit reellen Koeffizienten hat \(n\) Wurzeln \(\lambda_1, \ldots, \lambda_n\), die entweder reell oder paarweise konjugiert komplex sind.
+Wenn die Wurzeln \(\lambda_i\) der charakteristischen Gleichung alle voneinander verschieden sind, hat die Lösung der homogenen Differentialgleichung die Form
+\begin{equation}
+	y_h\parentheses*{t} = C_1 \cdot e^{\lambda_1 t} + \cdots + C_n \cdot e^{\lambda_n t}.
+\end{equation}
+Die Konstanten \(C_1, \ldots, C_n\) werden aus den Anfangsbedingungen und der rechten Seite der Differentialgleichung bestimmt.
+Falls die charakteristische Gleichung mehrfache Wurzeln aufweist, ändert sich die Form der Lösung; sie enthält aber auch dann Terme \(e^{\lambda t}\).
+Konjugiert komplexe Wurzelpaare führen zu Gliedern mit \(\sin\parentheses*{\omega t}\) und \(\cos\parentheses*{\omega t}\) in \(y_h\parentheses*{t}\).
+
+Für die Konstruktion einer partikulären Lösung gibt es verschiedene Verfahren (Variation der Konstanten, Ansatzverfahren), die je nach Form der Störfunktion einzusetzen sind.
+Auf Einzelheiten soll hier nicht eingegangen werden.
+
+Für Untersuchungen zur Stabilität und zum Einschwingverhalten dynamischer Systeme, die durch lineare Differentialgleichungen beschrieben werden, muss man wissen, dass der Differentialgleichung ein charakteristisches Polynom zugeordnet ist, das die Koeffizienten der homogenen Differentialgleichung enthält, und dass dessen Wurzeln in Exponentialfunktionen der Zeit auftreten, aus denen die Lösung der homogenen Differentialgleichung besteht.
+Die Wurzeln der charakteristischen Gleichung bestimmen maßgeblich das Verhalten dieser Lösung.
+
+
+\subsection{Laplace-Transformation}
+
+
+\subsubsection{Transformation von Zeitfunktionen}
+
+
+\subsubsection{Transformation von Operationen}
+
+
+\subsubsection{Anwendung zur Lösung linearer Differentialgleichungen mit konstanten Koeffizienten}
+
+
+\subsection{Übergangsfunktion, Gewichtsfunktion}
+
+
+\subsection{Übertragungsfunktion}
+
+
+\subsection{Grenzwertsätze}
+
+
+\subsection{Frequenzgang}
+
+
+\subsubsection{Allgemeines}
+
+
+\subsubsection{Frequenzgang und Differentialgleichung}
+
+
+\subsubsection{Frequenzgang von Totzeitgliedern}
+
+
+\subsubsection{Messen von Frequenzgängen}
+
+
+\subsubsection{Ortskurvendarstellung von Frequenzgängen}
+
+
+\subsubsection{Bode-Diagramm}
+
+
+\subsection{Rechenregeln für Frequenzgänge und Übertragungsfunktionen}
+
+
+\subsection{Faltungsintegral}
+
+
+\subsection{Zusammenhänge zwischen Zeit- und Frequenzbereich}

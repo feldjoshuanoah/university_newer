@@ -1,0 +1,212 @@
+\documentclass{exercise}
+
+\include{preamble}
+
+\title{Hausaufgabe 0}
+\author{René Dopichay (356986) \quad Joshua Feld (406718)\\Thilo Kloos (410343) \quad Shunta Takushima (430043)}
+\professor{Prof. Torrilhon \& Dr. Speck}
+\course{Mathematische Grundlagen III}
+
+\begin{document}
+	\maketitle
+
+
+	\section{}
+
+	\begin{enumerate}
+		\item
+		\begin{align*}
+			\partial F_1\parentheses*{y; v} &= \lim_{t \to 0}\frac{1}{t}\parentheses*{F_1\parentheses*{y + tv} - F_1\parentheses*{y}}\\
+			&= \lim_{t \to 0}\frac{1}{t}\parentheses*{\sum_{i = 1}^n \parentheses*{y + tv}^2\parentheses*{x_i} - \sum_{i = 1}^n y^2\parentheses*{x_i}}\\
+			&= \lim_{t \to 0}\frac{1}{t}\sum_{i = 1}^n \parentheses*{\parentheses*{y\parentheses*{x_i} + tv\parentheses*{x_i}}^2 - y^2\parentheses*{x_i}}\\
+			&= \lim_{t \to 0}\frac{1}{t}\sum_{i = 1}^n \parentheses*{2ty\parentheses*{x_i}v\parentheses*{x_i} + t^2 v^2\parentheses*{x_i}}\\
+			&= \sum_{i = 1}^n 2y\parentheses*{x_i}v\parentheses*{x_i}
+		\end{align*}
+		\item
+		\begin{enumerate}
+			\item
+			\begin{align*}
+				\partial F_2\parentheses*{y; v} &= \lim_{t \to 0}\frac{1}{t}\parentheses*{F_2\parentheses*{y + tv} - F_2\parentheses*{y}}\\
+				&= \lim_{t \to 0}\frac{1}{t}\parentheses*{\frac{\parentheses*{y + tv}\parentheses*{\pi}}{\parentheses*{y + tv}^2\parentheses*{0} + 1} - \frac{y\parentheses*{\pi}}{y^2\parentheses*{0} + 1}}\\
+				&= \lim_{t \to 0}\frac{1}{t}\parentheses*{\frac{y\parentheses*{\pi} + tv\parentheses*{\pi}}{y^2\parentheses*{0} + 2ty\parentheses*{0}v\parentheses*{0} + t^2 v^2\parentheses*{0} + 1} - \frac{y\parentheses*{\pi}}{y^2\parentheses*{0} + 1}}\\
+				&\stackrel{v = \cos}{=}\lim_{t \to 0}\frac{1}{t}\parentheses*{\frac{y\parentheses*{\pi} - t}{y^2\parentheses*{0} + 2ty\parentheses*{0} + t^2 + 1} - \frac{y\parentheses*{\pi}}{y^2\parentheses*{0} + 1}}\\
+				&= \lim_{t \to 0}\frac{1}{t}\frac{\parentheses*{y\parentheses*{\pi} - t}\parentheses*{y^2\parentheses*{0} + 1} - y\parentheses*{\pi}\parentheses*{y^2\parentheses*{0} + 2ty\parentheses*{0} + t^2 + 1}}{\parentheses*{y^2\parentheses*{0} + 2ty\parentheses*{0} + t^2 + 1}\parentheses*{y^2\parentheses*{0} + 1}}\\
+				&= -\lim_{t \to 0}\frac{1}{t}\frac{t\parentheses*{y^2\parentheses*{0} + 1 + 2y\parentheses*{\pi}y\parentheses*{0}} + t^2 y\parentheses*{\pi}}{\parentheses*{y^2\parentheses*{0} + 2ty\parentheses*{0} + t^2 + 1}\parentheses*{y^2\parentheses*{0} + 1}}\\
+				&= -\frac{y^2\parentheses*{0} + 1 + 2y\parentheses*{\pi}y\parentheses*{0}}{\parentheses*{y^2\parentheses*{0} + 1}^2}.
+			\end{align*}
+			\item
+			\[
+				\partial F_2\parentheses*{\sin; \cos} = -\frac{0 + 1 + 2 \cdot 0 \cdot 0}{\parentheses*{0 + 1}^2} = -1.
+			\]
+		\end{enumerate}
+		\item
+		\begin{align*}
+			F_3\parentheses*{y; v} &= \lim_{t \to 0}\frac{1}{t}\parentheses*{F_3\parentheses*{y + tv} - F_3\parentheses*{y}}\\
+			&= \lim_{t \to 0}\frac{1}{t}\parentheses*{2\pi\int_a^b \parentheses*{y + tv}\sqrt{1 + \parentheses*{y + tv}'^2}\d x - 2\pi\int_a^b y\sqrt{1 + y'^2}\d x}\\
+			&= 2\pi\lim_{t \to 0}\frac{1}{t}\int_a^b \parentheses*{\parentheses*{y + tv}\sqrt{1 + \parentheses*{y + tv}'^2} - y\sqrt{1 + y'^2}}\d x\\
+			&= 2\pi\lim_{t \to 0}\frac{1}{t}\int_a^b \parentheses*{y\parentheses*{\sqrt{1 + y'^2 + 2ty'v' + t^2 v'^2} - \sqrt{1 + y'^2}} + tv\sqrt{1 + y'^2 + 2ty'v' + t^2 v'^2}}\d x\\
+			&= 2\pi\lim_{t \to 0}\int_a^b \parentheses*{y\frac{2y'v' + tv'}{\sqrt{1 + y'^2 + 2ty'v' + t^2 v'^2} + \sqrt{1 + y'^2}} + v\sqrt{1 + y'^2 + 2ty'v' + t^2 v'^2}}\d x\\
+			&= 2\pi\int_a^b \parentheses*{y\frac{y'v'}{\sqrt{1 + y'^2}} + v\sqrt{1 + y'^2}}\d x.
+		\end{align*}
+	\end{enumerate}
+
+
+	\section{}
+
+	\begin{enumerate}
+		\item
+		\begin{align*}
+			\partial F\parentheses*{y; v} &= \lim_{t \to 0}\frac{1}{t}\parentheses*{\int_{-1}^1 \parentheses*{y\parentheses*{x} + tx^2}^2 \d x + \int_{-1}^1 \parentheses*{y\parentheses*{x} + tx^2}'^2 \d x - \int_{-1}^1 y^2\parentheses*{x}\d x - \int_{-1}^1 y'^2\parentheses*{x}\d x}\\
+			&= \lim_{t \to 0}\frac{1}{t}\parentheses*{\int_{-1}^1 \parentheses*{y^2\parentheses*{x} + 2ty\parentheses*{x}x^2 + t^2 x^4}\d x - \int_{-1}^1 y^2\parentheses*{x}\d x + \int_{-1}^1 \parentheses*{y'\parentheses*{x} + 2tx}^2 \d x - \int_{-1}^1 y'^2\parentheses*{x}\d x}\\
+			&= \lim_{t \to 0}\frac{1}{t}\parentheses*{\int_{-1}^1 \parentheses*{2ty\parentheses*{x}x^2 + t^2 x^4}\d x + \int_{-1}^1 \parentheses*{4ty'\parentheses*{x}x + 4t^2 x^2}\d x}\\
+			&= \int_{-1}^1 2y\parentheses*{x}x^2 \d x + \int_{-1}^1 4y'\parentheses*{x}x\d x\\
+			&= \int_{-1}^1 2x\parentheses*{xy\parentheses*{x} + 2y'\parentheses*{x}}\d x.
+		\end{align*}
+		\item
+		\begin{align*}
+			\partial F\parentheses*{y; v} &= \lim_{t \to 0}\frac{1}{t}\parentheses*{\int_0^1 \parentheses*{y\parentheses*{x} + t\cos\parentheses*{x}}\parentheses*{y\parentheses*{x} + t\cos\parentheses*{x}}''\d x - \int_0^1 y\parentheses*{x}y''\parentheses*{x}\d x}\\
+			&= \lim_{t \to 0}\frac{1}{t}\int_0^1 \parentheses*{\parentheses*{y\parentheses*{x} + t\cos\parentheses*{x}}\parentheses*{y''\parentheses*{x} - t\cos\parentheses*{x}} - y\parentheses*{x}y''\parentheses*{x}}\d x\\
+			&= \lim_{t \to 0}\frac{1}{t}\int_0^1 \parentheses*{t\parentheses*{-y\parentheses*{x}\cos\parentheses*{x} + \cos\parentheses*{x}y''\parentheses*{x}} - t^2 \cos^2\parentheses*{x}}\d x\\
+			&= \int_0^1 \parentheses*{y''\parentheses*{x} - y\parentheses*{x}}\cos\parentheses*{x}\d x.
+		\end{align*}
+	\end{enumerate}
+
+
+	\section{}
+
+	For the exact solution we use a Taylor expansion
+	\[
+		y\parentheses*{t + h} = y\parentheses*{t} + hy'\parentheses*{t} + \frac{1}{2}h^2 y''\parentheses*{t} + \mathcal{O}\parentheses*{h^3},
+	\]
+	where \(y'\parentheses*{t} = f\parentheses*{t, y\parentheses*{t}}\) and thus
+	\[
+		y''\parentheses*{t} = \frac{\d}{\d t}f\parentheses*{t, y\parentheses*{t}} = f_t\parentheses*{t, y\parentheses*{t}} + f_y\parentheses*{t, y\parentheses*{t}}y'\parentheses*{t} = f_t\parentheses*{t, y\parentheses*{t}} + f_y\parentheses*{t, y\parentheses*{t}}f\parentheses*{t, y\parentheses*{t}}.
+	\]
+	We can now rewrite the exact solution as
+	\[
+		y\parentheses*{t + h} = y\parentheses*{t} + hf\parentheses*{t, y\parentheses*{t}} + \frac{1}{2}h^2 \parentheses*{f_t\parentheses*{t, y\parentheses*{t}} + f_y\parentheses*{t, y\parentheses*{t}}f\parentheses*{t, y\parentheses*{t}}} + \mathcal{O}\parentheses*{h^3}
+	\]
+	and the approximation using the explicit method as
+	\[
+		y^{j + 1} = y^j + h\Psi\parentheses*{h},
+	\]
+	where
+	\begin{align*}
+		\Psi\parentheses*{h} &= \frac{1}{2}\parentheses*{f\parentheses*{t, y\parentheses*{t}} + f\parentheses*{t + h, y\parentheses*{t} + hf\parentheses*{t, y\parentheses*{t}}}}\\
+		\Psi'\parentheses*{h} &= \frac{1}{2}f_t\parentheses*{t + h, y\parentheses*{t} + hf\parentheses*{t, y\parentheses*{t}}} + \frac{1}{2}f_y\parentheses*{t + h, y\parentheses*{t} + hf\parentheses*{t, y\parentheses*{t}}}f\parentheses*{t, y\parentheses*{t}}.
+	\end{align*}
+	With
+	\[
+		\Psi\parentheses*{0} = f\parentheses*{t, y\parentheses*{t}}, \quad \Psi'\parentheses*{0} = \frac{1}{2}f_t\parentheses*{t, y\parentheses*{t}} + \frac{1}{2}f_y\parentheses*{t, y\parentheses*{t}}f\parentheses*{t, y\parentheses*{t}}
+	\]
+	we can now expand \(\Psi\parentheses*{h}\) around \(0\):
+	\begin{align*}
+		\Psi\parentheses*{h} &= \Psi\parentheses*{0} + h\Psi'\parentheses*{0} + \mathcal{O}\parentheses*{h^2}\\
+		&= f\parentheses*{t, y\parentheses*{t}} + \frac{1}{2}h\parentheses*{f_t\parentheses*{t, y\parentheses*{t}} + f_y\parentheses*{t, y\parentheses*{t}}f\parentheses*{t, y\parentheses*{t}}} + \mathcal{O}\parentheses*{h^2}.
+	\end{align*}
+	Alltogether the approximation is
+	\[
+		y^{j + 1} = y^j + hf\parentheses*{t, y^j} + \frac{1}{2}h^2 \parentheses*{f_t\parentheses*{t, y^j} + f_y\parentheses*{t, y^j}f\parentheses*{t, y^j}} + \mathcal{O}\parentheses*{h^3}.
+	\]
+	and the error is
+	\[
+		\absolute*{y\parentheses*{t + h} - y^{j + 1}} = \mathcal{O}\parentheses*{h^3},
+	\]
+	which gives us an order of \(2\) for the given explicit method.
+
+
+	\section{}
+
+	\begin{enumerate}
+		\item Wir definieren
+		\[
+			y_0\parentheses*{t} = y\parentheses*{t}, \quad y_1\parentheses*{t} = y'\parentheses*{t}.
+		\]
+		Dann können wir das Problem auf das ein System gewöhnlicher Differentialgleichungen erster Ordnung transformieren
+		\begin{align*}
+			y_0'\parentheses*{t} &= y'\parentheses*{t},\\
+			y_1'\parentheses*{t} &= ty_0\parentheses*{t} - y_1\parentheses*{t}
+		\end{align*}
+		für \(t \in \brackets*{0, \frac{1}{2}}\) mit den Randbedingungen
+		\[
+			y_0\parentheses*{0} = 0, \quad y_1\parentheses*{0} = 1.
+		\]
+		\item Es gilt
+		\begin{align*}
+			\phi_0 &= \begin{pmatrix}
+				0\\
+				1
+			\end{pmatrix},\\
+			\phi_1 &= \begin{pmatrix}
+				0\\
+				1
+			\end{pmatrix} + h\begin{pmatrix}
+				1 - 0\\
+				h \cdot 0 - 1
+			\end{pmatrix} = \begin{pmatrix}
+				h\\
+				1 - h
+			\end{pmatrix},\\
+			\phi_2 &= \begin{pmatrix}
+				h\\
+				1 - h
+			\end{pmatrix} + h\begin{pmatrix}
+				1 - h\\
+				h \cdot h - \parentheses*{1 - h}
+			\end{pmatrix} = \begin{pmatrix}
+				2h - h^2\\
+				1 - 2h + h^2 + h^3
+			\end{pmatrix}.
+		\end{align*}
+		Für die Bestimmung einer Näherung von \(y\parentheses*{\frac{1}{2}}\) in zwei Schritten, berechnen wir (mit \(h = \frac{1}{4}\)) dann
+		\[
+			\phi_0 = \begin{pmatrix}
+				y_0\parentheses*{0}\\
+				y_1\parentheses*{0}
+			\end{pmatrix} = \begin{pmatrix}
+				0\\
+				1
+			\end{pmatrix}, \quad \phi_1 = \begin{pmatrix}
+				y_0\parentheses*{\frac{1}{4}}\\
+				y_1\parentheses*{\frac{1}{4}}
+			\end{pmatrix} = \begin{pmatrix}
+				\frac{1}{4}\\
+				\frac{3}{4}
+			\end{pmatrix}, \quad \phi_2 = \begin{pmatrix}
+				y_0\parentheses*{\frac{1}{2}}\\
+				y_1\parentheses*{\frac{1}{2}}
+			\end{pmatrix} = \begin{pmatrix}
+				\frac{7}{16}\\
+				\frac{37}{64}
+			\end{pmatrix}
+		\]
+		und erhalten \(y\parentheses*{\frac{1}{2}} = y_0\parentheses*{\frac{1}{2}} = \frac{7}{16}\).
+		\item Der lokale Abbruchfehler gibt die Differenz zwischen dem exakten Wert und dem errechneten Wert an der Stelle \(t_{j + 1}\) an, wenn der Wert an der Stelle \(t_j\) richtig ist.
+		Da das im Allgmeinen nicht der Fall sein muss, gibt der lokale Fehler die Abweichung vom exakten Wert an, die nur durch den letzten Schritt verursacht wird.
+		Er ist für dieses Problem gegeben durch
+		\[
+			\delta_{j, h} = y\parentheses*{t_{j + 1}} - y_h\parentheses*{t_{j + 1}; t_j, y\parentheses*{t_j}} = y\parentheses*{t_{j + 1}} - y\parentheses*{t_j} - h\Psi_f\parentheses*{t_j, y\parentheses*{t_j}, h}.
+		\]
+		Aus dieser Beziehung erhalten wir
+		\[
+			y\parentheses*{t_{j + 1}} = y\parentheses*{t_j} + h\Psi_f\parentheses*{t_j, y\parentheses*{t_j}, h} + \delta_{j, h}.
+		\]
+		Für den globalen Fehler \(e_j := y\parentheses*{t_j} - y^j\) ergibt sich die Rekursion
+		\[
+			e_{j + 1} = \parentheses*{1 + h\lambda}e_j + \delta_{j, h}, \quad j = 0, \ldots, n - 1.
+		\]
+		Es gilt \(e_0 = 0\).
+		Daher erhalten wir
+		\begin{align*}
+			e_1 &= \parentheses*{1 + h\lambda}e_0 + \delta_{0, h} = \delta_{0, h},\\
+			e_2 &= \parentheses*{1 + h\lambda}e_1 + \delta_{1, h} = \parentheses*{1 + h\lambda}\delta_{0, h} + \delta_{1, h},\\
+			e_3 &= \parentheses*{1 + h\lambda}e_2 + \delta_{2, h} = \parentheses*{1 + h\lambda}^2 \delta_{0, h} + \parentheses*{1 + h\lambda}\delta_{1, h} + \delta_{2, h},\\
+			&\hspace{4cm}\vdots\\
+			e_n &= \parentheses*{1 + h\lambda}e_{n - 1} + \delta_{n - 1, h} = \sum_{i = 0}^{k - 1}\parentheses*{1 + h\lambda}^i \delta_{n - 1 - i, h}.
+		\end{align*}
+		Der maximale globale Fehler entsteht also durch eine Akkumulation der lokalen Fehler
+		\[
+			\max_{j = 0, \ldots, n}\absolute*{y\parentheses*{t_j} - y^j} \le \sum_{i = 0}^{j - 1}\parentheses*{1 + h\lambda}^i \absolute*{\delta_{j - 1 - i, h}}.
+		\]
+	\end{enumerate}
+\end{document}

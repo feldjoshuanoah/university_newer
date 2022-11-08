@@ -1,0 +1,87 @@
+\section{Integralrechnung}
+
+
+\subsection{Mehrfache Integrale}
+
+Sei \(f: \R^{n + m} \to \R\) eine messbare Funktion, und wir schreiben \(\parentheses*{x, y} \mapsto f\parentheses*{x, y}\), wobei \(x \in \R^n\) und \(y \in \R^m\) liegen.
+Nun suchen wir praktische Hilfe bei der Auswertung des Integrals \(\int_M f\) auf eine messbare Menge \(M \subseteq \R^{n + m}\).
+Unser Wissen über die Auswertung von Integralen in einer Dimension könnten wir benutzen, wenn wir eine iterative Methode zur Auswertung hätten.
+
+Für das Lebesgue-Maß von Mengen in \(\R^k\) schreiben wir \(\lambda_k\).
+Die Frage stellt sich, was \(\lambda_{n + m}\) mit \(\lambda_n\) und \(\lambda_m\) zu tun hat.
+Das sehen wir, indem wir erst Quader betrachten.
+Tatsächlich gilt für Quader \(Q_n \subset \R^n\) und \(Q_m \subset \R^m\)
+\begin{equation}
+	\lambda_{n + m}\parentheses*{Q_n \times Q_m} = \lambda_n\parentheses*{Q_n}\lambda_m\parentheses*{Q_m}.
+\end{equation}
+Dies gilt daher auch allgemein für das kartesische Produkt von messbaren \(M_n \subseteq \R^n\) und \(M_m \subseteq \R^m\):
+\[
+	\lambda_{n + m}\parentheses*{M_n \times M_m} = \lambda_m\parentheses*{M_m}\lambda_n\parentheses*{M_n}.
+\]
+Im allgemeineren Fall, wenn \(M\) kein kartesisches Produkt ist, betrachten wir die \emph{Schnitte}
+\begin{equation}
+	M_1\parentheses*{y} := \braces*{x \in \R^n : \parentheses*{x, y} \in M} \quad \text{und} \quad M_2\parentheses*{x} := \braces*{y \in \R^m : \parentheses*{x, y} \in M}.
+\end{equation}
+Dann gilt:
+
+\begin{proposition}[Cavalieri'sches Prinzip]
+	Ist \(M\) messbar, sind \(M_1\parentheses*{y}\) und \(M_2\parentheses*{x}\) messbar für fast jedes \(y\) beziehungsweise \(x\).
+	Die Funktionen \(y \mapsto \lambda_n\parentheses*{M_1\parentheses*{y}}\) sowie \(x \mapsto \lambda_m\parentheses*{M_2\parentheses*{x}}\) sind beide messbar, und es gilt
+	\begin{equation}\label{equation:44}
+		\lambda_{n + m}\parentheses*{M} = \int_{\R^m}\lambda_n\parentheses*{M_1\parentheses*{y}}\d y = \int_{\R^n}\lambda_m\parentheses*{M_2\parentheses*{x}}\d x.
+	\end{equation}
+\end{proposition}
+
+\begin{example}
+	\begin{enumerate}
+		\item Flächeninhalt der Kreisscheibe.
+		Sei \(M = \braces*{\parentheses*{x, y} : x^2 + y^2 \le r^2}\).
+		Dann gilt
+		\[
+			M_2\parentheses*{x} = \begin{cases}
+				\brackets*{-\sqrt{r^2 - x^2}, \sqrt{r^2 - x^2}}, & \text{falls }\absolute*{x} \le r,\\
+				\emptyset, & \text{sonst}.
+			\end{cases}
+		\]
+		Wir können also berechnen
+		\begin{align}
+			\lambda_2\parentheses*{M} &= \int_{-r}^r \lambda_1\parentheses*{M_2\parentheses*{x}}\d x\nonumber\\
+			&= \int_{-r}^r 2\sqrt{r^2 - x^2}\d x\nonumber\\
+			&= 2\int_{-1}^1 \sqrt{r^2\parentheses*{1 - t^2}}r\d t &&\parentheses*{\text{mit }t := \frac{x}{r}}\nonumber\\
+			&= 2r^2\int_{-\frac{\pi}{2}}^{\frac{\pi}{2}}\sqrt{1 - \sin^2 \alpha}\cos\alpha\d\alpha &&\parentheses*{\text{mit }\sin\alpha := t}\nonumber\\
+			&= 2r^2\int_{-\frac{\pi}{2}}^{\frac{\pi}{2}}\cos^2 \alpha\d\alpha\nonumber\\
+			&= r^2\int_{-\frac{\pi}{2}}^{\frac{\pi}{2}}\parentheses*{1 + \cos\parentheses*{2\alpha}}\d\alpha &&\parentheses*{\text{mit }\cos^2 \alpha = \frac{1 + \cos\parentheses*{2\alpha}}{2}}\nonumber\\
+			&= \pi r^2.
+		\end{align}
+		\item Volumen von Rotationskörpern.
+		Seien \(r: \brackets*{a, b} \to \left[0, \infty\right)\) messbar und
+		\[
+			M = \braces*{\parentheses*{x, y_1, y_2} \in \R^3 : x \in \brackets*{a, b}\text{ und }y_1^2 + y_2^2 \le r^2\parentheses*{x}}.
+		\]
+		Dann gilt
+		\begin{equation}
+			\lambda_2\parentheses*{M_2\parentheses*{x}} = \begin{cases}
+				\pi r^2\parentheses*{x}, & \text{falls }x \in \brackets*{a, b},\\
+				0, & \text{sonst}
+			\end{cases}
+		\end{equation}
+		und deshalb
+		\begin{equation}
+			\lambda_3\parentheses*{M} = \int_a^b r^2\parentheses*{x}\d x.
+		\end{equation}
+	\end{enumerate}
+\end{example}
+
+Gleichung \eqref{equation:44} lässt sich aber mit einfachen Funktionen umschreiben als
+\[
+	\int_{\R^{n + m}}\chi_M = \lambda_{n + m}\parentheses*{M} = \int_{\R^m}\underbrace{\int_{\R^n}\chi_M\parentheses*{x, y}\d x}_{= \lambda_n\parentheses*{M_1\parentheses*{y}}}\d y = \int_{\R^m}\int_{M_1\parentheses*{y}}\chi_M\parentheses*{x, y}\d x\d y
+\]
+oder
+\[
+	\int_{\R^{n + m}}\chi_M = \lambda_{n + m}\parentheses*{M} = \int_{\R^n}\underbrace{\int_{\R^m}\chi_M\parentheses*{x, y}\d y}_{= \lambda_m\parentheses*{M_2\parentheses*{x}}}\d x = \int_{\R^n}\int_{M_2\parentheses*{x}}\chi_M\parentheses*{x, y}\d y\d x,
+\]
+wobei wir benutzen, dass \(\chi_M\parentheses*{x, y} = 0\) für \(x \not\in M_1\parentheses*{y}\) und ebenso für \(y \not\in M_2\parentheses*{x}\) gilt.
+Wie zuvor lässt sich das, was für einfache Funktionen gilt, für messbare Funktionen verallgemeinern.
+
+
+\subsection{Die Transformationsformel}

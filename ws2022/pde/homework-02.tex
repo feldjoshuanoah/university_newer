@@ -1,0 +1,199 @@
+\documentclass[english]{exercise}
+
+\include{preamble}
+
+\title{Homework 2}
+\author{Joshua Feld, 406718}
+\professor{Prof. Kowalski}
+\course{Partial Differential Equations}
+
+\begin{document}
+	\maketitle
+
+
+	\section{}
+
+	Clearly both functions are not bounded as \(x \to 0\).
+	\begin{enumerate}
+		\item Notice that \(\Omega_2 \subset \Omega_1\).
+		Thus it suffices to show that \(u \in L^2\parentheses*{\Omega_1}\).
+		A direct calculation shows that
+		\begin{align*}
+			\int_{\Omega_1}\absolute*{u\parentheses*{x}}^2 \d x &= C\int_0^1 \parentheses*{-\ln\parentheses*{r}}^{2k}r\d r\\
+			&= C\parentheses*{\int_{\frac{1}{e}}^1 \parentheses*{-\ln\parentheses*{r}}^{2k}r\d r + \int_0^{\frac{1}{e}}\parentheses*{-\ln\parentheses*{r}}^{2k}r\d r}\\
+			&\le C\parentheses*{\int_{\frac{1}{e}}^1 r\d r + \int_0^{\frac{1}{e}}\parentheses*{-\ln\parentheses*{r}}r\d r}
+		\end{align*}
+		and using integration by parts we obtain
+		\[
+			\int_0^{\frac{1}{e}}r\ln\parentheses*{r}\d r = \parentheses*{\frac{1}{2}r^2 \ln\parentheses*{r}}_0^{\frac{1}{e}} - \int_0^{\frac{1}{e}}\frac{1}{2}r\d r < \infty.
+		\]
+		Thus \(u \in L^2\parentheses*{\Omega_1}\).
+		On the other hand we claim \(\absolute*{\nabla u}^2 \not\in L^1\parentheses*{\Omega_1}\).
+		Indeed,
+		\[
+			\absolute*{\nabla u} = -k\parentheses*{-\ln\parentheses*{\absolute*{x}}}^{k - 1}\frac{1}{\absolute*{x}}
+		\]
+		and due to the radial symmetry of \(u\) we have
+		\begin{align*}
+			\int_{\Omega_1}k^2\parentheses*{-\ln\parentheses*{\absolute*{x}}}^{2k - 2}\frac{1}{\absolute*{x}^2}\d x &= Ck^2 \int_0^1 \parentheses*{-\ln\parentheses*{r}}^{2k - 2}\frac{1}{r}\d r\\
+			&= C\frac{k^2}{1 - 2k}\int_0^1 \frac{\d}{\d r}\parentheses*{-\ln\parentheses*{r}}^{2k - 1}\d r\\
+			&= C\frac{k^2}{1 - 2k}\brackets*{\parentheses*{-\ln\parentheses*{r}}^{2k - 1}}_0^1.
+		\end{align*}
+		Clearly, this integral does not exist.
+		Consequently, \(u\) is not an \(H^1\parentheses*{\Omega_1}\) function.
+		On the other hand, \(u \in H^1\parentheses*{\Omega_2}\) because \(2k - 1 < 0\) and therefore \(\lim_{r \to 0}\parentheses*{\ln\parentheses*{r}}^{2k - 1}\) exists.
+		\item By definition we have \(v\parentheses*{x} = \ln\parentheses*{-\ln\parentheses*{\absolute*{x}}}\) and for all \(x \in \Omega_2\) it holds that \(-\ln\parentheses*{\absolute*{x}} > 1\).
+		Consequently, the function \(v\) only has a singularity at the origin.
+		We now show that \(v \in L^2\parentheses*{\Omega_2}\).
+		Indeed, using the radial symmetry of \(v\) and the substitution \(\xi = -\ln\parentheses*{r}\) we obtain
+		\[
+			\int_{\Omega_2}\absolute*{\ln\parentheses*{-\ln\parentheses*{\absolute*{x}}}}^2 \d x = C\int_0^{\frac{1}{e}}\absolute*{\ln\parentheses*{-\ln\parentheses*{r}}}^2 r\d r = C\int_1^\infty \absolute*{\ln\parentheses*{\xi}}^2 e^{-2\xi}\d\xi.
+		\]
+		Since \(\ln\parentheses*{\xi} \le \xi\) for \(\xi \in \left[1, \infty\right)\) we further obtain
+		\[
+			\norm*{v}_{0, 2}^2 \le C\int_1^\infty < C\int_1^\infty \xi^2 e^{-2\xi}\d\xi = C\frac{5}{4}e^{-2}.
+		\]
+		Let us now examine the gradient of \(v\).
+		With the chain rule we get
+		\[
+			\partial_{x_i}v\parentheses*{x} = \frac{1}{-\ln\parentheses*{\absolute*{x}}}\frac{-1}{\absolute*{x}}\frac{x_i}{\absolute*{x}}
+		\]
+		and therefore
+		\[
+			\absolute*{\nabla v} = \frac{1}{\absolute*{x}\ln\parentheses*{\absolute*{x}}}.
+		\]
+		Using the radial symmetry of \(v\) once again we obtain
+		\[
+			\norm*{\nabla v}_{0, 2}^2 = C\int_0^{\frac{1}{e}}\frac{1}{r\ln^2\parentheses*{r}}\d r = -C\brackets*{\frac{1}{\ln\parentheses*{r}}}_0^{\frac{1}{e}} = C.
+		\]
+		We conclude that \(v \in H^1\parentheses*{\Omega_2}\).
+		We now consider the domain \(\Omega_1\).
+		Clearly we have
+		\[
+			\norm*{v}_{L^2\parentheses*{\Omega_1}} = \norm*{v}_{L^2\parentheses*{\Omega_2}} + \norm*{v}_{L^2\parentheses*{\Omega_1 \setminus \Omega_2}}.
+		\]
+		It therefore suffices to show that \(v \in L^2\parentheses*{\Omega_1 \setminus \Omega_2}\).
+		We have
+		\begin{align*}
+			\norm*{v}_{L^2\parentheses*{\Omega_1 \setminus \Omega_2}} &= C\int_{\frac{1}{e}}^1 \absolute*{\ln\parentheses*{-\ln\parentheses*{r}}}^2 r\d r\\
+			&= C\int_0^1 \absolute*{\ln\parentheses*{\xi}}^2 \underbrace{e^{-2\xi}}_{\le 1}\d\xi\\
+			&\le C\int_0^1 \absolute*{\ln\parentheses*{\xi}}^2 \d\xi\\
+			&= C\brackets*{\xi\ln^2\parentheses*{\xi} - 2\xi\ln\parentheses*{\xi} + 2\xi}_0^1\\
+			&= 2C < \infty.
+		\end{align*}
+		On the other hand it holds that \(\nabla v \not\in L^2\parentheses*{\Omega_1}\) since
+		\[
+			\norm*{\nabla v}_0^2 = C\int_0^1 \frac{1}{r\ln^2\parentheses*{r}}\d r = -C\brackets*{\frac{1}{\ln\parentheses*{r}}}_0^1 = \infty
+		\]
+		and consequently \(v \not\in H^1\parentheses*{\Omega_1}\).
+	\end{enumerate}
+
+
+	\section{}
+
+	Let us first recall the definition of weak differentiability.
+	A function \(u \in L^p\parentheses*{\Omega}\) is weakly differentiable to the index \(\alpha = \parentheses*{\alpha_1, \ldots, \alpha_n}\) if there exists a function \(v \in L^p\parentheses*{\Omega}\) such that
+	\begin{equation}\label{eq:2-1}
+		\int_\Omega v\parentheses*{x}\varphi\parentheses*{x}\d x = \parentheses*{-1}^{\alpha_1} \cdots \parentheses*{-1}^{\alpha_n}\int_\Omega u\parentheses*{x}D^\alpha \varphi\parentheses*{x}\d x, \quad \forall\varphi \in C_0^\infty\parentheses*{\Omega}.
+	\end{equation}
+	\begin{enumerate}
+		\item For this case, the right-hand side of equation \eqref{eq:2-1} for \(\alpha = 1\) can be written as
+		\begin{align*}
+			 \int_{-1}^1 u\parentheses*{x}D^1 \varphi\parentheses*{x}\d x &= -\parentheses*{\int_{-1}^0 \parentheses*{1 + x}\varphi'\parentheses*{x}\d x + \int_0^1 \parentheses*{1 - x}\varphi'\parentheses*{x}\d x}\\
+			&= -\parentheses*{\brackets*{\parentheses*{1 + x}\varphi\parentheses*{x}}_{-1}^0 - \int_{-1}^0 \varphi\parentheses*{x}\d x + \brackets*{\parentheses*{1 - x}\varphi\parentheses*{x}}_0^1 - \int_0^1 -\varphi\parentheses*{x}\d x}\\
+			&= \int_{-1}^0 \varphi\parentheses*{x}\d x - \int_0^1 \varphi\parentheses*{x}\d x\\
+			&= \int_{-1}^1 v\parentheses*{x}\varphi\parentheses*{x}\d x.
+		\end{align*}
+		Therefore, there exists a function \(v\parentheses*{x} = u'\parentheses*{x}\) satisfying the definition in equation \eqref{eq:2-1}.
+		For the function \(u\parentheses*{x}\) the weak derivative exists, and is given by
+		\[
+			v\parentheses*{x} = \begin{cases}
+				-1, & \text{if }x > 0,\\
+				1, & \text{if }x < 0.
+			\end{cases}
+		\]
+		\item In this case we have
+		\[
+			\parentheses*{-1}^1 \int_{-1}^1 u\parentheses*{x}D^1 \varphi\parentheses*{x}\d x = -\int_0^\infty x\varphi'\parentheses*{x}\d x = \int_0^\infty \varphi\parentheses*{x}\d x - \brackets*{x\varphi\parentheses*{x}}_0^\infty \stackrel{\varphi\parentheses*{\infty} = 0}{=} \int_{-\infty}^\infty v\parentheses*{x}\varphi\parentheses*{x}\d x.
+		\]
+		For this function the weak derivative also exists and is given by
+		\[
+			v\parentheses*{x} = \begin{cases}
+				1, & \text{if }x > 0,\\
+				0, & \text{if }x \le 0.
+			\end{cases}
+		\]
+		\item Following the definition of weak differentiability, we get
+		\begin{align*}
+			-\int_0^2 u\parentheses*{x}\varphi'\parentheses*{x}\d x &= -\parentheses*{\int_0^1 x\varphi'\parentheses*{x}\d x + 2\int_1^2 \varphi'\parentheses*{x}\d x}\\
+			&= -\parentheses*{\brackets*{x\varphi\parentheses*{x}}_0^1 - \int_0^1 \varphi\parentheses*{x}\d x + 2\brackets*{\varphi\parentheses*{x}}_1^2}\\
+			&\stackrel{\varphi\parentheses*{2} = 0}{=} \int_0^1 \varphi\parentheses*{x}\d x + \varphi\parentheses*{1}.
+		\end{align*}
+		We can't simplify further and find a function \(v\parentheses*{x}\) like in the last two examples.
+		We need to follow some other strategy to find whether the weak derivative exists or not.
+		For the sake of argument assume that the weak derivative exists.
+		We then have
+		\begin{equation}\label{eq:2-2}
+			-\int_0^2 u\parentheses*{x}\varphi'\parentheses*{x}\d x = \int_0^2 v\parentheses*{x}\varphi\parentheses*{x}\d x.
+		\end{equation}
+		Here \(v\parentheses*{x}\) is the weak derivative.
+		Consider a sequence of smooth functions \(\braces*{\varphi_m}_{m = 1}^\infty\) satisfying
+		\[
+			0 \le \varphi_m\parentheses*{x} \le 1, \quad \lim_{m \to \infty}\varphi_m\parentheses*{1} = 1 \quad \text{and} \quad \lim_{m \to \infty}\varphi_m\parentheses*{x} = 0 \quad \forall x \ne 1.
+		\]
+		Now replacing \(\varphi\) by \(\varphi_m\) in equation \eqref{eq:2-2}, we get
+		\[
+			\lim_{m \to \infty}\int_0^2 v\parentheses*{x}\varphi_m\parentheses*{x}\d x = \lim_{m \to \infty}-\int_0^2 u\parentheses*{x}\varphi_m'\parentheses*{x}\d x = \lim_{m \to \infty}\int_0^1 \varphi\parentheses*{x}\d x + \lim_{m \to \infty}\varphi_m\parentheses*{1} = 1,
+		\]
+		which is a contradiction since
+		\[
+			\lim_{m \to \infty}\int_0^2 v\parentheses*{x}\varphi_m\parentheses*{x}\d x = 0.
+		\]
+		Therefore, the assumption that the weak derivative exists is not correct.
+		Hence, for this function the weak derivative does not exist.
+		\item If we use the definition again, we see that
+		\[
+			\parentheses*{-1}^1 \int_{-\infty}^\infty u\parentheses*{x}\varphi'\parentheses*{x}\d x = -\int_0^\infty \varphi'\parentheses*{x}\d x = -\brackets*{\varphi\parentheses*{x}}_0^\infty \stackrel{\varphi\parentheses*{\infty} = 0}{=} \varphi\parentheses*{0}.
+		\]
+		Obviously, there exists no function \(v\parentheses*{x} \in L^p\parentheses*{\Omega}\) such that
+		\[
+			\int_{-\infty}^\infty v\parentheses*{x}\varphi\parentheses*{x}\d x = \varphi\parentheses*{0}, \quad \forall\varphi \in C_0^\infty\parentheses*{\Omega}.
+		\]
+		Therefore, the weak derivative does not exists in this case as well.
+	\end{enumerate}
+
+
+	\section{}
+
+	Let us take a look at the partial derivatives of the solution \(u\parentheses*{r, \varphi}\).
+	First of all, the input parameters \(r\) and \(\varphi\) are separable as
+	\[
+		u\parentheses*{r, \varphi} = R\parentheses*{r}\Phi\parentheses*{\varphi}.
+	\]
+	Hence, any partial derivative is a product of derivatives of \(R\parentheses*{r}\) and \(\Phi\parentheses*{\varphi}\)
+	\[
+		\frac{\partial^{i_1 + i_2}u\parentheses*{r, \varphi}}{\partial r^{i_1}\partial\varphi^{i_2}} = R^{\parentheses*{i_1}}\parentheses*{r}\Phi^{\parentheses*{i_2}}\parentheses*{\varphi}.
+	\]
+	To compute the \(L^2\)-norm of the above mentioned derivative, we adjust the integral by Jacobian of polar coordinate system (which is a simple \(r\) multiplier):
+	\[
+		\norm*{\frac{\partial^{i_1 + i_2}u\parentheses*{r, \varphi}}{\partial r^{i_1}\partial\varphi^{i_2}}}_{L^2\parentheses*{\Omega}}^2 = \int_0^\alpha \parentheses*{\varphi^{\parentheses*{i_2}}\parentheses*{\varphi}}^2 \d\varphi \int_0^1 \parentheses*{R^{\parentheses*{i_1}}\parentheses*{r}}^2 r\d r.
+	\]
+	If \(\parentheses*{R^{\parentheses*{i_1}}\parentheses*{r}}^2 r\) is \(L^2\)-integrable on \(\brackets*{0, 1}\), then the derivative of the solution is \(L^2\)-integrable on \(\Omega\).
+	Now we look at the first and second derivate of \(R\parentheses*{r}\):
+	\begin{align*}
+		R'\parentheses*{r} &= \frac{\pi}{\alpha}r^{\frac{\pi}{\alpha} - 1},\\
+		R''\parentheses*{r} = \frac{\pi}{\alpha}\parentheses*{\frac{\pi}{\alpha} - 1}r^{\frac{\pi}{\alpha} - 2}
+	\end{align*}
+	and the corresponding integrals
+	\begin{align*}
+		\int_0^1 \parentheses*{R'\parentheses*{r}}^2 r\d r &= \int_0^1 \parentheses*{\frac{\pi}{\alpha}}^2 r^{\frac{2\pi}{\alpha} - 1}\d r = \frac{1}{2}\frac{\pi}{\alpha}\brackets*{r^{\frac{2\pi}{\alpha}}}_0^1,\\
+		\int_0^1 \parentheses*{R''\parentheses*{r}}^2 r\d r &= \int_0^1 \parentheses*{\frac{\pi}{\alpha}}^2 r^{\frac{2\pi}{\alpha} - 3}\d r = \frac{1}{2}\parentheses*{\frac{\pi}{\alpha}}^2 \parentheses*{\frac{\pi}{\alpha} - 1}\brackets*{r^{\frac{2\pi}{\alpha} - 2}}_0^1.
+	\end{align*}
+	So, we get to the answer:
+	\begin{enumerate}
+		\item For any \(\alpha > 0\) the first derivative of the solution \(u\parentheses*{r, \varphi}\) is \(L^2\parentheses*{\Omega}\)-integrable.
+		So we obtain \(\alpha_{\text{max}} = 2\pi\).
+		\item The second derivative is \(L^2\parentheses*{\Omega}\)-integrable if \(\frac{2\pi}{\alpha} - 2 > 0\) or \(\frac{\pi}{\alpha} - 1 = 0\).
+		Thus \(\alpha_{\text{max}} = \pi\).
+	\end{enumerate}
+\end{document}

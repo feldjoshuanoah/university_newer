@@ -1,0 +1,188 @@
+\documentclass{exercise}
+
+\include{preamble}
+
+\title{Hausaufgabe 3}
+\author{René Dopichay (356986) \quad Joshua Feld (406718)\\Thilo Kloos (410343) \quad Shunta Takushima (430043)}
+\professor{Prof. Torrilhon \& Dr. Speck}
+\course{Mathematische Grundlagen III}
+
+\begin{document}
+	\maketitle
+
+
+	\section{}
+
+	\begin{quote}
+		Let \(X\) be a vector space and \(\emptyset \ne D \subseteq X\).
+		Show that the epigraph
+		\[
+			E\parentheses*{f} := \braces*{\parentheses*{x, y} \in D \times \R : f\parentheses*{x} \le y}
+		\]
+		of a function \(f: D \to \R\) is convex, if and only if \(D\) and \(f\) are convex.
+	\end{quote}
+
+	Let \(D\) and \(f\) be convex.
+	Then
+	\[
+		f\parentheses*{\parentheses*{1 - t}x_1 + tx_2} \le \parentheses*{1 - t}f\parentheses*{x_1} + tf\parentheses*{x_2} \le \parentheses*{1 - t}y_1 + ty_2
+	\]
+	for \(\parentheses*{x_1, y_1}, \parentheses*{x_2, y_2} \in E\parentheses*{f}\) and \(t \in \brackets*{0, 1}\).
+	Thus \(\parentheses*{\parentheses*{1 - t}x_1 + tx_2, \parentheses*{1 - t}y_1 + ty_2} \in E\parentheses*{f}\) which implies that the epigraph \(E\parentheses*{f}\) is convex.
+	Now first assume that the set \(D\) is not convex.
+	Then there exists a linear combination of \(x_1, x_2 \in D\) and \(t \in \brackets*{0, 1}\) such that \(\parentheses*{1 - t}x_1 + tx_2 \not\in D\) from which we obtain
+	\[
+		\parentheses*{\parentheses*{1 - t}x_1 + tx_2, \parentheses*{1 - t}y_1 + ty_2} \not\in E\parentheses*{f}
+	\]
+	for \(\parentheses*{x_1, y_1}, \parentheses*{x_2, y_2} \in E\parentheses*{f}\), which means that \(E\parentheses*{f}\) is not convex if \(D\) is not convex.
+	Now assume that the function \(f\) is not convex.
+	Then there exists a linear combination of \(x_1, x_2 \in D\) and \(t \in \brackets*{0, 1}\) such that
+	\[
+		f\parentheses*{\parentheses*{1 - t}x_1 + tx_2} > \parentheses*{1 - t}f\parentheses*{x_1} + tf\parentheses*{x_2}.
+	\]
+	Since \(\parentheses*{x, f\parentheses*{x}} \in E\parentheses*{f}\) should be true for all \(x \in D\) we obtain the contradiction
+	\[
+		\parentheses*{\parentheses*{1 - t}x_1 + tx_2, \parentheses*{1 - t}f\parentheses*{x_1} + tf\parentheses*{x_2}} \not\in E\parentheses*{f},
+	\]
+	which means that in this case the epigraph \(E\parentheses*{f}\) is not convex either.
+
+
+	\section{}
+
+	\begin{quote}
+		Determine whether the following sets or functions are convex:
+		\begin{enumerate}
+			\item \(\braces*{x \in \R^n : Ax \le 0}\), \(A \in \R^{m \times n}\) arbitrary,
+			\item \(f\parentheses*{x} = \sum_{i = 1}^n h_i^2\parentheses*{x_i}\), for \(h_i: \R \to \R^+\) convex. 
+		\end{enumerate}
+	\end{quote}
+
+	\begin{enumerate}
+		\item Let \(x_1, x_2\) be elements of the given set and \(t \in \brackets*{0, 1}\).
+		Then
+		\[
+			A\parentheses*{\parentheses*{1 - t}x_1 + tx_2} = \parentheses*{1 - t}\underbrace{Ax_1}_{\le 0} + t\underbrace{Ax_2}_{\le 0} \le 0.
+		\]
+		Thus the set \(\braces*{x \in \R^n : Ax \le 0}, A \in \R^{m \times n}\) is convex.
+		\item It holds that
+		\begin{align*}
+			f\parentheses*{\parentheses*{1 - t}x_1 + tx_2} &= \sum_{i = 1}^n h_i^2\parentheses*{\parentheses*{1 - t}x_{1, i} + tx_{2, i}}\\
+			&\le \sum_{i = 1}^n \parentheses*{\parentheses*{1 - t}h_i^2\parentheses*{x_{1, i}} + th_i^2\parentheses*{x_{2, i}}}\\
+			&= \parentheses*{1 - t}\sum_{i = 1}^n h_i^2\parentheses*{x_{1, i}} + t\sum_{i = 1}^n h_i^2\parentheses*{x_{2, i}}\\
+			&= \parentheses*{1 - t}f\parentheses*{x_1} + tf\parentheses*{x_2}.
+		\end{align*}
+		In the second step we used that \(\ell\parentheses*{x} = x^2\) and \(h_i\) are convex.
+		Thus the function \(f\) is convex.
+	\end{enumerate}
+
+
+	\section{}
+
+	\begin{quote}
+		Die allgemeine Form eines linearen Mehrschrittverfahrens ist
+		\[
+			\sum_{\ell = 0}^k a_\ell y^{j + \ell} = h\sum_{\ell = 0}^k b_\ell f\parentheses*{t_{j + \ell}, y^{j + \ell}}, \quad j = 0, \ldots, n - k.
+		\]
+		Das Verfahren hat die Konsistenzordnung \(p\), falls die folgenden \(p + 1\) Bedingungen erfüllt sind:
+		\[
+			\sum_{\ell = 0}^k a_\ell = 0, \quad \sum_{\ell = 0}^k \parentheses*{\ell a_\ell - b_\ell} = 0, \quad \sum_{\ell = 0}^k \parentheses*{\ell^\nu a_\ell - \nu\ell^{\nu - 1}b_\ell} = 0, \quad \nu = 2, \ldots, p.
+		\]
+		Wir betrachten die 2-Schrittmethode
+		\[
+			y^{j + 2} = -4y^{j + 1} + 5y^j + h\parentheses*{2f\parentheses*{t_j, y^j} + 4f\parentheses*{t_{j + 1}, y^{j + 1}}}.
+		\]
+		Zeigen Sie, dass dieses Verfahren die Konsistenzordnung \(3\) hat.
+	\end{quote}
+
+	Die Bedingungen für Konsistenzordnung \(p = 3\) eines linearen 2-Schrittverfahrens (\(k = 2\)) sind gegeben durch
+	\begin{align*}
+		a_0 + a_1 + a_2 &= 0,\\
+		-b_0 + a_1 - b_1 + 2a_2 - b_2 &= 0,\\
+		a_1 - 2b_1 + 4a_2 - 4b_2 &= 0,\\
+		a_1 - 3b_1 + 8a_2 - 12b_2 &= 0.
+	\end{align*}
+	Die Koeffizienten des gegebenen Verfahrens sind
+	\[
+		a_0 = -5, \quad a_1 = 4, \quad a_2 = 1, \quad b_0 = 2, \quad b_1 = 4, \quad b_2 = 0.
+	\]
+	Setzen wir dies nun in die gerade bestimmten Bedingungen ein, so erhalten wir
+	\begin{align*}
+		-5 + 4 + 1 &= 0,\\
+		-2 + 4 - 4 + 2 \cdot 1 - 0 &= 0,\\
+		4 - 2 \cdot 4 + 4 \cdot 1 - 4 \cdot 0 &= 0,\\
+		4 - 3 \cdot 4 + 8 \cdot 1 - 12 \cdot 0 &= 0.
+	\end{align*}
+	Somit hat die gegebene 2-Schrittmethode
+	\[
+		y^{j + 2} = -4y^{j + 1} + 5y^j + h\parentheses*{2f\parentheses*{t_j, y^j} + 4f\parentheses*{t_{j + 1}, y^{j + 1}}}.
+	\]
+	tatsächlich die Konsistenzordnung \(3\).
+
+
+	\section{}
+
+	\begin{quote}
+		Bestimmen Sie alle linearen 2-Schrittverfahren mit Konsistenzordnung \(4\).
+	\end{quote}
+
+	Die allgemeine Form eines linearen Mehrschrittverfahrens ist
+	\[
+		\sum_{\ell = 0}^k a_\ell y^{j + \ell} = h\sum_{\ell = 0}^k b_\ell f\parentheses*{t_{j + \ell}, y^{j + \ell}}, \quad j = 0, \ldots, n - k.
+	\]
+	Das Verfahren hat die Konsistenzordnung \(p\), falls die folgenden \(p + 1\) Bedingungen erfüllt sind:
+	\[
+		\sum_{\ell = 0}^k a_\ell = 0, \quad \sum_{\ell = 0}^k \parentheses*{\ell a_\ell - b_\ell} = 0, \quad \sum_{\ell = 0}^k \parentheses*{\ell^\nu a_\ell - \nu\ell^{\nu - 1}b_\ell} = 0, \quad \nu = 2, \ldots, p.
+	\]
+	Für diese Aufgabe haben wir \(p = 4\) und \(k = 2\).
+	Damit ist die allgemeine Form eines linearen 2-Schrittverfahren
+	\[
+		a_0 y^j + a_1 y^{j + 1} + a_2 y^{j + 2} = h\parentheses*{b_0 f\parentheses*{t_j, y^j} + b_1 f\parentheses*{t_{j + 1}, y^{j + 1}} + b_2 f\parentheses*{t_{j + 2}, y^{j + 2}}}, \quad j = 0, \ldots, n - 2
+	\]
+	und die Bedingungen für Konsistenzordnung \(4\) sind
+	\begin{align*}
+		a_0 + a_1 + a_2 &= 0,\\
+		-b_0 + a_1 - b_1 + 2a_2 - b_2 &= 0,\\
+		a_1 - 2b_1 + 4a_2 - 4b_2 &= 0,\\
+		a_1 - 3b_1 + 8a_2 - 12b_2 &= 0,\\
+		a_1 - 4b_1 + 16a_2 - 32b_2 &= 0.
+	\end{align*}
+	Dies ist ein unterbestimmtes Gleichungssystem, welches wir mit dem Gauß-Algorithmus lösen können:
+	\begin{align*}
+		\parentheses*{\begin{array}{cccccc|c}
+			1 & 1 & 1 & 0 & 0 & 0 & 0\\
+			0 & 1 & 2 & -1 & -1 & -1 & 0\\
+			0 & 1 & 4 & 0 & -2 & -4 & 0\\
+			0 & 1 & 8 & 0 & -3 & -12 & 0\\
+			0 & 1 & 16 & 0 & -4 & -32 & 0
+		\end{array}} &\xrightarrow[R_5 := R_5 + \parentheses*{-1} \cdot R_2]{\substack{R_3 := R_3 + \parentheses*{-1}R_2\\R_4 := R_4 + \parentheses*{-1}R_2}} \parentheses*{\begin{array}{cccccc|c}
+			1 & 1 & 1 & 0 & 0 & 0 & 0\\
+			0 & 1 & 2 & -1 & -1 & -1 & 0\\
+			0 & 0 & 2 & 1 & -1 & -3 & 0\\
+			0 & 0 & 6 & 1 & -2 & -11 & 0\\
+			0 & 0 & 14 & 1 & -3 & -31 & 0
+		\end{array}}\\
+		&\xrightarrow[R_5 := R_5 + \parentheses*{-7} \cdot R_3]{R_4 := R_4 + \parentheses*{-3} \cdot R_3} \parentheses*{\begin{array}{cccccc|c}
+			1 & 1 & 1 & 0 & 0 & 0 & 0\\
+			0 & 1 & 2 & -1 & -1 & -1 & 0\\
+			0 & 0 & 2 & 1 & -1 & -3 & 0\\
+			0 & 0 & 0 & -2 & 1 & -2 & 0\\
+			0 & 0 & 0 & -6 & 4 & -10 & 0
+		\end{array}}\\
+		&\xrightarrow{R_5 := R_5 + \parentheses*{-3} \cdot R_4} \parentheses*{\begin{array}{cccccc|c}
+			1 & 1 & 1 & 0 & 0 & 0 & 0\\
+			0 & 1 & 2 & -1 & -1 & -1 & 0\\
+			0 & 0 & 2 & 1 & -1 & -3 & 0\\
+			0 & 0 & 0 & -2 & 1 & -2 & 0\\
+			0 & 0 & 0 & 0 & 1 & -4 & 0
+		\end{array}}
+	\end{align*}
+	Sei nun \(b_2 = c \in \R\) beliebig wählbar. Dann ist die Lösung des Gleichungssystems gegeben durch
+	\[
+		a_0 = -3c, \quad a_1 = 0, \quad a_2 = 3c, \quad b_0 = c, \quad b_1 = 4c, \quad b_2 = c.
+	\]
+	Folglich sind alle linearen 2-Schrittverfahren mit Konsistenzordnung \(4\) gegeben durch
+	\begin{align*}
+		-3cy^j + 3cy^{j + 2} &= h\parentheses*{cf\parentheses*{t_j, y^j} + 4cf\parentheses*{t_{j + 1},y^{j + 1}} + cf\parentheses*{t_{j + 2}, y^{j + 2}}}\\
+		\iff y^{j + 2} &= y^j + \frac{1}{3}h\parentheses*{f\parentheses*{t_j, y^j} + 4f\parentheses*{t_{j + 1},y^{j + 1}} + f\parentheses*{t_{j + 2}, y^{j + 2}}}, \quad j = 0, \ldots, n - 2.
+	\end{align*}
+\end{document}

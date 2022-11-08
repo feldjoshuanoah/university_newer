@@ -1,0 +1,202 @@
+\documentclass[english]{exercise}
+
+\include{preamble}
+
+\title{Homework 3}
+\author{Joshua Feld, 406718}
+\professor{Prof. Kowalski}
+\course{Partial Differential Equations}
+
+\begin{document}
+	\maketitle
+
+
+	\section{}
+
+	\begin{quote}
+		Consider the Poisson equation in 1D on the domain \(\Omega = \parentheses*{0, 1}\):
+		\begin{align*}
+			-\Delta u &= f, \quad \text{in }\Omega,\\
+			u &= 0, \quad \text{on }\partial\Omega.
+		\end{align*}
+		For each of the following choices of the function \(f\), write down the weak formulation of the Poission problem and find the solution to the weak formlation.
+		Verify that the proposed weak solution satisfies the weak formulation in each case.
+		\begin{enumerate}
+			\item \(f \equiv 0\),
+			\item \(f = \delta_{\frac{1}{2}}\),
+			\item \(f\parentheses*{x} = \begin{cases}
+				0, & \text{if }x \le \frac{1}{2},\\
+				1, & \text{if }x > \frac{1}{2}.
+			\end{cases}\)
+		\end{enumerate}
+	\end{quote}
+
+	\begin{enumerate}
+		\item The PDE is \(-u''\parentheses*{x} = 0\) which implies that the solution has the form \(u\parentheses*{x} = ax + b, a, b \in \R\).
+		With the boundary conditions \(u\parentheses*{0} = u\parentheses*{1} = 0\) we obtain \(a = b = 0\) and thus we obtain \(u\parentheses*{x} = 0\) as a classical solution (since it's continuous and differentiable).
+		Quite obviuously, it is also a weak solution, because
+		\[
+			\int_\Omega \nabla u \cdot \nabla v\d x = \int_\Omega 0 \cdot \nabla v\d x = 0 \int_\Omega fv\d x \quad \forall v \in H_0^1\parentheses*{\Omega}.
+		\]
+		\item Consider the two subintervals \(\parentheses*{0, \frac{1}{2}}\) and \(\parentheses*{\frac{1}{2}, 1}\) on which a classical problem is given because \(f\) is regular.
+		We can now apply a linear function to the left and right interval
+		\begin{align*}
+			u_\ell\parentheses*{x} &= a_\ell x + b_\ell,\\
+			u_r\parentheses*{x} &= a_r x + b_r.
+		\end{align*}
+		The boundary conditions give us \(b_\ell = 0\) and \(a_r + b_r = 0\).
+		We now have to connect two straight lines, which are fixed at the points \(0\) and \(1\), such that the functions are continuous and the second derivative results in a negative delta distribution at \(x = \frac{1}{2}\).
+		We know that this corresponds to a kink with a slope change of \(-1\) and thus
+		\begin{align*}
+			u_\ell\parentheses*{\frac{1}{2}} = u_r\parentheses*{\frac{1}{2}} &\iff \frac{1}{2}a_\ell = \frac{1}{2}a_r + b_r,\\
+			u_\ell'\parentheses*{\frac{1}{2}} - 1 = u_r'\parentheses*{\frac{1}{2}} &\iff a_\ell - 1 = a_r.
+		\end{align*}
+		These four equations give us the solution
+		\[
+			a_\ell = \frac{1}{2}, b_\ell = 0, \quad a_r = -\frac{1}{2}, b_r = \frac{1}{2}.
+		\]
+		The candidate for the weak solution is
+		\[
+			u\parentheses*{x} = \begin{cases}
+				\frac{1}{2}x, & \text{if }x \le \frac{1}{2},\\
+				\frac{1}{2} - \frac{1}{2}x, & \text{if }x > \frac{1}{2}.
+			\end{cases}
+		\]
+		We now only need to verify that this is in fact a weak solution by plugging it into the weak formulation
+		\begin{align*}
+			\int\nabla u\nabla v\d x &= \int_0^{\frac{1}{2}}\frac{1}{2}\nabla v\d x + \int_{\frac{1}{2}}^1 -\frac{1}{2}\nabla v\d x\\
+			&= \frac{1}{2}\parentheses*{v\parentheses*{1}{2} - v\parentheses*{0}} - \frac{1}{2}\parentheses*{v\parentheses*{1} - v\parentheses*{\frac{1}{2}}}\\
+			&\stackrel{v\parentheses*{0} = v\parentheses*{1} = 0}{=} v\parentheses*{\frac{1}{2}} = \int_\Omega \delta_{\frac{1}{2}}v\d x \quad \forall v \in H_0^1\parentheses*{\Omega}.
+		\end{align*}
+		\item Again, consider the two subintervals \(\parentheses*{0, \frac{1}{2}}\) and \(\parentheses*{\frac{1}{2}, 1}\).
+		The procedure is very analogous to the previous exercise. We use two functions
+		\begin{align*}
+			u_\ell\parentheses*{x} &= a_\ell x + b_\ell,\\
+			u_r\parentheses*{x} &= -\frac{1}{2}x^2 + a_r x + b_r.
+		\end{align*}
+		From the boundary conditions we obtain \(b_\ell = 0\) and \(a_r + b_r = \frac{1}{2}\).
+		\(u\) and its first derivative need to be continuous.
+		We end up with the following two additional equations which help us find the remaining parameters for the candidate of the weak solution:
+		\begin{align*}
+			u_\ell\parentheses*{\frac{1}{2}} = u_r\parentheses*{\frac{1}{2}} &\iff \frac{1}{2}a_\ell = -\frac{1}{8} + \frac{1}{2}a_r + b_r,\\
+			u_\ell'\parentheses*{\frac{1}{2}} = u_r'\parentheses*{\frac{1}{2}} &\iff a_\ell = -\frac{1}{2} + a_r.
+		\end{align*}
+		Thus
+		\[
+			a_\ell = \frac{1}{8}, b_\ell = 0, \quad a_r = \frac{5}{8}, b_r = -\frac{1}{8}
+		\]
+		and
+		\[
+			u\parentheses*{x} = \begin{cases}
+				\frac{1}{8}x, & \text{if }x \le \frac{1}{2},\\
+				-\frac{1}{2}x^2 + \frac{5}{8}x - \frac{1}{8}, & \text{if }x > \frac{1}{2}.
+			\end{cases}
+		\]
+		We again verify that this is actually a weak solution
+		\begin{align*}
+			\int_\Omega \nabla u\nabla v\d x &= \int_0^{\frac{1}{2}}\frac{1}{8}\nabla v\d x + \int_{\frac{1}{2}}^1 \parentheses*{\frac{5}{8} - x}\nabla v\d x\\
+			&= \frac{1}{8}\parentheses*{v\parentheses*{\frac{1}{2}} - v\parentheses*{0}} + \brackets*{\parentheses*{\frac{5}{8} - x}v\parentheses*{x}}_{\frac{1}{2}}^1 - \int_{\frac{1}{2}}^1 \nabla\parentheses*{\frac{5}{8} - x}v\d x\\
+			&= \frac{1}{8}\parentheses*{v\parentheses*{\frac{1}{2}} - v\parentheses*{0} - 3v\parentheses*{1} - v\parentheses*{\frac{1}{2}}} + \int_{\frac{1}{2}}^1 v\d x\\
+			&\stackrel{v\parentheses*{0} = v\parentheses*{1} = 0}{=} \int_{\frac{1}{2}}^1 v\d x = \int_\Omega fv\d x \quad \forall v \in H_0^1\parentheses*{\Omega}.
+		\end{align*}
+	\end{enumerate}
+
+
+	\section{}
+
+	\begin{quote}
+		Let \(\Omega\) be a bounded set with boundary \(\partial\Omega\), where \(\partial\Omega = \Gamma_1 \cup \Gamma_2, \Gamma_1 \cap \Gamma_2 = \emptyset\).
+		Additionally, let \(c > 0\) and let the functions \(f, g, p, q \in C^0\parentheses*{\Omega}\).
+		Next, we define the set \(V := \braces*{v \in H^1\parentheses*{\Omega} : \left.v\right|_{\Gamma_1} = 0}.\).
+		Assume that the function \(u \in H^1\parentheses*{\Omega}\) with \(\left.u\right|_{\Gamma_1} = g\) satisfies the following weak formulation:
+		\[
+			\int_\Omega \parentheses*{\nabla u\nabla v + cuv}\d x + \int_{\Gamma_2}\parentheses*{pu - q}v\d s = \int_\Omega fv\d x \quad \forall v \in V.
+		\]
+		If \(u \in C^2\parentheses*{\Omega} \cap C^1\parentheses*{\bar{\Omega}}\), then what classical PDE does \(u\) solve?
+	\end{quote}
+
+	Since \(v = 0\) on \(\Gamma_1\) we obtain using integration by parts that
+	\[
+		\int_\Omega \parentheses*{-\Delta u + cu}v\d x + \int_{\Gamma_2}\parentheses*{\frac{\partial u}{\partial n} + pu - q}v\d s = \int_\Omega fv\d x
+	\]
+	for all test functions \(v \in V\).
+	In particular for \(v \in H_0^1\parentheses*{\Omega} \subset V\) we obtain
+	\[
+		\int_\Omega \parentheses*{-\Delta u + cu}v\d x = \int_\Omega fv\d x \iff -\Delta u + cu = f, \quad \text{in }\Omega.
+	\]
+	Returning to the first equation, we see that we must have
+	\[
+		\int_{\Gamma_2}\parentheses*{\frac{\partial u}{\partial n} + pu - q}v\d s = 0
+	\]
+	for all \(v \in V\).
+	Naturally, this yields the boundary condition
+	\[
+		\frac{\partial u}{\partial n} + pu = q, \quad \text{on }\Gamma_2.
+	\]
+	We conclude that the classical PDE associated with the above weak formulation is given by
+	\begin{align*}
+		-\Delta u + cu &= f, \quad \text{in }\Omega,\\
+		u &= g, \quad \text{on }\Gamma_1,\\
+		\frac{\partial u}{\partial n} + pu &= q, \quad \text{on }\Gamma_2.
+	\end{align*}
+
+
+	\section{}
+
+	\begin{quote}
+		Let \(\Omega \subset \R\) be an open bounded domain.
+		Consider the following Robin boundary (which is a combination of Dirichlet and Neumann boundary conditions) value problem
+		\begin{align*}
+			-\Delta u + \alpha u &= f, \quad \text{in }\Omega,
+			\nabla u \cdot n + \beta u &= g, \quad \text{on }\partial\Omega,
+		\end{align*}
+		where \(f, g \in L^2\parentheses*{\Omega}\).
+		\begin{enumerate}
+			\item Derive the weak formulation of the above problem, including the statement of reasonable function spaces for the solution and test functions.
+			\item Prove that for any \(\alpha > 0\) and \(\beta \ge 0\) there exists a unique solution.
+		\end{enumerate}
+	\end{quote}
+
+	\begin{enumerate}
+		\item Multiplying the given differential equation by \(v\parentheses*{x} \in H^1\parentheses*{\Omega}\) and integrating over the domain \(\Omega\), we get
+		\[
+			-\int_\Omega v\Delta u\d x + \int_\Omega \alpha uv\d x = \int_\Omega fv\d x.
+		\]
+		Integrating by parts, we get
+		\begin{align*}
+			\int_\Omega \nabla u \cdot \nabla v\d x - \int_{\partial\Omega}\parentheses*{\nabla u \cdot n}v\d x + \int_\Omega \alpha uv\d x &= \int_\Omega fv\d x\\
+			\iff \int_\Omega \nabla u \cdot \nabla v\d x - \int_{\partial\Omega}\parentheses*{g - \beta u}v\d x + \int_\Omega \alpha uv\d x &= \int_\Omega fv\d x.
+		\end{align*}
+		The weak formulation of the given problem can thus be given as:
+		Find \(u \in H^1\parentheses*{\Omega}\) such that
+		\[
+			a\parentheses*{u, v} = \ell\parentheses*{v} \quad \forall v \in H^1\parentheses*{\Omega},
+		\]
+		where
+		\begin{align*}
+			a\parentheses*{u, v} &= \int_\Omega \nabla u \cdot \nabla v\d x + \int_\Omega \alpha uv\d x + \int_{\partial\Omega}\beta uv\d x,\\
+			\ell\parentheses*{v} &= \int_\Omega fv\d x + \int_{\partial\Omega}gv\d x.
+		\end{align*}
+		\item We first look at the continuity property:
+		\begin{align*}
+			\absolute*{a\parentheses*{u, v}} &= \absolute*{\int_\Omega \nabla u \cdot \nabla v\d x + \int_\Omega \alpha uv\d x + \int_{\partial\Omega}\beta uv\d x}\\
+			&\le \absolute*{\int_\Omega \nabla u \cdot \nabla v\d x} + \absolute*{\int_\Omega \alpha uv\d x} + \absolute*{\int_{\partial\Omega}\beta uv\d x}\\
+			&\le \sqrt{\int_\Omega \absolute*{\nabla u}^2 \d x}\sqrt{\int_\Omega \absolute*{\nabla v}^2 \d x} + \absolute*{\alpha}\sqrt{\int_\Omega \absolute*{u}^2 \d x}\sqrt{\int_\Omega \absolute*{v}^2 \d x} + \absolute*{\beta}\sqrt{\int_{\partial\Omega}\absolute*{u}^2 \d x}\sqrt{\int_{\partial\Omega}\absolute*{v}^2 \d x}\\
+			&\le \sqrt{\int_\Omega \parentheses*{\absolute*{\nabla u}^2 + \absolute*{u}^2}\d x}\sqrt{\int_\Omega \parentheses*{\absolute*{\nabla v}^2 + \absolute*{v}^2}\d x} + \absolute*{\alpha}\sqrt{\int_\Omega \parentheses*{\absolute*{\nabla u}^2 + \absolute*{u}^2}\d x}\sqrt{\int_\Omega \parentheses*{\absolute*{\nabla v}^2 + \absolute*{v}^2}\d x}\\
+			&\quad + \absolute*{\beta}\sqrt{\int_{\partial\Omega}\parentheses*{\absolute*{\nabla u}^2 + \absolute*{u}^2}\d x}\sqrt{\int_{\partial\Omega}\parentheses*{\absolute*{\nabla v}^2 + \absolute*{v}^2}\d x}\\
+			&\le \norm*{u}_1 \norm*{v}_1 + \absolute*{\alpha}\norm*{u}_1 \norm*{v}_1 + \absolute*{\beta}\norm*{u}_1 \norm*{v}_1\\
+			&= \parentheses*{1 + \absolute*{\alpha} + \absolute*{\beta}}\norm*{u}_1 \norm*{v}_1.
+		\end{align*}
+		Therefore, the bilinear form \(a\parentheses*{u, v}\) is continuous for \(\alpha, \beta \ge 0\).
+		We now look at the coercive property.
+		Notice that if \(\beta \ge 0\) then we have
+		\begin{align*}
+			a\parentheses*{v, v} &= \int_\Omega \nabla u \cdot \nabla v\d x + \int_\Omega \alpha vv\d x + \int_{\partial\Omega}\beta vv\d x\\
+			&\ge \int_\Omega \absolute*{\nabla u}^2 \d x + \alpha\int_\Omega \absolute*{v}^2 \d x\\
+			&\ge \min\parentheses*{1, \alpha}\int_\Omega \parentheses*{\absolute*{\nabla v}^2 + \absolute*{v}^2}\d x.
+		\end{align*}
+		Consequently, the bilinear form is coercive if \(\alpha > 0\) and \(\beta \ge 0\).
+		In can easily be verified that the functional \(\ell\parentheses*{v}\) is continuous and further it does not depend on \(\alpha\) and \(\beta\).
+		Therfore the given boundary value problem has a unique solution for all \(\alpha \ge 1, \beta > 0\).
+	\end{enumerate}
+\end{document}

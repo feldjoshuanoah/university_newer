@@ -1,0 +1,50 @@
+\section{Theory of Weak Solutions}
+
+The classical solution theory of the Poisson problem \(-\Delta u = f\) in \(\Omega\) with boundary conditions \(u = 0\) on \(\partial\Omega\) requires two classical derivatives.
+That is, to at least make sense of the Laplace operator \(\Delta\), we require \(u \in C^2\parentheses*{\Omega}\).
+We have seen, that this might be too restrictive in general.
+To remedy this shortcoming we need to reformulate the problem statement and allow for a ``weaker'' solution concept.
+
+
+\subsection{Variational Formulation}
+
+We multiply the Poisson problem by an arbitrary, sufficiently smooth test function \(v \in V\) defined on \(\Omega\) and integrate over \(\Omega\):
+\[
+	-\int_\Omega v \cdot \Delta u\d x = \int_\Omega v \cdot f\d x.
+\]
+Partial integration for \(\Delta u = \div\parentheses*{\grad u}\) yields
+\begin{align*}
+	-\int_\Omega v \cdot \Delta u\d x &= -\int_\Omega \parentheses*{\div\parentheses*{v\grad u} - \grad u \cdot \grad v}\d x\\
+	&= -\int_\Omega \div\parentheses*{v\grad u}\d x + \int_\Omega \grad u \cdot \grad v\d x\\
+	&= -\int_{\partial\Omega}vn \cdot \grad u\d s + \int_\Omega \grad u \cdot \grad v\d x
+\end{align*}
+where we used Gauss' theorem, denoting the outward pointing normal by \(n\) on the domain boundary \(\partial\Omega\).
+Rearranging terms, we arrive at
+\[
+	\int_\Omega \grad u \cdot \grad v\d x - \int_{\partial\Omega}vn \cdot \grad u\d s = \int_\Omega v \cdot f\d x.
+\]
+We observe that the boundary integral is ready to accommodate Neumann boundary conditions (comes later).
+Moreover, homogeneous Dirichlet conditions \(u = 0\) on \(\partial\Omega\) are commonly ``built'' into the function space, that is, we simply require the test functions to satisfy \(\left.v\right|_{\partial\Omega} = 0\), so that the boundary integral vanishes.
+
+\begin{definition}
+	The problem statement
+	\begin{quote}
+		``Find the function \(u: \Omega \to \R\) with \(\left.u\right|_{\partial\Omega} = 0\) such that the relation
+		\[
+			\int_\Omega \nabla u \cdot \nabla v\d x = \int_\Omega v \cdot f\d x
+		\]
+		is satisfied for all test functions \(v \in V\).''
+	\end{quote}
+	is called the \emph{weak} or \emph{variational formulation} of the PDE problem
+	\[
+		-\Delta u = f\text{ in }\Omega, \quad \text{and} \quad u = 0\text{ on }\partial\Omega.
+	\]
+	Its solution is called \emph{weak solution}.
+\end{definition}
+
+\begin{remark}
+	\begin{enumerate}
+		\item In, e.g., 2D, we have \(\nabla u \cdot \nabla v = \grad u \cdot \grad v = \partial_x u \partial_x v + \partial_y u\partial_y v\) for the scalar product.
+		\item Every classical, 
+	\end{enumerate}
+\end{remark}

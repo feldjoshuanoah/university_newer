@@ -1,0 +1,193 @@
+\documentclass{lecture}
+
+\include{preamble}
+
+\title{Vorlesung 1}
+\author{Joshua Feld, 406718}
+\professor{Prof. Stamm}
+\course{Mathematische Grundlagen III}
+
+\begin{document}
+	\maketitle
+
+
+	\tableofcontents
+
+
+	\section{Einfache Einschrittverfahren}
+
+	Zunächst wollen wir kurz einige Notationen klären und nützliche Resultate zur Theorie gewöhnlicher Differentialgleichungen rekapitulieren, die wir im Folgenden benutzen werden.
+
+	Wir betrachten Anfangswertprobleme für gewöhnliche Differentialgleichungen:
+	\begin{equation}
+		\begin{alignedat}{2}
+			\dot{x}\parentheses*{t} &= f\parentheses*{t, x\parentheses*{t}}, \quad & &a \le t \le b,\\
+			x\parentheses*{t_0} &= x_0, & &a \le t_0 \le b.
+		\end{alignedat}
+	\end{equation}
+	Dabei ist die rechte Seite gegeben durch
+	\[
+		f: \brackets*{a, b} \times \R^d \to \R^d, f = \begin{pmatrix}
+			f_1\\
+			\vdots\\
+			f_d
+		\end{pmatrix}
+	\]
+	und die Lösung hat die Form
+	\[
+		x: \brackets*{a, b} \to \R^d, x = \begin{pmatrix}
+			x_1\\
+			\vdots\\
+			x_d
+		\end{pmatrix}.
+	\]
+
+	\begin{definition}
+		Die Funktion \(f: \brackets*{a, b} \times \R^d \to \R^d\) ist \emph{global Lipschitz-stetig} bzgl. \(x\), falls
+		\begin{equation}
+			\norm*{f\parentheses*{t, x_1} - f\parentheses*{t, x_2}} \le L\norm*{x_1 - x_2}
+		\end{equation}
+		für alle \(t \in \brackets*{a, b}\) und \(x_1, x_2 \in \R^d\).
+	\end{definition}
+
+	Für global Lipschitz-stetige rechte Seiten gilt der Existenz- und Eindeutigkeitssatz von Picard-Lindelöf.
+
+	\begin{proposition}[Picard-Lindelöf]
+		Sei \(f\) global Lipschitz-stetig bzgl. \(x\).
+		Dann existiert zu jedem \(x_0 \in \R^d\) und \(a \le t_0 \le b\) genau eine Lösung \(x \in C^1\parentheses*{\brackets*{a, b}}\) des Anfangswertproblems 
+	\end{proposition}
+
+	Für die weitere Untersuchung führen wir folgende Sprechweise ein:
+	Sei \(x\) die Lösung des AWP \(\dot{x} = f\parentheses*{t, x}, x\parentheses*{t_0} = x_0\) auf \(\brackets*{a, b}\).
+	Dann ist durch
+	\[
+		\phi^{t, t_0}x_0 = x\parentheses*{t; t_0, x_0}
+	\]
+	die \emph{Evolution der Differentialgleichung} gegeben.
+	Für die Evolution gilt:
+	\begin{itemize}
+		\item \(\phi^{t, t}x_0 = x_0\),
+		\item \(\left.\frac{\d}{\d\tau}\phi^{t + \tau, t}x\right|_{\tau = 0} = f\parentheses*{t, x}\),
+		\item \(\phi^{t, \sigma}\phi^{\sigma, s}x = \phi^{t, s}x\).
+	\end{itemize}
+
+	\begin{remark}
+		Betrachtet man autonome Probleme
+		\[
+			\dot{x} = f\parentheses*{x}, \quad x\parentheses*{t_0} = x_0,
+		\]
+		dann entsteht durch Translation um \(\tau \in \R\) eine Lösung \(\hat{x}\parentheses*{t} = x\parentheses*{t - \tau}\) des AWP
+		\[
+			\frac{\d}{\d t}\hat{x} = f\parentheses*{\hat{x}}, \quad \hat{x}\parentheses*{t_0 + \tau} = x_0.
+		\]
+		D.h. bei autonomen Problemen spielt der Startpunkt keine Rolle.
+		Wir wählen immer \(t_0 = 0\) und \(a \le 0 \le b\), und schreiben \(\phi^t\) statt \(\phi^{t, t_0}\).
+	\end{remark}
+
+	Will man die Auswirkung von Störungen in den Anfangswerten für \emph{lange} Zeiten untersuchen, so muss man die Stabilität von Lösungen betrachten.
+	Seien \(\parentheses*{t_0, x_0}\) und die Evolution \(\phi^{t, t_0}x_0\) der DGL \(\dot{x} = f\parentheses*{t, x}\) für alle \(t \ge t_0\) gegeben.
+	Die Lösung \(\phi^{t, t_0}x_0\) heißt
+	\begin{itemize}
+		\item \emph{stabil (Ljapunov-stabil)}, falls für alle \(\varepsilon > 0\) ein \(\delta > 0\) existiert, so dass
+		\[
+			\phi^{t, t_0}x \in B_\varepsilon\parentheses*{\phi^{t, t_0}x_0}
+		\]
+		für alle \(t > t_0\) für alle gestörten Anfangswerte \(x \in B_\delta\parentheses*{x_0}\),
+		\item \emph{asymptotisch stabil}, falls zusätzlich ein \(\delta_0 > 0\) existiert, so dass
+		\[
+			\lim_{t \to \infty}\absolute*{\phi^{t, t_0}x_0 - \phi^{t, t_0}x} = 0
+		\]
+		für alle \(x \in B_{\delta_0}\parentheses*{x_0}\),
+		\item \emph{instabil} in allen anderen Fällen.
+	\end{itemize}
+	Wir untersuchen zunächst homogene, lineare autonome Systeme:
+	\[
+		\dot{x} = Ax, \quad A \in \R^{d \times d}.
+	\]
+	Dann ist \(\phi^t: \R^d \to \R^d\) eine lineare Abbildung.
+	Die Stabilität eines linearen autonomen Systems kann leicht überprüft werden.
+
+	\begin{definition}
+		\begin{enumerate}
+			\item Das \emph{Spektrum} einer Matrix \(A \in \C^{d \times d}\) ist
+			\[
+				\sigma\parentheses*{A} = \braces*{\lambda \in \C : \det\parentheses*{\lambda I - A} = 0}.
+			\]
+			\item Die \emph{Spektralabszisse} von \(A\) ist der maximale Realteil der Eigenwerte
+			\[
+				\nu\parentheses*{A} = \max_{\lambda \in \sigma\parentheses*{A}}\Re\parentheses*{\lambda}.
+			\]
+			\item Der \emph{Index} \(i\parentheses*{\lambda}\) eines Eigenwertes \(\lambda \in \sigma\parentheses*{A}\) ist die maximale Dimension der zu \(\lambda\) gehörenden Jordanblöcke von \(A\).
+		\end{enumerate}
+	\end{definition}
+
+	\begin{proposition}
+		Das lineare Anfangswertproblem \(\dot{x} = Ax, A \in \R^{d \times d}\) ist genau dann stabil, falls \(\nu\parentheses*{A} \le 0\) und alle Eigenwerte \(\lambda \in \sigma\parentheses*{A}\) mit \(\Re\parentheses*{\lambda} = 0\) den Index \(i\parentheses*{\lambda} = 1\) besitzen.
+		Es ist asymptotisch stabil, falls \(v\parentheses*{A} < 0\) gilt.
+	\end{proposition}
+
+	Jetzt wollen wir uns der numerischen Lösung von Anfangswertproblemen zuwenden.
+	Eine Idee dazu ist uns bereits beim Beweis des Existenzsatzes von Peano über den Weg gelaufen, nämlich das sogenannte Polygonzugverfahren.
+	Man benutzt zur Approximation der Lösung \(x\parentheses*{t}\) von
+	\[
+		\dot{x}\parentheses*{t} = f\parentheses*{t, x\parentheses*{t}}, \quad x\parentheses*{t_0} = x_0
+	\]
+	ein Polygon, das man wie folgt erhält:
+	Wähle eine Unterteilung (oder auch Gitter) \(\Delta = \braces*{t_0, \ldots, t_n : t_0 < \cdots < t_n = T}\) des Intervalls \(\brackets*{t_0, T}\) und konstruiere eine Approximation \(x_\Delta\) durch folgende rekursive Vorschrift:
+	\begin{align*}
+		x_\Delta\parentheses*{t_0} &= x_0,\\
+		x_\Delta\parentheses*{t} &= x_0 + \parentheses*{t - t_0}\underbrace{f\parentheses*{t_0, x_0}}_{\sim \dot{x}\parentheses*{t_0}} &&\text{für }t \in \brackets*{t_0, t_1},\\
+		x_\Delta\parentheses*{t} &= x_\Delta\parentheses*{t_j} + \parentheses*{t - t_j}f\parentheses*{t_j, x_\Delta\parentheses*{t_j}} &&\text{für }t \in \brackets*{t_j, t_{j + 1}}, j = 0, \ldots, n - 1.
+	\end{align*}
+	D.h. \(x_j := x_\Delta\parentheses*{t_j}\) ist gegeben durch die Iterationsvorschrift
+	\begin{equation}
+		x_{j + 1} = x_j + \parentheses*{t_{j + 1} - t_j}f\parentheses*{t_j, x_j},
+	\end{equation}
+	wobei \(x_0\) gegeben ist.
+	Diese Iteration ist einfach auf einem Rechner implementierbar.
+	Das Verfahren heißt \emph{explizites Euler-Verfahren}.
+	``Explizit'', da die Iterationsvorschrift direkt benutzt werden kann, um \(x_{j + 1}\) zu berechnen.
+
+	Das explizite Euler-Verfahren lässt sich auch dahingehend interpretieren, als dass die Ableitung durch einen Differenzenquotienten ersetzt wurde.
+	Aus
+	\[
+		\dot{x}\parentheses*{t} = f\parentheses*{t, x\parentheses*{t}}
+	\]
+	wird
+	\[
+		\frac{x_{j + 1} - x_j}{t_{j + 1} - t_j} = f\parentheses*{t_j, x_j}.
+	\]
+	Es sind auch andere Differenzenquotienten denkbar, z.B. der andere einseitige Quotient
+	\[
+		\frac{x_j - x_{j - 1}}{t_j - t_{j - 1}} = f\parentheses*{t_j, x_j},
+	\]
+	bzw. nach Indexverschiebung
+	\[
+		\frac{x_{j + 1} - x_j}{t_{j + 1} - t_j} = f\parentheses*{t_{j + 1}, x_{j + 1}} \quad \text{oder} \quad x_{j + 1} = x_j + \parentheses*{t_{j + 1} - t_j}f\parentheses*{t_{j + 1}, x_{j + 1}}.
+	\]
+	Dieses Verfahren heißt \emph{implizites Euler-Verfahren}.
+	``Implizit'' daher, dass der neu zu bestimmende Wert \(x_{j + 1}\) auch in der rechten Seite \(f\) auftaucht, und daher ein Gleichungssystem gelöst werden muss.
+
+	Eine weitere Möglichkeit, Verfahren herzuleiten, ist durch Quadraturformeln.
+	Wir integrieren die gewöhnliche Differentiagleichung über das Intervall \(\brackets*{t_j, t_{j + 1}}\) und erhalten
+	\[
+		\int_{t_j}^{t_{j + 1}}\dot{x}\parentheses*{t}\d t = \int_{t_j}^{t_{j + 1}}f\parentheses*{t, x\parentheses*{t}}\d t \iff x\parentheses*{t_{j + 1}} - x\parentheses*{t_j} = \int_{t_j}^{t_{j + 1}}f\parentheses*{t, x\parentheses*{t}}\d t.
+	\]
+	Dann verwenden wir für die rechte Seite eine Quadraturformel, z.B. die Trapezregel
+	\[
+		x\parentheses*{t_{j + 1}} - x\parentheses*{t_j} \approx \frac{t_{j + 1} - t_j}{2}\parentheses*{f\parentheses*{t_j, x\parentheses*{t_j}} + f\parentheses*{t_{j + 1}, x\parentheses*{t_{j + 1}}}}.
+	\]
+	Es ist nicht überraschend, dass diese Methode Trapezverfahren heißt.
+	Das Trapezverfahren ist ebenfalls implizit.
+
+	\begin{example}
+		Wir betrachten die einfache gewöhnliche Differentialgleichung \(\dot{x} = \lambda x\) it einem \(\lambda \in \R\).
+		Wir wenden die obigen drei Verfahren an mit einer festen Schrittweite \(\tau\).
+		Die impliziten Gleichungen kann man leicht auflösen und erhält
+		\begin{align*}
+			x_{j + 1} &= \parentheses*{1 + \tau\lambda}x_j, &&\text{explizites Eulerverfahren},\\
+			x_{j + 1} &= \frac{1}{1 - \tau\lambda}x_j, &&\text{implizites Eulerverfahren},\\
+			x_{j + 1} &= \frac{1 + \frac{\tau\lambda}{2}}{1 - \frac{\tau\lambda}{2}}x_j, &&\text{Trapezverfahren}.
+		\end{align*}
+	\end{example}
+\end{document}

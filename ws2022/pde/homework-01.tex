@@ -1,0 +1,171 @@
+\documentclass[english]{exercise}
+
+\include{preamble}
+
+\title{Homework 1}
+\author{Joshua Feld, 406718}
+\professor{Prof. Kowalski}
+\course{Partial Differential Equations}
+
+\begin{document}
+	\maketitle
+
+
+	\section{}
+
+	\begin{enumerate}
+		\item
+		\begin{enumerate}
+			\item For all \(n \in \N\) we have that \(u\) is continuous and bounded in \(\Omega\).
+			Since \(\Omega\) is a bounded set \(u\) is in each one of the \(L^p\) spaces.
+			Clearly \(u\) does not have compact support in \(\Omega\) for any \(n \in \N\).
+			Next, \(u\) is continuous for all \(n \in \N\).
+			Furthermore we observe that for all \(n \in \N\) it holds that
+			\[
+				u\parentheses*{x} = \absolute*{x}^n = \begin{cases}
+					\absolute*{x}^{2k + 1}, k \in \N, & \text{if }n\text{ is odd},\\
+					\absolute*{x}^{2k}, k \in \N, & \text{if }n\text{ is even}.
+				\end{cases}
+			\]
+			Consequently, if \(n\) is even, then \(u\) is just a polynomial so it is infinitely differentiable.
+			On the other hand, if \(n\) is odd, then \(u\) is product of a polynomial and the absolute value function.
+			Consequently, it cannot be differentiable (by the product rule).
+			\item \(u\) has a singularity at \(x = 0\) so it is neither continuous, differentiable nor bounded.
+			Clearly the support of \(u\) is not compact in \(\Omega\).
+			Finally, the following calculations show that \(u \not\in L^1\parentheses*{\Omega}, u \not\in L^2\parentheses*{\Omega}\) for \(n = 1\), \(u \in L^1\parentheses*{\Omega}, u \not\in L^2\parentheses*{\Omega}\) for \(n = 2\) and \(u \in L^1\parentheses*{\Omega}, u \in L^2\parentheses*{\Omega}\) otherwise.
+
+			\(n = 1\):
+			\begin{align*}
+				\norm*{u}_{L^1} &= \int_{-2}^2 \frac{1}{\absolute*{x}}\d x = 2\int_0^2 \frac{1}{x}\d x = 2\brackets*{\ln\parentheses*{x}}_0^2 = 2\parentheses*{\ln 2 - \lim_{x \to 0}\ln x} \to \infty \implies u \not\in L^1\parentheses*{\Omega},\\
+				\norm*{u}_{L^1}^2 &= \int_{-2}^2 \absolute*{x}^{-2}\d x = 2\int_0^2 x^{-2}\d x = -2\brackets*{\frac{1}{x}}_0^2 = -2\parentheses*{\frac{1}{2} - \lim_{x \to 0}\frac{1}{x}} \to \infty \implies u \not\in L^2\parentheses*{\Omega}.
+			\end{align*}
+			\(n = 2\):
+			\begin{align*}
+				\norm*{u}_{L^1} &= \int_{-2}^2 \absolute*{x}^{-\frac{1}{2}}\d x = 2\int_0^2 \frac{1}{\sqrt{x}}\d x = 4\brackets*{\sqrt{x}}_0^2 = 4\parentheses*{\sqrt{2} - \sqrt{0}} < \infty \implies u \in L^1\parentheses*{\Omega},\\
+				\norm*{u}_{L^2}^2 &= \int_{-2}^2 \absolute*{\frac{1}{\sqrt{\absolute*{x}}}}^2\d x = 2\int_0^2 \frac{1}{x}\d x = 2\brackets*{\ln\parentheses*{x}}_0^2 = 2\parentheses*{\ln 2 - \lim_{x \to 0}\ln x} \to \infty \implies u \not\in L^2\parentheses*{\Omega}.
+			\end{align*}
+			\(n = 3\):
+			\begin{align*}
+				\norm*{u}_{L^1} = \int_{-2}^2 \absolute*{x}^{-\frac{1}{n}}\d x = 2\int_0^2 x^{-\frac{1}{n}}\d x = \frac{2}{1 - \frac{1}{n}}\brackets*{x^{1 - \frac{1}{n}}}_0^2 = \frac{2}{1 - \frac{1}{n}}\parentheses*{2^{1 - \frac{1}{n}} - 0} < \infty \implies u \in L^1\parentheses*{\Omega},\\
+				\norm*{u}_{L^2} = \int_{-2}^2 \absolute*{x}^{-\frac{2}{n}}\d x = 2\int_0^2 x^{-\frac{2}{n}}\d x = \frac{2}{1 - \frac{2}{n}}\brackets*{x^{1 - \frac{2}{n}}}_0^2 = \frac{2}{1 - \frac{2}{n}}\parentheses*{2^{1 - \frac{2}{n}} - 0} < \infty \implies u \in L^2\parentheses*{\Omega}.
+			\end{align*}
+			\item First \(u\) goes to zero at \(\pm 1\) exponentially fast, so \(u\) is continuous.
+			Compute
+			\[
+				u'\parentheses*{x} = \begin{cases}
+					-\exp\parentheses*{-\frac{1}{1 - \absolute*{x}^2}} \cdot \frac{2x}{\parentheses*{1 - x^2}^2}, & \text{if }\absolute*{x} < 1,\\
+					0, & \text{elsewhere}.
+				\end{cases}
+			\]
+			When \(\absolute*{x} < 1\), this is a product of a rational function with \(u\) itself.
+			It is itself hence differentiable.
+			Forthermore, \(u'\parentheses*{x}\) is bounded as there are no singularities within \(\parentheses*{-1, 1}\) and the function is continuous therein.
+			But is \(u'\parentheses*{x}\) continuous differentiable 
+			\item The logarithm is neither continuous nor bounded due to its singularity, but it is integrable in \(L^1\parentheses*{\Omega}\) and \(L^2\parentheses*{\Omega}\).
+			This can be shown by a direct calculation.
+			\item \(u\) is obviously not continuous or differentiable, but bounded and hence also in \(L^1\parentheses*{\Omega}\) and \(L^2\parentheses*{\Omega}\) as \(\Omega\) is bounded.
+		\end{enumerate}
+		\item We use a change of variables to the spherical coordinate system \(\parentheses*{r, \phi, \varphi_1, \ldots, \varphi_{n - 2}}\) in \(\R^n, n \ge 3\).
+		The determinant of the Jacobian associated with this change in variables is given by
+		\[
+			r^{n - 1}\sin\parentheses*{\varphi_1}\sin\parentheses*{\varphi_2}^2 \cdots \sin\parentheses*{\varphi_{n - 2}}^{n - 2},
+		\]
+		where \(\phi \in \left[0, 2\pi\right), \varphi_i \in \left[0, \pi\right)\).
+		Consequently, we obtain that
+		\begin{align*}
+			\int_{B_1\parentheses*{0}}\parentheses*{\frac{1}{\absolute*{x}^q}}^p \d x &= \int_0^{2\pi}\int_0^\pi \cdots \int_0^\pi \int_0^1 \frac{1}{r^{pq}}r^{n - 1}\sin\parentheses*{\varphi_1} \cdots \sin\parentheses*{\varphi_{n - 2}}^{n - 2}\d r\d\varphi_1 \cdots \d\varphi_{n - 2}\d\phi\\
+			&= C\parentheses*{n}\int_0^1 r^{n - 1 - pq}\d r,
+		\end{align*}
+		where \(C\) is some constant depending on the dimension \(n\).
+		We immediately see that this integral exists if and only if
+		\[
+			n - 1 - pq > -1 \iff n > pq.
+		\]
+		In other words \(u \in L^p\parentheses*{\Omega}\) if and only if \(pq < n\).
+		As an example, for the case \(n = 3\), the function \(u\parentheses*{x} := \frac{1}{\norm*{x}_2}\) is in \(L^1\parentheses*{\Omega}\) and \(L^2\parentheses*{\Omega}\) but not in any \(L^p\parentheses*{\Omega}\) for \(p \ge 3\).
+		Notice that the function \(u\) has a singularity at the origin but is still integrable.
+	\end{enumerate}
+
+
+	\section{}
+
+	\begin{enumerate}
+		\item We first write the Laplace operator in polar coordinates (see formula given in the hint):
+		\[
+			\frac{\partial^2 u}{\partial r^2} + \frac{1}{r}\frac{\partial u}{\partial r} + \frac{1}{r^2}\frac{\partial^2 u}{\partial\varphi^2} = 0, \quad 0 \le r \le r_{\text{max}}, 0 \le \varphi \le \alpha.
+		\]
+		We will now be using the seperation of variables approach
+		\[
+			u\parentheses*{r, \varphi} = R\parentheses*{r}\Phi\parentheses*{\varphi}.
+		\]
+		Inserting this approach into the partial differential equation yields
+		\[
+			R''\parentheses*{r}\Phi\parentheses*{\varphi} + \frac{1}{r}R'\parentheses*{r}\Phi\parentheses*{\varphi} + \frac{1}{r^2}R\parentheses*{r}\Phi''\parentheses*{\varphi} = 0,
+		\]
+		and simplifying this expression gives
+		\[
+			r^2 \frac{R''\parentheses*{r}}{R\parentheses*{r}} + r\frac{R'\parentheses*{r}}{R\parentheses*{r}} + \frac{\Phi''\parentheses*{\varphi}}{\Phi\parentheses*{\phi}} = 0.
+		\]
+		Since this equation mus be fulfilled for all \(r\) and \(\varphi\), the terms \(r^2 \frac{R''\parentheses*{r}}{R\parentheses*{r}} + r\frac{R'\parentheses*{r}}{R\parentheses*{r}}\) and \(\frac{\Phi''\parentheses*{\varphi}}{\Phi\parentheses*{\varphi}}\) must each be equal to some constant.
+		Consequently, we obtain two ordinary differential equations:
+		\begin{align}
+			\Phi''\parentheses*{\varphi} + \lambda^2 \Phi\parentheses*{\varphi} &= 0, \label{eq:1}\\
+			r^2 R''\parentheses*{r} + r R'\parentheses*{r} - \lambda^2 R\parentheses*{r} &= 0. \label{eq:2}
+		\end{align}
+		Here, the contant \(\lambda\) is as of yet unknown and must be determined.
+		\item In order to solve the angular ordinary differential equation \eqref{eq:1} we use the approach
+		\begin{equation}\label{eq:3}
+			\Phi\parentheses*{\varphi} = C_1 \sin\parentheses*{\mu\varphi} + C_2 \cos\parentheses*{\mu\varphi}.
+		\end{equation}
+		Inserting approach \eqref{eq:3} into the ordinary differential equation yields \(\mu = \lambda\).
+		Furthermore, the boundary conditions imply that \(\Phi\parentheses*{0} = 0\) so that \(C_2 = 0\).
+		Next, since \(\sin\parentheses*{\lambda\alpha} = 0\) we obtain \(\lambda = \frac{\pi}{\alpha}\).
+		Consequently, the function \(\Phi\) is given by
+		\[
+			\Phi\parentheses*{\varphi} = C_1 \sin\parentheses*{\frac{\pi}{\alpha}\varphi}.
+		\]
+		In order to solve the radial ordinary differential equation \eqref{eq:2}, we use the approach \(R\parentheses*{r} = r^\beta\).
+		Inserting this in equation \eqref{eq:2} immediately yields \(\beta = \lambda = \frac{\pi}{\alpha}\).
+		Consequently, it holds that
+		\[
+			u\parentheses*{r, \varphi} = C_1 \sin\parentheses*{\frac{\pi}{\alpha}\varphi}r^{\frac{\pi}{\alpha}},
+		\]
+		where the constant \(C_1\) must be determined from the boundary condition \(u\parentheses*{r_{\text{max}}, \varphi} = \sin\parentheses*{\frac{\pi}{\alpha}\varphi}\).
+		Indeed, a simple solution yields \(C_1 = \parentheses*{\frac{1}{r_{\text{max}}}}^{\frac{\pi}{\alpha}}\).
+		The complete solution is thus given by
+		\[
+			u\parentheses*{r, \varphi}\sin\parentheses*{\frac{\pi}{\alpha}\varphi}\parentheses*{\frac{r}{r_{\text{max}}}}^{\frac{\pi}{\alpha}}.
+		\]
+	\end{enumerate}
+
+
+	\section{}
+
+	\begin{enumerate}
+		\item We look at the Taylor expansion in \(x\)-direction.
+		We implicitly assume a discretization of the domain with a grid of width \(h\).
+		\begin{align*}
+			u\parentheses*{x_i + h, y_i} &= u\parentheses*{x_i, y_i} + h\left.\frac{\partial u}{\partial x}\right|_{x_i, y_i} + \frac{1}{2}h^2 \left.\frac{\partial^2 u}{\partial x^2}\right|_{x_i, y_i} + \mathcal{O}\parentheses*{h^3},\\
+			u\parentheses*{x_i - h, y_i} &= u\parentheses*{x_i, y_i} - h\left.\frac{\partial u}{\partial x}\right|_{x_i, y_i} + \frac{1}{2}h^2 \left.\frac{\partial^2 u}{\partial x^2}\right|_{x_i, y_i} + \mathcal{O}\parentheses*{h^3}.
+		\end{align*}
+		A summation and rearrangement gives
+		\[
+			\left.\frac{\partial^2 u}{\partial x^2}\right|_{x_i, y_i} \approx \frac{u\parentheses*{x_i + h, y_i} - 2u\parentheses*{x_i, y_i} + u\parentheses*{x_i - h, y_i}}{h^2}.
+		\]
+		Analogously for the second derivative with respect to \(y\) we get
+		\[
+			\left.\frac{\partial^2 u}{\partial y^2}\right|_{x_i, y_i} \approx \frac{u\parentheses*{x_i, y_i + h} - 2u\parentheses*{x_i, y_i} + u\parentheses*{x_i, y_i - h}}{h^2}.
+		\]
+		This way we obtain a discretization of the Laplacian on the whole domain.
+		For the Neumann boundary conditions we need a one-sided stencil.
+		A rearrangement of the expression
+		\[
+			u\parentheses*{x_i - h, y_i} = u\parentheses*{x_i, y_i} - h\left.\frac{\partial u}{\partial x}\right|_{x_i, y_i} + \mathcal{O}\parentheses*{h^2}
+		\]
+		gives
+		\[
+			\left.\frac{\partial u}{\partial x}\right|_{x_i, y_i} \approx \frac{u\parentheses*{x_i, y_i} - u\parentheses*{x_i - h, y_i}}{h}.
+		\]
+		\item
+	\end{enumerate}
+\end{document}
