@@ -1,0 +1,64 @@
+\documentclass[english]{exercise}
+
+\input{preamble}
+
+\title{Self Exercise 5}
+\author{Joshua Feld (406718)}
+\professor{Prof. Kowalski}
+\course{Partial Differential Equations}
+
+\begin{document}
+	\maketitle
+
+
+	\section{}
+
+	\begin{quote}
+		Consider the following one-dimensional Poisson problem
+		\begin{align*}
+			-u''\parentheses*{x} = f\parentheses*{x}, \quad \text{in }\parentheses*{0, 1},\\
+			u\parentheses*{0} = u\parentheses*{1} &= 0.
+		\end{align*}
+		The domain \(\Omega := \parentheses*{0, 1}\) is equipped with the uniform grid \(0 = x_0 < \cdots x_N = 1.\)
+		We select
+		\[
+			V_h = \braces*{u \in C^0\parentheses*{\brackets*{0, 1}} : u_{\brackets*{x_{k - 1}, x_k} = a_k + b_k x, k = 1, \ldots, N, u\parentheses*{0} = u\parentheses*{1} = 0}}
+		\]
+		as the approximation space, i.e., the space of linear finite elements in 1D.
+		Additionally, we equip this space with the basis of so-called hat functions \(\braces*{\phi_i}_{i = 1}^N\) as defined in the lecture.
+
+		Write down the weak formulation of this problem ans the Galerkin discretization for the approximation space \(V_h\).
+		Compute the stiffness matrix \(A\) using the definition of the basis \(\braces*{\phi_i}_{i = 1}^N\) of hat functions.
+		Show your computations.
+	\end{quote}
+
+
+	\section{}
+
+    \begin{quote}
+        Consider the following one-dimensional boundary value problem
+        \begin{align*}
+            -u''\parentheses*{x} + u\parentheses*{x} &= f\parentheses*{x}, \quad \text{in }\parentheses*{0, 1} \subset \R,\\
+            u\parentheses*{0} &= 0 \quad \text{(Dirichlet)},\\
+            \alpha u\parentheses*{1} + u'\parentheses*{1} &= a, \quad \alpha \ge 0, a \in \R \quad \text{(Robin)}.
+        \end{align*}
+        \begin{enumerate}
+            \item Derive the weak formulation of the above problem.
+            \item Find the discrete solution using the finite element method.
+            Choose the continuous piecewise linear functions
+            \[
+                \psi_i\parentheses*{x} := \begin{cases}
+                    \frac{x - x_{i - 1}}{h_i}, & \text{if }x \in I_i = \parentheses*{x_{i - 1}, x_i},\\
+                    \frac{x_{i + 1} - x}{h_{i + 1}}, & \text{if }x \in I_{i + 1} = \parentheses*{x_i, x_{i + 1}},\\
+                    0, & \text{otherwise}
+                \end{cases}
+            \]
+            as basis functions on a uniform grid, \(0 = x_0 < \cdots < x_N = 1\) with \(h = x_i - x_{i - 1}\).
+        \end{enumerate}
+    \end{quote}
+    
+    \begin{enumerate}
+        \item
+        \item
+    \end{enumerate}
+\end{document}

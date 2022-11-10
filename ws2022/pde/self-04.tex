@@ -1,0 +1,81 @@
+\documentclass[english]{exercise}
+
+\input{preamble}
+
+\title{Self Exercise 4}
+\author{Joshua Feld (406718)}
+\professor{Prof. Kowalski}
+\course{Partial Differential Equations}
+
+\begin{document}
+	\maketitle
+
+
+	\section{}
+
+	\begin{quote}
+		Consider the following boundary value problem over the domain \(\Omega = \parentheses*{0, 1} \subset \R\)
+		\begin{align*}
+			\frac{\d}{\d x}\parentheses*{\parentheses*{1 + x}\frac{\d u}{\d x}} &= 1,\\
+			u\parentheses*{0} = u\parentheses*{1} &= 0,
+		\end{align*}
+		with \(u \in H_0^1\parentheses*{0, 1}\).
+		\begin{enumerate}
+			\item Derive the continuous and discrete variational formulations.
+			\item Choose the trigonometric functions, \(\psi_j\parentheses*{x} = \sin\parentheses*{j\pi x}, j = 1, \ldots, N\) as the basis functions.
+			Derive the Ritz-Galerkin equations and find the discrete solution \(u_h \in H_h \subset H_0^1\parentheses*{0, 1}\).
+			\item Find the Ritz-Galerkin solution for the cases of \(N = 2\) (which results in two basis functions \(\psi_1\) and \(\psi_2\)).
+			Plot the exact solution and the approximate solution over the domain \(\parentheses*{0, 1}\).
+		\end{enumerate}
+	\end{quote}
+
+	\begin{enumerate}
+		\item
+		\item
+		\item
+	\end{enumerate}
+
+
+	\section{}
+
+	\begin{quote}
+		We want to approximate the discontinuous function
+		\[
+			f\parentheses*{x} = \begin{cases}
+				1, & \text{if }x < 0,\\
+				-1, & \text{if }x \ge 0,
+			\end{cases},
+		\]
+		for \(x \in \brackets*{-L, L}\) by a piecewise linear function.
+		The approximation has the form
+		\[
+			s\parentheses*{x} = \sum_{i = -N}^{N + 1}\alpha_i \phi_i\parentheses*{x}
+		\]
+		with hat functions \(\phi_i\) at the grid points
+		\[
+			x_i = \parentheses*{i - \frac{1}{2}}\Delta x, \quad \Delta x = \frac{2L}{2N + 1}, \quad -N \le i \le N + 1
+		\]
+		and the boundary conditions \(\alpha_{-N} = f\parentheses*{x_{-N}}\) and \(\alpha_{N + 1} = f\parentheses*{x_{N + 1}}\).
+		The approximation should be optimal in the sense that the error \(\norm*{f - s}\) is minimal in a suitable norm.
+		\begin{enumerate}
+			\item Consider the \(L^2\) norm and solve the minimization problem
+			\[
+				\norm*{f - s}_s^2 \to \min
+			\]
+			in a general setting.
+			\item Pick \(L = 3, N = 1, 2, 3\) and plot the solution next to the function \(f\).
+			Would you call this an optimal solution?
+			\item Write down the minimization problem for the \(L^1\) norm.
+			What is the difficulty here?
+			How would you solve this problem?
+			\item Show for \(N = 1\) assuming point symmetry that the interpolating spline \(\alpha_i = f\parentheses*{x_i}\) minimizes the \(L^1\) norm.
+		\end{enumerate}
+	\end{quote}
+
+	\begin{enumerate}
+		\item
+		\item
+		\item
+		\item
+	\end{enumerate}
+\end{document}

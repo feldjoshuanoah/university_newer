@@ -3,7 +3,7 @@
 \input{preamble}
 
 \title{Self Exercise 1}
-\author{Joshua Feld, 406718}
+\author{Joshua Feld (406718)}
 \professor{Prof. Kowalski}
 \course{Partial Differential Equations}
 
@@ -12,6 +12,20 @@
 
 
 	\section{}
+
+	\begin{quote}
+		Given the Neumann problem
+		\begin{align*}
+			-\Delta u = f, \quad \text{on }\Omega,\\
+			\frac{\partial u}{\partial n} = \nabla u \cdot n &= g, \quad \text{on }\partial\Omega
+		\end{align*}
+		where \(n\) denotes the outer normal.
+		The domain can be assumed to be sufficiently smooth.
+		\begin{enumerate}
+			\item Does the problem have a unique solution?
+			\item Which additional constraint has to be fulfilled by \(f\) and \(g\) for a solution to exist?
+		\end{enumerate}
+	\end{quote}
 
 	\begin{enumerate}
 		\item The problem does not have a unique solution:
@@ -40,6 +54,34 @@
 
 
 	\section{}
+	\begin{quote}
+		\begin{enumerate}
+			\item Let \(f: \Omega \to \R\) with
+			\[
+				f\parentheses*{x} := \begin{cases}
+					1, & \text{if }0 \le x \le 1,\\
+					\frac{1}{x^{\frac{2}{3}}}, & \text{if }x > 1.
+				\end{cases}
+			\]
+			Show that \(f \not\in L^1\parentheses*{\Omega}\) but \(f \in L^2\parentheses*{\Omega}\).
+			\item Let \(g: \Omega \to \R\) with
+			\[
+				g\parentheses*{x} := \begin{cases}
+					\frac{1}{x^{\frac{3}{4}}}, & \text{if }0 < x \le 1,\\
+					0, & \text{if }x > 1.
+				\end{cases}
+			\]
+			Show that \(g \in L^1\parentheses*{\Omega}\) but \(g \not\in L^2\parentheses*{\Omega}\).
+			\item Use the Hölder inequality in the form of
+			\[
+				\norm*{f \cdot g}_1 \le \norm*{f}_p \norm*{g}_q = \norm*{f}_3 \norm*{g}_{\frac{3}{2}},
+			\]
+			for an estimate of the following integral:
+			\[
+				\int_\Omega \frac{1}{\sqrt[3]{\parentheses*{x + 2}^4}}e^{-\frac{2}{3}x}\d x.
+			\]
+		\end{enumerate}
+	\end{quote}
 
 	\begin{enumerate}
 		\item

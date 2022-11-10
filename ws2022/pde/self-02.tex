@@ -1,0 +1,54 @@
+\documentclass[english]{exercise}
+
+\input{preamble}
+
+\title{Self Exercise 2}
+\author{Joshua Feld (406718)}
+\professor{Prof. Kowalski}
+\course{Partial Differential Equations}
+
+\begin{document}
+	\maketitle
+
+
+	\section{}
+
+	\begin{quote}
+		Let \(\Omega = B_1\parentheses*{0} \subset \R^3\) be the unit open ball in \(\R^3\), i.e., \(B_1\parentheses*{0} = \braces*{x \in \R^3 : \norm*{x} < 1}\).
+		Show that the function \(u: \Omega \to \R\) defined as
+		\begin{align*}
+			u\parentheses*{x, y, z} &:= \ln\parentheses*{\sqrt{x^2 + y^2 + z^2}} \quad \forall \parentheses*{x, y, z} \ne \parentheses*{0, 0, 0},\\
+			u\parentheses*{0, 0, 0} &= 0
+		\end{align*}
+		is in \(H^1\parentheses*{\Omega}\) but is not continuous in \(\Omega\).
+	\end{quote}
+
+
+	\section{}
+
+	\begin{quote}
+		Determine the weak derivative of the function \(u: \R \to \R\) defined as
+		\[
+			u\parentheses*{x} := \begin{cases}
+				1 + x, & \text{if }x \in \brackets*{-1, 0},\\
+				1 - x, & \text{if }x \in \brackets*{0, 1},\\
+				0, & \text{if }\absolute*{x} > 1.
+			\end{cases}
+		\]
+		Does the second weak derivative of \(u\) exist?
+		Justify your answer.
+	\end{quote}
+
+
+	\section{}
+
+	\begin{quote}
+		Let \(\Omega = \parentheses*{0, 1}^2 \subset \R^2\) be the open unity square.
+		Consider the function \(u: \Omega \to \R\) which is defined by
+		\[
+			u\parentheses*{x} = u\parentheses*{x_1, x_2} = x_1^\alpha, \quad x \in \Omega,
+		\]
+		where \(\alpha\) is a constant.
+		For which values of \(\alpha\) is \(u\) an element of the Hilbert and Lebesgue spaces \(H^1\parentheses*{\Omega}\) and \(L^2\parentheses*{\Omega}\)?
+	\end{quote}
+\end{document}

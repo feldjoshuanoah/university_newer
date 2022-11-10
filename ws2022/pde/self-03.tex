@@ -1,0 +1,53 @@
+\documentclass[english]{exercise}
+
+\input{preamble}
+
+\title{Self Exercise 3}
+\author{Joshua Feld (406718)}
+\professor{Prof. Kowalski}
+\course{Partial Differential Equations}
+
+\begin{document}
+	\maketitle
+
+
+	\section{}
+
+	\begin{quote}
+		Consider the following one dimensional problem:
+		\begin{align*}
+			-u''\parentheses*{x} + u\parentheses*{x} &= \sin\parentheses*{x} + \sin\parentheses*{2x} + \sin\parentheses*{3x}, \quad \text{in }\parentheses*{0, 2\pi},\\
+			u\parentheses*{0} = u\parentheses*{2\pi} &= 0.
+		\end{align*}
+		Derive the weak formulation of the above problem.
+	\end{quote}
+
+
+	\section{}
+
+	\begin{quote}
+		Consider the following weak formulation over the domain \(\Omega = \parentheses*{0, 1}^2 \subset \R^2\)
+		\[
+			a\parentheses*{u, v} = F\parentheses*{v} \quad \forall v \in H_0^1\parentheses*{\Omega},
+		\]
+		where \(a\parentheses*{u, v}\) and \(F\parentheses*{v}\) are defined by
+		\begin{align*}
+			a\parentheses*{u, v} &= \int_\Omega \parentheses*{4\frac{\partial u}{\partial x_1}\frac{\partial v}{\partial x_1} + 2\frac{\partial u}{\partial x_2}\frac{\partial v}{\partial x_2}}\d x,\\
+			F\parentheses*{v} &= \int_\Omega v\parentheses*{x}\d x.
+		\end{align*}
+		Show that there exists a unique solution to the above problem.
+	\end{quote}
+
+
+	\section{}
+
+	\begin{quote}
+		Consider the following partial differential equation over the domain \(\Omega = \parentheses*{0, 1}^2 \subset \R^2\):
+		\begin{align*}
+			\frac{\partial^2 u}{\partial x_1^2} + \frac{\partial^2 u}{\partial x_2^2} - \frac{\partial u}{\partial x_1} - \frac{\partial u}{\partial x_2} &= -\sin\parentheses*{x_1}, \quad \text{in }\Omega,\\
+			u &= 0, \quad \text{on }\partial\Omega,
+		\end{align*}
+		with \(u = u\parentheses*{x}\) and \(x = \parentheses*{x_1, x_2} \in \Omega\).
+		Derive the weak formulation and check if the Lax-Milgram theorem can be applied.
+	\end{quote}
+\end{document}
