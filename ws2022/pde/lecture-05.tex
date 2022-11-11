@@ -1,0 +1,16 @@
+\section{Finite element method}
+
+The goal of the finite element method (FEM) is to find a simple space \(V_N\) such that the resulting matrix \(A\) is sparsely occupied.
+This is, for example, the case if the test functions \(\braces*{\varphi_i}_{i = 1, 2, \ldots}\) overlap with each other in a minimal way.
+
+
+\subsection{Hat-functions and FEM in 1D}
+
+For an interval \(\Omega = \brackets*{a, b}\) we consider the positions \(\braces*{x_i}_{i = 0, \ldots, N + 1} \subset \brackets*{a, b}\) with \(a = x_0 < x_i < x_{N + 1} = b\) and step size \(h_j = x_j - x_{j - 1}\) and define the ``hat-functions'' \(\varphi_j \in H^1\parentheses*{\brackets*{a, b}}\) by
+\[
+    \varphi_j\parentheses*{x} = \begin{cases}
+        \frac{x - x_{j - 1}}{h_j}, & \text{if }x_{j - 1} \le x \le x_j,\\
+        \frac{x_{j + 1} - x}{h_{j + 1}}, & \text{if }x_j \le x \le x_{j + 1},\\
+        0, & \text{otherwise}.
+    \end{cases}
+\]

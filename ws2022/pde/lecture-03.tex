@@ -45,6 +45,359 @@ Moreover, homogeneous Dirichlet conditions \(u = 0\) on \(\partial\Omega\) are c
 \begin{remark}
 	\begin{enumerate}
 		\item In, e.g., 2D, we have \(\nabla u \cdot \nabla v = \grad u \cdot \grad v = \partial_x u \partial_x v + \partial_y u\partial_y v\) for the scalar product.
-		\item Every classical, 
+		\item Every classical, ``strong'' solution of the Poisson problem is also a weak solution of the variational formulation.
+		Just insert that strong solution into the formulation and proceed the above derivation backwards.
+		\item We need to specify the function spaces that the solution \(u\) and the test function \(v\) are supposed to live in.
+		They  should be large enough, complete, and with scalar product.
+		Foremost, it should be such that the integrals in the formulation make sense.
 	\end{enumerate}
+\end{remark}
+
+\begin{theorem}\label{theorem:3-3}
+	If \(u, v \in H^1\parentheses*{\Omega}\), it holds that
+	\[
+		\absolute*{\int_\Omega \nabla u \cdot \nabla v\d x} \le \norm*{u}_1 \norm*{v}_1 < \infty.
+	\]
+\end{theorem}
+
+\begin{proof}
+	Using the Cauchy-Schwartz inequality we can split the integral into two integrals and use the definition of the Sobolev norm
+	\[
+		\absolute*{\int_\Omega \nabla u \cdot \nabla v\d x}^2 \le \int_\Omega \absolute*{\nabla u}^2 \d x \int_\Omega \absolute*{\nabla v}^2 \d x = \norm*{\nabla u}_0^2 \norm*{\nabla v}_0^2 \le \norm*{u}_1^2 \norm*{v}_1^2,
+	\]
+	which is bounded because \(u, v \in H^1\parentheses*{\Omega}\).
+\end{proof}
+
+\begin{remark}
+	\begin{enumerate}
+		\item Hence, we will require \(u, v \in V := H_0^1\parentheses*{\Omega}\), with functions vanishing at the boundary and the variational formulation for the Poisson problem with homogeneous Dirichlet boundary conditions reads:
+		\begin{quote}
+			``Find \(u \in H_0^1\parentheses*{\Omega}\) such that \(\int_\Omega \nabla u \cdot \nabla v\d x = \int_\Omega vf\d x\) für alle \(v \in H_0^1\parentheses*{\Omega}\).'' 
+		\end{quote}
+		\item This formulation allows more solutions to the Poisson problem than the classical statement.
+	\end{enumerate}
+\end{remark}
+
+\begin{example}
+	For \(n = 1\) and \(\Omega = \brackets*{-1, 1}\) the function
+	\[
+		u\parentheses*{x} = \frac{1}{2}\parentheses*{1 - \absolute*{x}}
+	\]
+	is a weak solution of the Poisson problem with irregular right-hand side \(f\parentheses*{x} = \delta_0\parentheses*{x}\) (Dirac).
+	That is, we need to verify that the variational formulation
+	\[
+		\int_{-1}^1 u'v'\d x = \int_{-1}^1 fv\d x,
+	\]
+	holds for all \(v \in H_0^1\parentheses*{\brackets*{-1, 1}}\).
+	For the right-hand side we immediately find
+	\[
+		\int_{-1}^1 fv\d x = \int_{-1}^1 \delta_{-1}^1 \delta_0\parentheses*{x}v\parentheses*{x}\d x = v\parentheses*{0}
+	\]
+	using the properties of the Dirac distribution.
+	For the left-hand side we insert the piecewise derivative of the solution
+	\[
+		\int_{-1}^1 u'v'\d x = \int_{-1}^0 \frac{1}{2}v'\parentheses*{x}\d x + \int_0^1 -\frac{1}{2}v'\parentheses*{x}\d x = \frac{1}{2}\parentheses*{v\parentheses*{0} - v\parentheses*{-1}} - \frac{1}{2}\parentheses*{v\parentheses*{1} - v\parentheses*{0}}.
+	\]
+	We conclude by noting that on the boundary \(v\parentheses*{1} = v\parentheses*{-1} = 0\) holds for all test functions \(v \in H_0^1\parentheses*{\brackets*{-1, 1}}\).
+	Thus \(u\) is a weak solution of the problem, but not a classical, strong solution, because \(u \not\in C^2\parentheses*{\brackets*{-1, 1}}\).
+\end{example}
+
+
+\subsection{Lax-Milgram Theorem}
+
+To formulate the variational formulation in a more compact form, we introduce the following operators (for a fixed function \(f\)):
+\begin{align*}
+	a: H_0^1\parentheses*{\Omega} \times H_0^1\parentheses*{\Omega} \to \R, &\parentheses*{u, v} \mapsto a\parentheses*{u, v} := \int_\Omega \nabla u \cdot \nabla v\d x,\\
+	\ell: H_0^1\parentheses*{\Omega} \to \R, &v \mapsto \ell\parentheses*{v} := \int_\Omega fv\d x.
+\end{align*}
+With this \(a\parentheses*{\cdot, \cdot}\) is linear in both arguments, maps to a real number, and it holds that \(a\parentheses*{u, v} = a\parentheses*{v, u}\).
+Hence, \(a\) is a symmetric bilinear form.
+Similarly, \(\ell\parentheses*{\cdot}\) is linear and maps to a real number; hence, \(\ell\) is a linear functional.
+
+If we replace \(H_0^1\parentheses*{\Omega}\) by a general space placeholder \(V\), the variational formulation reads:
+\begin{quote}
+	``Find \(u \in V\) such that \(a\parentheses*{u, v} = \ell\parentheses*{v}\) for all \(v \in V\).''
+\end{quote}
+It turns out that many problems (not just the Poisson problem) can be cast as abstract variational formulations.
+
+So far we have not yet discussed whether or not theses abstract variational formulations are well-posed, in the sense of providing a unique solution.
+The answer is affirmative for a large class of variational formulations.
+
+\begin{theorem}
+	Let \(V\) be a Hilbert space with norm \(\norm*{\cdot}_V\), \(a: V \times V \to \R\) a bilinear form, and \(\ell: V \to \R\) a linear functional.
+	Suppose that
+	\begin{enumerate}
+		\item \(a\) is continuous, i.e., \(\absolute*{a\parentheses*{u, v}} \le C_1\norm*{u}_V\norm*{v}_V\),
+		\item \(\ell\) is continuous, i.e., \(\absolute*{\ell\parentheses*{v}} \le C_1\norm*{v}_V\),
+		\item \(a\) is coercive, i.e., \(a\parentheses*{u, u} \ge \gamma\norm*{u}_V^2\) with \(\gamma > 0\)
+	\end{enumerate}
+	for all \(u, v \in V\).
+	Then the variational formulation
+	\begin{quote}
+		``Find \(u \in V\) such that \(a\parentheses*{u, v} = \ell\parentheses*{v}\) for all \(v \in V\).''
+	\end{quote}
+	has a unique solution, which satisfies
+	\[
+		\norm*{u}_V \le \frac{1}{\gamma}\norm*{\ell}_{V}.
+	\]
+\end{theorem}
+
+\begin{proof}
+	The existence proof of a unique weak solution can be found in any decent book on PDEs, e.g., the one by Evans.
+	Here, we only show the norm estimate, which is obviously true for \(u = 0\).
+	Without losss of generality we therefore assume that \(u \ne 0\) solves the variational formulation.
+	Together with the coercivity condition we find
+	\[
+		\gamma\norm*{u}_V^2 \le a\parentheses*{u, u} = \absolute*{\ell\parentheses*{u}} \iff \gamma\norm*{u}_V \le \frac{\absolute*{\ell\parentheses+{u}}}{\norm*{u}_V},
+	\]
+	from which the claim follows.
+\end{proof}
+
+\begin{remark}
+	\begin{enumerate}
+		\item Notice that the Lax-Milgram theorem does not require symmetry of \(a\).
+		Consequently, it is possible to show existence of a unique weak solution for many different elliptic PDEs.
+		\item Coercivity (sometimes called \(V\)-ellipticity) is crucial and often harder to check than continuity.
+		In the finite dimensional case \(V = \R^m\), \(u, v\) are \(\R^m\) vectors and the bilinear form \(a\) would be represented by a quadratic form \(a\parentheses*{u, v} = u^T Av\) with matrix \(A \in \R^{m \times m}\).
+		In that case the coercivity condition reads
+		\[
+			u^T Au \ge \gamma u^T u,
+		\]
+		for some \(\gamma > 0\), which is satisfied if \(A\) is strictly positive definite.
+		\item The functional \(\ell: V \to \R\) contains the right-hand side \(f\) (in the Poisson case) which can be considered the ``input'' or ``data'' to the problem.
+		The Lax-Milgram theorem states
+		\[
+			\norm*{u}_V \le \frac{1}{\gamma}\norm*{\ell}_{V'} = \frac{1}{\gamma}\sup_{v \in V, v \ne 0}\frac{\absolute*{\ell\parentheses*{v}}}{\norm*{v}_V}
+		\]
+		for any abstract variational formulation.
+		This means the solution \(u\) is ``controlled'' by the right-hand side, or ``\(u\) depends continuously on the data'', or ``the problem is stable''.
+		\item This is an important, general concept:
+		If the solution of a mathematical problem exists, is unique, and the problem is stable, then the problem is called ``well-posed'' (in the sense of J. Hadamard).
+	\end{enumerate}
+\end{remark}
+
+
+\subsection{Well-posedness for the Possion problem}
+
+We now use the Lax-Milgram theorem to show that the variational formulation of the Poisson problem
+\begin{quote}
+	``Find \(u \in H_0^1\parentheses*{\Omega}\) such that \(\int_\Omega \nabla v \cdot \nabla u\d x = \int_\Omega fv\d x\) for all \(v \in H_0^1\parentheses*{\Omega}\).''
+\end{quote}
+has a unique solution.
+
+\begin{example}
+	First we identify
+	\[
+		V = H_0^1\parentheses*{\Omega}, \quad a\parentheses*{u, v} = \int_\Omega \nabla u \cdot \nabla v\d x, \quad \ell\parentheses*{v} = \int_\Omega fv\d x.
+	\]
+	Next we need to check the requirements of the Lax-Milgram theorem:
+	\begin{enumerate}
+		\item \(H_0^1\parentheses*{\Omega}\) is a Hilbert space and we use its norm \(\norm*{\cdot}_1\) and the corresponding scalar product \(\angles*{\cdot, \cdot}_1\).
+		\item \(a\parentheses*{\cdot, \cdot}\) is a bilinear form.
+		\item \(\ell\parentheses*{\cdot}\) is a linear functional.
+		\item \(a\parentheses*{\cdot, \cdot}\) is continuous, because
+		\[
+			\absolute*{\int_\Omega \nabla u \cdot \nabla v\d x} \le \norm*{u}_1 \norm*{v}_1
+		\]
+		see Theorem \ref{theorem:3-3}.
+		\item \(\ell\parentheses*{\cdot}\) is continuous, because (again with the Cauchy-Schwartz inequality) provided that \(f \in L^2\parentheses*{\Omega}\)
+		\[
+			\absolute*{\int_\Omega fv\d x} \le \norm*{v}_0 \norm*{f}_0 \le C\norm*{v}_1
+		\]
+		with \(C = \norm*{f}_0 < \infty\).
+		\item However, it is not immediately clear why \(a\) should be coercive, that is, why
+		\[
+			\absolute*{\int_\Omega \nabla u \cdot \nabla v\d x} \stackrel{?}{\ge} \gamma\norm*{u}_1^2 \quad \forall u \in H_0^1\parentheses*{\Omega}.
+		\]
+		Formally, this inequality is not satisfied for constant functions (\(\ne 0\)).
+	\end{enumerate}
+\end{example}
+
+\begin{theorem}
+	Let \(\Omega \subset \R^n\) be bounded.
+	There is a constant \(C\) depending only on \(\Omega\), such that
+	\[
+		\norm*{u}_{L^2\parentheses*{\Omega}} \le C\norm*{\nabla u}_{L^2\parentheses*{\Omega}}
+	\]
+	for all \(u \in H^1\parentheses*{\Omega}\) that vanish on the boundary \(\partial\Omega\), that is, for all \(u \in H_0^1\parentheses*{\Omega}\).
+\end{theorem}
+
+\begin{proof}
+	We show this property for mooth functions \(u \in C_0^\infty\parentheses*{\Omega}\), because \(C_0^\infty\parentheses*{\Omega}\) is dense in \(H_0^1\parentheses*{\Omega}\) so that any \(H_0^1\parentheses*{\Omega}\) function can be approximated by those.
+	We restrict ourselves to \(n = 1\) (\(\nabla u = u'\)) and \(\Omega = \parentheses*{a, b}\).
+	First, consider any \(x \in \Omega\) and look at
+	\[
+		\absolute*{u\parentheses*{x}}^2 = \absolute*{u\parentheses*{x} - u\parentheses*{a}}^2 = \absolute*{\int_a^x u'\parentheses*{\xi}\d\xi}^2 = \absolute*{\int_a^x u'\parentheses*{\xi}\d\xi}^2 \le \int_a^x \d\xi\int_a^x \absolute*{u'\parentheses*{\xi}}^2 \d\xi.
+	\]
+	The first integral can be computed and gives \(x - a \le b - a\), and the second integral can be estimated by the integral from \(a\) to \(b\), hence
+	\[
+		\absolute*{u\parentheses*{x}}^2 \le \parentheses*{b - a}\int_a^b \absolute*{u'\parentheses*{x}}^2 \d\xi = \parentheses*{b - a}\norm*{u'}_{L^2\parentheses*{\Omega}}^2.
+	\]
+	Both sides are positive and can be integrated again
+	\[
+		\norm*{u}_{L^2\parentheses*{\Omega}}^2 = \int_a^b \absolute*{u\parentheses*{x}}^2 \d x \le \int_a^b \parentheses*{b - a}\norm*{u'}_{L^2\parentheses*{\Omega}}^2 \d x = \parentheses*{b - a}^2 \norm*{u'}_{L^2\parentheses*{\Omega}}^2
+	\]
+	where we identify \(C = \parentheses*{b - a}^2\).
+	For \(n > 1\) one would proceed coordinate-wise, using \(u\parentheses*{x} = u\parentheses*{y} + \sum_{i = 1}^n \int_{y_i}^{x_i}\partial_{x_i} u\parentheses*{x_1, \ldots, x_{i - 1}, z, x_{i + 1}, \ldots, x_n}\d z\) for \(x = \parentheses*{x_1, \ldots, x_n}^T, y = \parentheses*{y_1, \ldots, y_n}^T \in \R^n\).
+\end{proof}
+
+\begin{example}
+	To show the coercivity of \(a\) we add \(\norm*{\nabla u}_0^2\) to both sides of the square of the Poincare inequality to find
+	\[
+		\norm*{u}_0^2 + \norm*{\nabla u}_0^2 \le C^2 \norm*{\nabla u}_0^2 + \norm*{\nabla u}_0^2 \iff \norm*{u}_1^2 \le \parentheses*{1 + C^2}\norm*{\nabla u}_0^2 \equiv \tilde{C}\int_\Omega \nabla u \cdot \nabla u\d x.
+	\]
+	Reading backwards we obtain as desired
+	\[
+		a\parentheses*{u, u} = \int_\Omega \nabla u \cdot \nabla u\d x \ge \frac{1}{\tilde{C}}\norm*{u}_1^2.
+	\]
+	Hence, the variational or weak formulation of the Poisson problem
+	\begin{align*}
+		-\Delta u = 0, \quad \text{in }\Omega,\\
+		u &= f, \quad \text{on }\partial\Omega
+	\end{align*}
+	has a unique weak solution \(u \in H_0^1\parentheses*{\Omega}\) for any \(f \in L^2\parentheses*{\Omega}\).
+\end{example}
+
+
+\subsection{Regularity}
+
+Next, we assess the regularity of the weak solution for the Poisson problem.
+
+\begin{theorem}
+	Let \(\Omega \subset \R^n\) be a domain and \(u \in H_0^1\parentheses*{\Omega}\) the weak solution of the Poisson problem
+	\begin{align*}
+		-\Delta u &= f, \quad \text{in }\Omega,\\
+		u &= 0, \quad \text{on }\partial\Omega,
+	\end{align*}
+	for \(f \in H^k\parentheses*{\Omega}, k \in \N_0\).
+	\begin{enumerate}
+		\item\label{theorem:3-11:1} If \(\partial\Omega\) is a smooth boundary with a parametrization in \(C^{k + 2}\parentheses*{\Omega}\), then \(u \in H^{k + 2}\parentheses*{\Omega}\) and \(\norm*{u}_{k + 2} \le C\norm*{f}_k\).
+		\item\label{theorem:3-11:2} If \(\Omega\) is a (Lipschitz) domain and \(G \subset \Omega\) a strictly contained subdomain with \(\bar{G} \subset \Omega\), then \(u \in H^{k + 2}\parentheses*{G}\) and \(\norm*{u}_{k + 2, G} \le C\norm*{f}_{k, \Omega}\), with \(C = C\parentheses*{G}\).
+		\item If \(\Omega\) is a convex Lipschitz domain, then \(u \in H^2\parentheses*{\Omega}\) for all \(f \in L^2\parentheses*{\Omega}\).
+	\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+	In any decent book on elliptic PDEs, e.g., the book by Evans.
+\end{proof}
+
+\begin{remark}
+	\begin{enumerate}
+		\item The case \ref{theorem:3-11:1} describes a property that we already know from classical solutions:
+		The solution has two orders of ``differentiability'' more than the right-hand side \(f\).
+		Notice, however, that these are weak derivatives here.
+		Results of this type, where a certain regularity of \(f\) yields a higher regularity in \(u\), are called \emph{shift theorems}.
+		\item The case \ref{theorem:3-11:2} shows that full regularity as in \ref{theorem:3-11:1} can only be expected in some interior \(G\) of the domain \(\Omega\), so that the smoothness of \(\partial\Omega\) plays no role.
+		\item If the domain has reentrant corners, it is possible to have only \(u \in H^{1 + \alpha}\parentheses*{\Omega}\) with \(0 < \alpha < 1\); c.f. Pacman domain.
+		\item Question:
+		For case \ref{theorem:3-11:1}, is the solution \(u\) smooth enough to be a classical solution, i.e., to be in \(C^2\parentheses*{\Omega}\)?
+		The answer is given by the Sobolev embedding theorem \ref{theorem:2-12}.
+		For example, for \(n = 2\) we find
+		\[
+			f \in H^2\parentheses*{\Omega} \implies u \in H^4\parentheses*{\Omega} \implies u \in C^2\parentheses*{\Omega},
+		\]
+		because \(4 - \frac{n}{2} > 2\).
+		\item Similar regularity results can be proved for weak solutions of more general elliptic PDEs.
+	\end{enumerate}
+\end{remark}
+
+
+\subsection{Neumann problem}
+
+We consider the Poisson problem with inhomogeneous Neumann boundary conditions
+\begin{align*}
+    -\Delta u &= f, \quad \text{in }\Omega,\\
+    \partial_n u &= g_N, \quad \text{on }\partial\Omega.
+\end{align*}
+As before we construct the variational formulation by multiplying with the test function \(v\), integrating over \(\Omega\) and using partial integration
+\[
+    -\int_\Omega v \cdot \Delta u\d x = \int_\Omega v \cdot f\d x \iff \int_\Omega \nabla u \cdot \nabla v\d x - \oint_{\partial\Omega}\partial_n uv\d A = \int_\Omega v \cdot f\d x,
+\]
+where we now use the boundary conditions for \(\partial_n u\) directly in the boundary integral.
+We use \(H^1\parentheses*{\Omega}\) as the approach-space for \(u\) and test-space for \(v\).
+Find \(u \in H^1\parentheses*{\Omega}\) such that
+\[
+    \int_\Omega \nabla u \cdot \nabla v\d x = \int_\Omega v \cdot f\d x + \oint_{\partial\Omega}vg_N\d A \quad \forall v \in H^1\parentheses*{\Omega}.
+\]
+
+\begin{remark}
+    \begin{enumerate}
+        \item Inspection shows that the solution is only determined up to a constant, i.e., if \(u\) is a solution, then \(u + c\) with \(c \in \R\) is too.
+        A single condition is needed to eliminate this non-uniqueness.
+        One approach is the requirement of zero mean
+        \[
+            \int_\Omega u\d x = 0.
+        \]
+        Analogously, to the Dirichlet case we build this requirement into our function space and define
+        \[
+            \tilde{H}^1\parentheses*{\Omega} = \braces*{u \in H^1\parentheses*{\Omega} : \int_\Omega u\d x = 0}.
+        \]
+        Consequently, we ask for \(u, v \in \tilde{H}^1\parentheses*{\Omega}\) in the variational formulation of the Neumann-Poisson problem.
+        \item The bilinear form \(a\parentheses*{u, v}\) is coercive on \(\tilde{H}^1\parentheses*{\Omega}\) (second Poincare inequality) and according to Lax-Milgram the Neumann-Poisson problem has a unique solution.
+        \item Inhomogeneous Dirichlet conditions \(u = g_D\) on the boundary \(\partial\Omega\) can be ``weakly'' imposed by writing them as Robin-type conditions \(-\delta\partial_n u = u - g_D\) with a small artificial parameter \(\delta \ll 1\).
+        The variational formulation then reads:
+        \begin{quote}
+            ``Find \(u \in H^1\parentheses*{\Omega}\) such that
+            \[
+                \int_\Omega \nabla u \cdot \nabla v\d x + \delta^{-1}\oint_{\partial\Omega}uv\d A = \int_\Omega v \cdot f\d x + \delta^{-1}\oint_{\partial\Omega}vg_N\d x
+            \]
+            for all \(v \in H^1\parentheses*{\Omega}\).''
+        \end{quote}
+    \end{enumerate}
+\end{remark}
+
+
+\subsection{Minimization problem}
+
+\begin{theorem}
+    Like in Lax-Milgram, let \(V\) be a Hilbert space, \(a: V \times V \to \R\) a continuous, coercive, symmetric bilinear form, and \(\ell: V \to \R\) a continuous, linear functional.
+    Then we have the equivalence
+    \[
+        u \in V\text{ minimizes }J\parentheses*{v} := \frac{1}{2}a\parentheses*{v, v} - \ell\parentheses*{v} \iff a\parentheses*{v, u} = \ell\parentheses*{v}\text{ for all }v \in V.
+    \]
+\end{theorem}
+
+\begin{proof}
+    Let \(u \in V\) be the minimum of \(J: V \to \R, v \mapsto \frac{1}{2}a\parentheses*{v, v} - \ell\parentheses*{v}\).
+    We choose a so-called variation \(v \in V\) and scalar parameter \(t \in \R, t > 0\).
+    Obviously, \(J\parentheses*{u + tv} \ge J\parentheses*{u}\), because \(J\parentheses*{u}\) is the minimal value.
+    Hence,
+    \begin{align*}
+        0 &\le J\parentheses*{u + tv} - J\parentheses*{u}\\
+        &= \frac{1}{2}a\parentheses*{u + tv, u + tv} - \ell\parentheses*{u + tv} - \parentheses*{\frac{1}{2}a\parentheses*{u, u} - \ell\parentheses*{u}}\\
+        &= t\parentheses*{a\parentheses*{v, u} - \ell\parentheses*{v}} + t^2 \frac{1}{2}a\parentheses*{v, v}
+    \end{align*}
+    due to linearity of \(a\) and \(\ell\).
+    Because \(t > 0\) and \(a\) is coercive we find
+    \[
+        a\parentheses*{v, u} - \ell\parentheses*{v} \le 0.
+    \]
+    However, the same calculation holds for \(t < 0\) which gives
+    \[
+        a\parentheses*{v, u} - \ell\parentheses*{v} \ge 0,
+    \]
+    such that \(a\parentheses*{u, v} = \ell\parentheses*{v}\) for any variation \(v\).
+    If, conversely, \(u \in V\) is the solution of \(a\parentheses*{v, u} = \ell\parentheses*{v}\) for all \(v \in V\), we compute
+    \begin{align*}
+        J\parentheses*{u + v} - J\parentheses*{u} &= \frac{1}{2}a\parentheses*{u + v, u + v} - \ell\parentheses*{u + v} - \parentheses*{\frac{1}{2}a\parentheses*{u, u} - \ell\parentheses*{u}}\\
+        &= a\parentheses*{u, v} - \ell\parentheses*{v} + \frac{1}{2}a\parentheses*{v, v}\\
+        &= \frac{1}{2}a\parentheses*{v, v} \ge 0.
+    \end{align*}
+    Thus, \(J\parentheses*{u + v} \ge J\parentheses*{u}\) for all \(v\) and \(u\) must be a minimizer of \(J\).
+\end{proof}
+
+\begin{remark}
+    \begin{enumerate}
+        \item With this insight the notation ``variational formulation'' makes more sense, because we vary the solution \(u\) with a variation \(v\) (see variational calculus).
+        \item In the finite dimensional case \(V = \R^m\) we have \(a\parentheses*{v, u} = v^T Au\) with matrix \(A \in \R^{m \times m}\) and \(\ell\parentheses*{v} = v^T f\) with some fixed vector \(f \in \R^m\).
+        The variational formulation reads
+        \[
+            v^T Au = v^T f \quad \forall v \in \R^m,
+        \]
+        which implies \(Au = f\) and the solution \(u = A^{-1}f\).
+        This solution minimizes the quadratic form
+        \[
+            J\parentheses*{v} = \frac{1}{2}v^T Av - v^T f.
+        \]
+    \end{enumerate}
 \end{remark}
