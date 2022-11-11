@@ -81,7 +81,8 @@
 
 \renewcommand{\maketitle}{
     \begin{center}
-        \ul{\mbox{\@title}}\\[5pt]
+        {\Large\bfseries \@title}\\[5pt]
+        {\itshape\@author}\\[5pt]
         \ifenglish{Course}\else{Kurs}\fi: {\itshape\internalcourse} -- Professor: {\itshape\internalprofessor}\\
         Semester: {\itshape WS 2022/23} -- \ifenglish{Program}\else{Studiengang}\fi: {\itshape CES (Bachelor)}
         \vspace{20pt}

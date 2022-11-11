@@ -3,7 +3,7 @@
 
 \input{common.tex}
 
-\titleformat{\section}{}{\ifenglish{\ul{Task}}\else{\ul{Aufgabe}}\fi\ul{\ \thesection}}{1em}{}
+\titleformat{\section}{}{\Large\bfseries\ifenglish{Exercise}\else{Aufgabe}\fi \ \thesection}{1em}{}
 
 \setlist[enumerate,1]{label=\alph*)}
 \setlist[enumerate,2]{label=(\roman*)}

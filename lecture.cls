@@ -3,18 +3,13 @@
 
 \input{common.tex}
 
-\titleformat{\section}{}{\ul{\thesection.\enspace}}{0pt}{\ul}
-\titleformat{\subsection}{}{\ul{\thesubsection.\enspace}}{0pt}{\ul}
-\titleformat{\subsubsection}{}{\ul{\thesubsubsection.\enspace}}{0pt}{\ul}
-
-\RequirePackage{tocloft}
-
-\renewcommand{\cftsecfont}{\normalfont}
-\renewcommand{\cftsecpagefont}{\normalfont}
+\titleformat{\section}{}{\Large\bfseries\thesection.\enspace}{0pt}{\Large\bfseries}
+\titleformat{\subsection}{}{\large\bfseries\thesubsection.\enspace}{0pt}{\large\bfseries}
+\titleformat{\subsubsection}{}{\normalsize\bfseries\thesubsubsection.\enspace}{0pt}{\normalsize\bfseries}
 
 \RequirePackage{amsthm}
 
-\newtheoremstyle{custom}{}{}{}{}{}{}{ }{\ul{\mbox{#1 \thmnumber{#2}\thmnote{ (#3)}}.}}
+\newtheoremstyle{custom}{}{}{}{}{}{}{ }{\bfseries#1 \thmnumber{#2}\thmnote{ (#3)}.}
 \theoremstyle{custom}
 \newtheorem{corollary}{\ifenglish{Corollary}\else{Korollar}\fi}
 \numberwithin{corollary}{section}
