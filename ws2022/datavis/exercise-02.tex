@@ -1,5 +1,7 @@
 \documentclass[english]{exercise}
 
+\include{preamble}
+
 \title{Exercise 2}
 \author{Joshua Feld (406718)}
 \course{Data Analysis and Visualization}
@@ -16,6 +18,28 @@
         Use column representations to decide whether \(\alpha P + \beta Q\) (for \(\alpha, bet \in \R\)) is a point or a vector.
         If so what is its geometric interpretation?
     \end{quote}
+
+    Only the extended column representation allows this judgement.
+    There, the last component is \(0\) for a vector and \(1\) for a point.
+    Thus, the last component of \(\alpha P + \beta Q\) is \(\alpha + \beta\).
+    We distinguish three cases:
+    \begin{itemize}
+        \item \(\alpha + \beta \not\in \braces*{0, 1}\): This combination is not geometrically meaningful.
+        \item \(\alpha + \beta = 0\), i.e. \(\beta = -\alpha\): This gives a vector.
+        For the geometric interpretation
+        \[
+            \alpha P + \beta Q = \alpha P - \alpha Q = \alpha\parentheses*{P - Q}.
+        \]
+        The difference \(P - Q\) represents the vector from \(Q\) to \(P\).
+        Thus, \(\alpha P + \beta Q\) represents this vector, scaled by \(\alpha\).
+        \item \(\alpha + \beta = 1\), i.e. \(\beta = 1 - \alpha\): This gives a point.
+        For the geometric interpretation
+        \[
+            \alpha P + \beta Q = Q + \alpha\parentheses*{P - Q}.
+        \]
+        We interpret the vector \(\alpha\parentheses*{P - Q}\) as before.
+        Thus, the full object is the point we obtain by starting at \(Q\) and moving by a fraction of \(\alpha\) in the direction of \(P\).
+    \end{itemize}
     
     
     \section{}
@@ -40,6 +64,63 @@
         \]
         Construct the coordinate transformation to convert \(E + x\vec{e}_1 + y\vec{e}_2\) into the system \(\parentheses*{Q, \vec{q}_1, \vec{q}_2}\).
     \end{quote}
+
+    We proceed in two steps.
+    First, we construct the transformation from \(\parentheses*{E, \vec{e}_1, \vec{e}_2}\) to \(\parentheses*{E, \vec{q}_1, \vec{q}_2}\).
+    Afterwards, we construct the transformation to \(\parentheses*{Q, \vec{q}_1, \vec{q}_2}\).
+    The first transformation is a change of basis from \(\parentheses*{\vec{e}_1, \vec{e}_2}\) to \(\parentheses*{\vec{q}_1, \vec{q}_2}\).
+    The transformation from \(\parentheses*{\vec{q}_1, \vec{q}_2}\) to \(\parentheses*{\vec{e}_1, \vec{e}_2}\) is given by
+    \[
+        \begin{pmatrix}
+            2 & -\frac{1}{3}\\
+            -1 & \frac{1}{2}
+        \end{pmatrix}.
+    \]
+    The inverse transformation from \(\parentheses*{\vec{e}_1, \vec{e}_2}\) to \(\parentheses*{\vec{q}_1, \vec{q}_2}\) is
+    \[
+        \begin{pmatrix}
+            2 & -\frac{1}{3}\\
+            -1 & \frac{1}{2}
+        \end{pmatrix}^{-1} = \begin{pmatrix}
+            \frac{3}{4} & \frac{1}{2}\\
+            \frac{3}{2} & 3
+        \end{pmatrix}.
+    \]
+    Written in extended coordinates, the coordinate transformation from \(\parentheses*{E, \vec{e}_1, \vec{e}_2}\) to \(\parentheses*{E, \vec{q}_1, \vec{q}_2}\) can thus be represented by the matrix
+    \[
+        \begin{pmatrix}
+            \frac{3}{4} & \frac{1}{2} & 0\\
+            \frac{3}{2} & 3 & 0\\
+            0 & 0 & 1
+        \end{pmatrix}
+    \]
+    To shift from \(\parentheses*{E, \vec{q}_1, \vec{q}_2}\) to \(\parentheses*{Q, \vec{q}_1, \vec{q}_2}\), we need to translate by \(-\vec{EQ}\).
+    Since the extended coordinates of \(Q\) are written with respect to \(\parentheses*{E, \vec{e}_1, \vec{e}_2}\), a conversion with \(T\) is necessary.
+    The final transformation is thus
+    \[
+        \begin{pmatrix}
+            x\\
+            y\\
+            1
+        \end{pmatrix} \mapsto T\begin{pmatrix}
+            x\\
+            y\\
+            1
+        \end{pmatrix} - T\begin{pmatrix}
+            5\\
+            -3\\
+            0
+        \end{pmatrix} = \begin{pmatrix}
+            \frac{3}{4} & \frac{1}{2} & -\frac{9}{4}\\
+            \frac{3}{2} & 3 & \frac{3}{2}\\
+            0 & 0 & 1
+        \end{pmatrix}\begin{pmatrix}
+            x\\
+            y\\
+            1
+        \end{pmatrix}.
+    \]
+
     
     \section{}
     
@@ -78,16 +159,49 @@
     \end{quote}
     
     \begin{enumerate}
-        \item
-        \item
+        \item The minkowski distance of order \(p\) (where \(p\) is an integer) between two points \(X, Y \in \R^n\) is defined as \(L_p\parentheses*{X, Y} = \parentheses*{\sum_{i = 1}^n \absolute*{x_i - y_i}^p}^{\frac{1}{p}}\).
+        For \(p = 1\) we get the Manhattan distance
+        \[
+            L_1\parentheses*{f_1, f_2} = \sum_{i = 1}^5 \absolute*{f_{1, i} - f_{2, i}} = 3,
+        \]
+        for \(p = 2\) the Euclidean distance
+        \[
+            L_2\parentheses*{f_1, f_2} = \sqrt{\sum_{i = 1}^5 \absolute*{f_{1, i} - f_{2, i}}^2} = 1.6062,
+        \]
+        and for \(p = \infty\) the Chebyshev distance
+        \[
+            L_\infty\parentheses*{f_1, f_2} = \max_{i = 1, \ldots, 5} \absolute*{f_{1, i} - f_{2, i}} = 1.2.
+        \]
+        \item We can transform any distance function \(\delta\) to a similarity function \(s\) with any monotonically decreasing function \(g: \R \to \R\)
+        \[
+            s\parentheses*{X, Y} = g\parentheses*{\delta\parentheses*{X, Y}} \quad \forall X, Y \in \R^n.
+        \]
         \begin{enumerate}
-            \item
-            \item
+            \item The logarithmic similarity function is given by
+            \[
+                s_{\log}\parentheses*{X, Y} = 1 - \log\parentheses*{1 + \delta\parentheses*{X, Y}}.
+            \]
+            Plugging in \(L_1, L_2, L_\infty\) for \(\delta\) gives us the values
+            \begin{align*}
+                s_{\log, 1}\parentheses*{f_1, f_2} &= 1 - \log\parentheses*{1 + L_1\parentheses*{f_1, f_2}} = -0.38629,\\
+                s_{\log, 2}\parentheses*{f_1, f_2} &= 1 - \log\parentheses*{1 + L_2\parentheses*{f_1, f_2}} = 0.042107,\\
+                s_{\log, \infty}\parentheses*{f_1, f_2} &= 1 - \log\parentheses*{1 + L_\infty\parentheses*{f_1, f_2}} = 0.21154.
+            \end{align*}
+            \item Analoguously, the exponential similarity function is given by
+            \[
+                s_{\exp}\parentheses*{X, Y} = e^{-\delta\parentheses*{X, Y}}.
+            \]
+            Thus plugging in \(L_1, L_2, L_\infty\) for \(\delta\) gives us the values
+            \begin{align*}
+                s_{\exp, 1}\parentheses*{f_1, f_2} &= e^{-L_1\parentheses*{f_1, f_2}} = 0.049787,\\
+                s_{\exp, 2}\parentheses*{f_1, f_2} &= e^{-L_2\parentheses*{f_1, f_2}} = 0.20065,\\
+                s_{\exp, \infty}\parentheses*{f_1, f_2} &= e^{-L_\infty\parentheses*{f_1, f_2}} = 0.30119.
+            \end{align*}
         \end{enumerate}
         \item
         \begin{enumerate}
-            \item
-            \item
+            \item The dot product measure for the given points is \(s_d\parentheses*{f_1, f_2} = f_1^T f_2 = 64.43\).
+            \item The cosine measure for \(f_1\) and \(f_2\) is \(s_c\parentheses*{f_1, f_2} = \frac{f_1^T f_2}{\norm*{f_1}\norm*{f_2}} = 0.98451\).
         \end{enumerate}
     \end{enumerate}
     
@@ -130,16 +244,31 @@
         \begin{enumerate}
             \item Hamming distance,
             \item Minkowski distance for \(p = 1, 2, \infty\),
-            \item histogram intersection distance \(HI\parentheses*{h_1, h_2}\) and \(HI\parentheses*{h_2, h_1}\),
+            \item histogram intersection distance \(\HI\parentheses*{h_1, h_2}\) and \(\HI\parentheses*{h_2, h_1}\),
             \item histogram intersection over union distance.
         \end{enumerate}
         Use your favorite computing environment (e.g. Python) to compute the results.
     \end{quote}
 
     \begin{enumerate}
-        \item
-        \item
-        \item
-        \item
+        \item The Hamming distance between two equal-size histograms is the number of positions at which the corresponding values are different:
+        \[
+            \Delta\parentheses*{h_1, h_2} = \absolute*{\braces*{i \in \braces*{1, \ldots, 6} : h_{1, i} \ne h_{2, i}}} = 5.
+        \]
+        \item Similar to the previous exercise, we obtain the following values for the Minkowski distances:
+        \begin{align*}
+            L_1\parentheses*{h_1, h_2} &= \sum_{i = 1}^6 \absolute*{h_{1, i} - h_{2, i}} = 6,\\
+            L_2\parentheses*{h_1, h_2} &= \sqrt{\sum_{i = 1}^6 \absolute*{h_{1, i} - h_{2, i}}^2} = 2.8284,\\
+            L_\infty\parentheses*{h_1, h_2} &= \max_{i = 1, \ldots, 6} \absolute*{h_{1, i} - h_{2, i}} = 2.
+        \end{align*}
+        \item The histogram intersections are given by
+        \begin{align*}
+            \HI\parentheses*{h_1, h_2} &= \frac{\sum_{i = 1}^6 \min\parentheses*{h_{1, i}, h_{2, i}}}{\sum_{i = 1}^6 h_{2, i}} = 0.7619,\\
+            \HI\parentheses*{h_2, h_1} &= \frac{\sum_{i = 1}^6 \min\parentheses*{h_{1, i}, h_{2, i}}}{\sum_{i = 1}^6 h_{1, i}} = 0.94118.
+        \end{align*}
+        \item The histogram intersection over union on the other hand can be calculated as follows:
+        \[
+            \IoU\parentheses*{h_1, h_2} = \frac{\sum_{i = 1}^6 \min\parentheses*{h_{1, i}, h_{2, i}}}{\sum_{i = 1}^6 \max\parentheses*{h_{1, i}, h_{2, i}}} = 0.72727.
+        \]
     \end{enumerate}
 \end{document}
