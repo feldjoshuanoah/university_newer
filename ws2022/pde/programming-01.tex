@@ -1,0 +1,55 @@
+\documentclass[english]{exercise}
+
+\title{Programming Exercise 1}
+\author{Joshua Feld (406718)}
+\course{Partial Differential Equations}
+\professor{Prof. Kowalski}
+
+\begin{document}
+    \maketitle
+
+
+    \section{}
+    
+    \begin{quote}
+        We consider the one-dimensional boundary value problem
+        \begin{align*}
+            -u'' &= f, \quad \text{in }\parentheses*{0, 1},\\
+            u\parentheses*{0} = u\parentheses*{1} &= 0,
+        \end{align*}
+        with a general right-hand side \(f\).
+        The goal of this programming exercise is to obtain an approximate solution to this boundary value problem using the finite element method with piecewise linear basis functions
+        \[
+            \phi_i^{\text{lin}}\parentheses*{x} := \begin{cases}
+                \frac{x - x_{i - 1}}{h_i}, & \text{if }x \in I_i := \parentheses*{x_{i - 1}, x_i},\\
+                \frac{x_{i + 1} - x}{h_{i + 1}}, & \text{if }x \in I_{i + 1} := \parentheses*{x_i, x_{i + 1}},\\
+                0, & \text{otherwise}
+            \end{cases}
+        \]
+        as well as piecewise quadratic basis functions:
+        \begin{align*}
+            \phi_i^{\text{quad, }i\text{ even}}\parentheses*{x} &:= \begin{cases}
+                \frac{x_{i - 2} - x}{x_{i - 2} - x_i}\frac{x_{i - 1} - x}{x_{i - 1} - x_i}, & \text{if }x \in \parentheses*{x_{i - 2}, x_i},\\
+                \frac{x - x_{i + 1}}{x_i - x_{i + 1}}\frac{x - x_{i + 2}}{x_i - x_{i + 2}}, & \text{if }x \in \parentheses*{x_i, x_{i + 2}},\\
+                0, & \text{otherwise},
+            \end{cases}\\
+            \phi_i^{\text{quad, }i\text{ odd}}\parentheses*{x} &:= \begin{cases}
+                \frac{x - x_{i - 1}}{x_i - x_{i + 1}}\frac{x_{i + 1} - x}{x_{i + 1} - x_i}, & \text{if }x \in \parentheses*{x_{i - 1}, x_{i + 1}},\\
+                0, & \text{otherwise}
+            \end{cases}
+        \end{align*}
+        on an equidistant grid.
+        \begin{enumerate}
+            \item Solve the above boundary value problem with the right-hand side \(f \equiv 1\) using linear basis functions.
+            \item Next, solve the above boundary value problem with the right-hand side \(f\parentheses*{x} = 2\delta\parentheses*{x - \frac{1}{2}}\) in \(\parentheses*{0, 1}\), where \(\delta\) denotes the delta distribution.
+            Also calculate the analytical solution.
+            \item Examine the convergence behavior of the numerical solution using a loglog plot.
+            To do this, create a graph that displays the error \(\norm*{u - u_h}_{L^2}\) versus the mesh width \(h\).
+            Here \(u\) is the analytical (exact) solution and \(u_h\) is the numerical solution.
+            Determine the convergence order for both right-hand sides.
+            What do you observer when there is (isn't) a grid point \(x_k\) at \(0,5\)?
+            \item Solve the above three tasks using quadratic basis functions.
+            \item Bonus: Generalize your solver for non-uniform grids \(0 = x_0 < \cdots < x_N = 1\) with \(h_i = x_i - x_{i - 1}\).
+        \end{enumerate}
+    \end{quote}
+\end{document}
