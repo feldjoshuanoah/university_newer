@@ -1,0 +1,84 @@
+\documentclass{exercise}
+
+\include{preamble}
+
+\title{Hausaufgabe 4}
+\author{René Dopichay (356986) \quad Joshua Feld (406718)\\Thilo Kloos (410343) \quad Shunta Takushima (430043)}
+\professor{Prof. Torrilhon \& Dr. Speck}
+\course{Mathematische Grundlagen III}
+
+\begin{document}
+	\maketitle
+
+
+	\section{}
+
+    \begin{quote}
+        Zeigen Sie, dass das äußere Lebesgue-Maß \(\lambda^*\) translationsinvariant ist, d.h. es gilt
+        \[
+            \lambda^*\parentheses*{x + M} = \lambda^*\parentheses*{M}
+        \]
+        für alle \(x \in \R^n\) und alle \(M \subset \R^n\).
+    \end{quote}
+    
+    
+    \section{}
+    
+    \begin{quote}
+        Gegeben sei \(\Omega = \parentheses*{0, 1}\) sowie die Funktionen
+        \begin{align*}
+            f: \Omega \to \R, &f\parentheses*{x} = \frac{1}{\sqrt{x}},\\
+            g: \Omega \to \R, &g\parentheses*{x} = \exp\parentheses*{-x}.
+        \end{align*}
+        \begin{enumerate}
+            \item Ist \(g\) Lebesgue-messbar?
+            Ist \(g\) Lebesgue-integrierbar?
+            \item Geben Sie eine Funktion \(h\) an mit \(f \ne h\) und \(h \sim f\) bzgl. der Äquivalenzrelation
+            \[
+                u \sim v \iff u = v\text{ fast überall auf }\Omega.
+            \]
+        \end{enumerate}
+    \end{quote}
+    
+    
+    \section{}
+    
+    \begin{quote}
+        Zeigen Sie, dass für die Adams-Bashforth- und Adams-Moulton-Verfahren die Wurzelbedingung erfüllt ist.
+    \end{quote}
+    
+    
+    \section{}
+    
+    \begin{quote}
+        Betrachten Sie das Adams-Bashforth Schema
+        \[
+            y^{j + 2} - y^{j + 1} = h\parentheses*{\frac{3}{2}f\parentheses*{t_{j + 1}, y^{j + 1}} - \frac{1}{2}f\parentheses*{t_j, y^j}}
+        \]
+        und das Anfangswertproblem
+        \[
+            \frac{\d^2 y}{\d t^2}\parentheses*{t} = t + y\parentheses*{t},
+        \]
+        mit den Anfangswerten \(y\parentheses*{0} = 1\) und \(y'\parentheses*{0} = -2\).
+        \begin{enumerate}
+            \item Was ist die Ordnung des Schemas?
+            Ist das Verfahren implizit oder explizit?
+            \item Weisen Sie nach, dass \(y\parentheses*{t} =e^{-t} - t\) die exakte Lösung des Problems ist.
+            \item Zum Lösen des Anfangswertproblems mit dem oben angegebenen Adams-Bashforth Schema werden zwei Anfangswerte benötigt: \(y\parentheses*{0}\) und \(y\parentheses*{h}\).
+            Welche Verfahren sind geeignet, um den Anfangswert \(y\parentheses*{h}\) numerisch zu berechnen?
+            \item Überführen Sie das Anfangswertproblem in ein System von gewöhnlichen Differentiagleichungen erster Ordnung.
+            \item Sei \(h = 0,1\).
+            Approximieren Sie \(y\parentheses*{h}\) mit Hilfe des modifizierten Euler-Verfahrens, das durch das folgende Tableau gegeben ist:
+            \[
+                \renewcommand\arraystretch{1.2}
+				\begin{array}{c|cc}
+					0 & 0 & 0\\
+					\frac{1}{2} & \frac{1}{2} & 0\\
+					\hline
+					& 0 & 1
+				\end{array}
+            \]
+            \item Berechnen Sie \(y\parentheses*{2h}\) mit Hilfe von \(y\parentheses*{0}\) und \(y\parentheses*{h}\) mit dem Adams-Bashforth Schema.
+        \end{enumerate}
+    \end{quote}
+\end{document}
