@@ -20,6 +20,21 @@
         \]
         für alle \(x \in \R^n\) und alle \(M \subset \R^n\).
     \end{quote}
+
+    Um die Translationsinvarianz des Lebesgue-Maßes \(\lambda^*\) zu zeigen, müssen wir zunächst zeigen, dass das Volumen \(\vol\) translationsinvariant ist. Dies ist leicht zu zeigen.
+    Sei dazu \(Q = \brackets*{a, b}^n \in q_n\) und \(x \in \R^n\).
+    Dann gilt \(x + Q = \brackets*{x + a, x + b} \in q_n\) und somit
+    \[
+        \vol\parentheses*{x + Q} = \prod_{i = 1}^n \parentheses*{x_i + b_i - \parentheses*{x_i + a_i}} = \prod_{i = 1}^n \parentheses*{b_i - a_i} = \vol\parentheses*{Q}.
+    \]
+    Somit gilt nun für das Lebesgue-Maß
+    \begin{align*}
+        \lambda^*\parentheses*{x + M} &= \inf\braces*{\sum_{k = 1}^\infty \vol\parentheses*{Q_k} : x + M \subset \bigcup_{k \in \N}Q_k}\\
+        &= \inf\braces*{\sum_{k = 1}^\infty \vol\parentheses*{Q_k} : M \subset \bigcup_{k \in \N}\parentheses*{-x + Q_k}}\\
+        &= \inf\braces*{\sum_{k = 1}^\infty \vol\parentheses*{-x + Q_k} : M \subset \bigcup_{k \in \N}\parentheses*{-x + Q_k}}\\
+        &= \inf\braces*{\sum_{k = 1}^\infty \vol\parentheses*{Q_k} : M \subset \bigcup_{k \in \N}Q_k}\\
+        &= \lambda^*\parentheses*{M}.
+    \end{align*}
     
     
     \section{}
@@ -39,6 +54,27 @@
             \]
         \end{enumerate}
     \end{quote}
+
+    \begin{enumerate}
+        \item Die Umkehrfunktion von \(g\) ist gegeben durch
+        \[
+            g^{-1}: \R \to \Omega, g^{-1}\parentheses*{x} = -\log\parentheses*{x}.
+        \]
+        \(g^{-1}\parentheses*{\parentheses*{\ell, u}}\) ist Lebesgue-messbar für alle \(\ell, u \in \Omega\) mit \(\ell \le u\), weshalb auch \(g\) Lebesgue-messbar ist.
+        Die Funktion \(g\) ist Riemann-integrierbar auf \(\Omega\), denn
+        \[
+            \int_\Omega g\d\mu = \int_0^1 \exp\parentheses*{-x}\d x = \left.-\exp\parentheses*{-x}\right|_0^1 < \infty,
+        \]
+        und somit auch Lebesgue-integrierbar.
+        \item Sei
+        \[
+            h: \Omega \to \R, h\parentheses*{x} = \begin{cases}
+                f, & \text{falls }x \ne a,\\
+                c, & \text{sonst},
+            \end{cases} \quad a \in \parentheses*{0, 1}, c \in \R.
+        \]
+        Dann ist \(f \ne h\) aber \(f = h\) fast überall auf \(\Omega\) und somit \(h \sim f\).
+    \end{enumerate}
     
     
     \section{}
@@ -46,6 +82,20 @@
     \begin{quote}
         Zeigen Sie, dass für die Adams-Bashforth- und Adams-Moulton-Verfahren die Wurzelbedingung erfüllt ist.
     \end{quote}
+
+    Die Wurzelbedingung ist wie folgt definiert:
+    Die Nullstellen \(\lambda\) des charakteristischen Polynoms \(\rho\) erfüllen \(\absolute*{\lambda} \le 1\), und die Nullstellen \(\lambda\) mit \(\absolute*{\lambda} = 1\) sind einfache Nullstellen.
+    Die beiden Verfahren sind gegeben durch
+    \begin{align*}
+        y^{j + k} - y^{j + k - 1} &= h\sum_{\ell = 0}^{k - 1}b_{k, \ell}f\parentheses*{t_{j + \ell}, y^{j + \ell}} \quad \text{(Adams-Bashforth)},\\
+        y^{j + k} - y^{j + k - 1} &= h\sum_{\ell = 0}^k b_{k, \ell}f\parentheses*{t_{j + \ell}, y^{j + \ell}} \quad \text{(Adams-Moulton)}.
+    \end{align*}
+    Offensichtlich haben beide Verfahren das charakteristische Polynom
+    \[
+        \rho\parentheses*{\lambda} = \lambda^{k - 1}\parentheses*{\lambda - 1}.
+    \]
+    Setzen wir nun \(\rho\parentheses*{\lambda} = 0\), so erhalten wir die Nullstelle \(\lambda = 0\) mit algebraischer Vielfachheit \(k - 1\) und \(\lambda = 1\) mit algebraischer Vielfachheit \(1\). Damit ist die Wurzelbedingung für beide Verfahren erfüllt.
+
     
     
     \section{}
@@ -81,4 +131,126 @@
             \item Berechnen Sie \(y\parentheses*{2h}\) mit Hilfe von \(y\parentheses*{0}\) und \(y\parentheses*{h}\) mit dem Adams-Bashforth Schema.
         \end{enumerate}
     \end{quote}
+
+    \begin{enumerate}
+        \item Das Verfahren ist explizit und hat die Ordnung \(2\).
+        \item Die Anfangsbedingungen sind erfüllt, denn \(y\parentheses*{0} = e^{-0} - 0 = 1\) und \(y'\parentheses*{0} = -e^{-0} - 1 = -2\).
+        Wir müssen also nur noch die Differentialgleichung prüfen:
+        \[
+            \frac{\d^2 y}{\d t^2}\parentheses*{t} = \frac{\d^2}{\d t^2}\parentheses*{e^{-t} - t} = e^{-t} = t + \parentheses*{e^{-t} - t} = t + y\parentheses*{t}.
+        \]
+        \item Zur Berechnung des Anfangswertes \(y\parentheses*{h}\) sind alle Verfahren mit Ordnung \(\ge 2\) geeignet.
+        \item Als System gewöhnlicher Differentialgleichungen erster Ordnung können wir das gegebene Anfangswertproblem darstellen durch
+        \[
+            \frac{\d}{\d t}\begin{pmatrix}
+                y\parentheses*{t}\\
+                y'\parentheses*{t}
+            \end{pmatrix} = \begin{pmatrix}
+                y'\parentheses*{t}\\
+                t + y\parentheses*{t}
+            \end{pmatrix},
+        \]
+        mit den Anfangsbedingungen
+        \[
+            \begin{pmatrix}
+                y\parentheses*{0}\\
+                y'\parentheses*{0}
+            \end{pmatrix} = \begin{pmatrix}
+                1\\
+                -2
+            \end{pmatrix}.
+        \]
+        \item
+        \begin{align*}
+            \begin{pmatrix}
+                y\parentheses*{h}\\
+                y'\parentheses*{h}
+            \end{pmatrix} &= \begin{pmatrix}
+                1\\
+                -2
+            \end{pmatrix} + hf\parentheses*{0 + \frac{h}{2}, \begin{pmatrix}
+                1\\
+                -2
+            \end{pmatrix} + \frac{h}{2}f\parentheses*{0, \begin{pmatrix}
+                1\\
+                -2
+            \end{pmatrix}}}\\
+            &= \begin{pmatrix}
+                1\\
+                -2
+            \end{pmatrix} + hf\parentheses*{\frac{h}{2}, \begin{pmatrix}
+                1\\
+                -2
+            \end{pmatrix} + \frac{h}{2}\begin{pmatrix}
+                -2\\
+                1
+            \end{pmatrix}}\\
+            &= \begin{pmatrix}
+                1\\
+                -2
+            \end{pmatrix} + hf\parentheses*{\frac{h}{2}, \begin{pmatrix}
+                1 - h\\
+                -2 + \frac{h}{2}
+            \end{pmatrix}}\\
+            &= \begin{pmatrix}
+                1\\
+                -2
+            \end{pmatrix} + h\begin{pmatrix}
+                -2 + \frac{h}{2}\\
+                1 - \frac{h}{2}
+            \end{pmatrix}\\
+            &= \begin{pmatrix}
+                \frac{1}{2}h^2 - 2h + 1\\
+                -\frac{1}{2}h^2 + h - 2
+            \end{pmatrix}.
+        \end{align*}
+        Setzen wir hier nun noch \(h = 0,1\) ein und betrachten nur die erste Zeile, so erhalten wir
+        \[
+            y\parentheses*{0,1} = \frac{1}{2} \cdot 0,1^2 - 2 \cdot 0,1 + 1 = 0,805.
+        \]
+        \item
+        \begin{align*}
+            \begin{pmatrix}
+                y\parentheses*{2h}\\
+                y'\parentheses*{2h}
+            \end{pmatrix} &= \begin{pmatrix}
+                y\parentheses*{h}\\
+                y'\parentheses*{h}
+            \end{pmatrix} + h\parentheses*{\frac{3}{2}f\parentheses*{h, \begin{pmatrix}
+                y\parentheses*{h}\\
+                y'\parentheses*{h}
+            \end{pmatrix}} - \frac{1}{2}f\parentheses*{0, \begin{pmatrix}
+                y\parentheses*{0}\\
+                y'\parentheses*{0}
+            \end{pmatrix}}}\\
+            &= \begin{pmatrix}
+                \frac{1}{2}h^2 - 2h + 1\\
+                -\frac{1}{2}h^2 + h - 2
+            \end{pmatrix} + h\parentheses*{\frac{3}{2}f\parentheses*{h, \begin{pmatrix}
+                \frac{1}{2}h^2 - 2h + 1\\
+                -\frac{1}{2}h^2 + h - 2
+            \end{pmatrix}} - \frac{1}{2}f\parentheses*{0, \begin{pmatrix}
+                1\\
+                -2
+            \end{pmatrix}}}\\
+            &= \begin{pmatrix}
+                \frac{1}{2}h^2 - 2h + 1\\
+                -\frac{1}{2}h^2 + h - 2
+            \end{pmatrix} + h\parentheses*{\frac{3}{2}\begin{pmatrix}
+                -h^2 + h - 2\\
+                \frac{1}{2}h^2 - h + 1
+            \end{pmatrix} - \frac{1}{2}\begin{pmatrix}
+                -2\\
+                1
+            \end{pmatrix}}\\
+            &= \begin{pmatrix}
+                -\frac{3}{4}h^3 + 2h^2 - 4h + 1\\
+                \frac{3}{4}h^3 - 2h^2 + 2h - 2
+            \end{pmatrix}.
+        \end{align*}
+        Setzen wir hier wieder \(h = 0,1\) ein und betrachten erneut nur die erste Zeile, so erhalten wir
+        \[
+            y\parentheses*{0,2} = -\frac{3}{4} \cdot 0,1^3 + 2 \cdot 0,1^2 - 4 \cdot 0,1 + 1 = 0,61925.
+        \]
+    \end{enumerate}
 \end{document}
