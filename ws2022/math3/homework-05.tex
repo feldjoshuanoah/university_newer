@@ -1,0 +1,152 @@
+\documentclass{exercise}
+
+\include{preamble}
+
+\title{Hausaufgabe 5}
+\author{René Dopichay (356986) \quad Joshua Feld (406718)\\Thilo Kloos (410343) \quad Shunta Takushima (430043)}
+\professor{Prof. Torrilhon \& Dr. Speck}
+\course{Mathematische Grundlagen III}
+
+\begin{document}
+	\maketitle
+
+
+	\section{}
+
+	\begin{quote}
+		The set \(A \subset \R^2\) is depicted in figure \ref{fig:1-1}.
+		\begin{figure}[h]
+			\centering
+			\begin{tikzpicture}
+				\draw[<->] (0,3.5) node[right] {\(y\)} -- (0,0) -- (3.5,0) node[above] {\(x\)};
+				\filldraw[fill=white!80!black] (2,1) node[below] {\(\parentheses*{2, 1}\)} -- (1,2) node[left] {\(\parentheses*{1, 2}\)} -- (3,3) node[above] {\(\parentheses*{3, 3}\)} -- cycle;
+				\node at (2,2) {\(A\)};
+			\end{tikzpicture}
+			\caption{Area of triangle}
+			\label{fig:1-1}
+		\end{figure}
+		\begin{enumerate}
+			\item Write the integral of a function \(f\) over \(A\) as an iterated integral.
+			\item Determine the area of \(A\) by taking \(f \equiv 1\).
+		\end{enumerate}
+	\end{quote}
+
+	\begin{enumerate}
+		\item We can find functions for the borders of the triangle:
+		\begin{align*}
+			\parentheses*{1, 2} \to \parentheses*{3, 3}:& \quad y\parentheses*{x} = \frac{1}{2}x + \frac{3}{2},\\
+			\parentheses*{1, 2} \to \parentheses*{2, 1}:& \quad y\parentheses*{x} = -x + 3,\\
+			\parentheses*{2, 1} \to \parentheses*{3, 3}:& \quad y\parentheses*{x} = 2x - 3.
+		\end{align*}
+		We can now split the triangle in two smaller triangles as shown in the following figure:
+		\begin{figure}[h]
+			\centering
+			\begin{tikzpicture}
+				\draw[<->] (0,3.5) node[right] {\(y\)} -- (0,0) -- (3.5,0) node[above] {\(x\)};
+				\filldraw[fill=white!80!black] (2,1) node[below] {\(\parentheses*{2, 1}\)} -- (1,2) node[left] {\(\parentheses*{1, 2}\)} -- (3,3) node[above] {\(\parentheses*{3, 3}\)} -- cycle;
+				\draw[dashed] (2,2.5) -- (2,1);
+			\end{tikzpicture}
+			\caption{Triangle split up into two smaller triangles}
+			\label{fig:1-1}
+		\end{figure}
+
+		The set of points that are in the left triangle are thus given by \(\brackets*{-x + 3, \frac{1}{2}x + \frac{3}{2}}\) for \(x \in \left[1, 2\right)\) and the points in the right triangle by \(\brackets*{2x - 3, \frac{1}{3}x + \frac{3}{2}}\) for \(x \in \brackets*{2, 3}\).
+		Combining these two sets gives us the set of points in the full triangle
+		\[
+			A_x = \begin{cases}
+				\brackets*{-x + 3, \frac{1}{2}x + \frac{3}{2}}, & \text{for }x \in \left[1, 2\right),\\
+				\brackets*{2x - 3, \frac{1}{3}x + \frac{3}{2}}, & \text{for }x \in \brackets*{2, 3},\\
+				\emptyset, & \text{otherwise}.
+			\end{cases}
+		\]
+		The integral of a function \(f\) over \(A\) as an iterated integral is therefore given by
+		\[
+			\int_A f\d\mu = \int_\R \parentheses*{\int_{A_x}f\d y}\d x = \int_1^2 \int_{-x + 3}^{\frac{1}{2}x + \frac{3}{2}}f\parentheses*{x, y}\d y\d x + \int_2^3 \int_{2x - 3}^{\frac{1}{2}x + \frac{3}{2}}f\parentheses*{x, y}\d y\d x.
+		\]
+		\item Taking \(f \equiv 1\) yields
+		\begin{align*}
+			\int_A 1\d\mu &= \int_1^2 \int_{-x + 3}^{\frac{1}{2}x + \frac{3}{2}}\d y\d x + \int_2^3 \int_{2x - 3}^{\frac{1}{2}x + \frac{3}{2}}\d y\d x\\
+			&= \int_1^2 \parentheses*{\frac{1}{2}x + \frac{3}{2} - \parentheses*{-x + 3}}\d x + \int_2^3 \parentheses*{\frac{1}{2}x + \frac{3}{2} - \parentheses*{2x - 3}}\\
+			&= \frac{3}{2}\parentheses*{\int_1^2 \parentheses*{x - 1}\d x + \int_2^3 \parentheses*{-x + 3}\d x}\\
+			&= \frac{3}{2}\parentheses*{\brackets*{\frac{1}{2}x^2 - x}_1^2 + \brackets*{-\frac{1}{2}x^2 + 3x}_2^3}\\
+			&= \frac{3}{2} \cdot \parentheses*{\frac{1}{2} \cdot 2^2 - 2 - \parentheses*{\frac{1}{2} \cdot 1^2 - 1} + \parentheses*{-\frac{1}{2} \cdot 3^2 + 3 \cdot 3 - \parentheses*{-\frac{1}{2} \cdot 2^2 + 3 \cdot 2}}} = \frac{3}{2}.
+		\end{align*}
+	\end{enumerate}
+
+
+	\section{}
+
+	\begin{quote}
+		Let \(\mathcal{A}\) be the cone defined by
+		\[
+			\mathcal{A} = \braces*{\parentheses*{x, y, z} \in \R^3 : x^2 + y^2 \le \parentheses*{1 - z}^2, 0 \le z \le 1}
+		\]
+		and \(\mathcal{B}\) be the paraboloid defined by
+		\[
+			\mathcal{B} = \braces*{\parentheses*{x, y, z} \in \R^3 : x^2 + y^2 \le 1 - z, 0 \le z \le 1}.
+		\]
+		Compute the volume of solid delimited by \(\mathcal{A}\) and the plane \(\braces*{z = 0}\), and the solid delimited by \(\mathcal{B}\) and the plane \(\braces*{z = 0}\).
+	\end{quote}
+
+
+	\section{}
+
+	\begin{quote}
+		Given the differential equation \(x'\parentheses*{t} = \lambda x\parentheses*{t}\) derive the stability regions for the following methods:
+		\begin{enumerate}
+			\item the 3-step Euler method \(x^{j + k + \frac{1}{3}} = x^{j + k} + \frac{h}{3}f\parentheses*{t_{j + k}, x^{j + k}}\) for \(k = 0, \frac{1}{3}, \frac{2}{3}\),
+			\item the 4-step Euler method \(x^{j + k + \frac{1}{4}} = x^{j + k} + \frac{h}{4}f\parentheses*{t_{j + k}, x^{j + k}}\) for \(k = 0, \frac{1}{4}, \frac{1}{2}, \frac{3}{4}\).
+		\end{enumerate}
+	\end{quote}
+
+	\begin{enumerate}
+		\item With \(f\parentheses*{t_{j + k}, x^{j + k}} = \lambda x^{j + k}\) we get the following equation for the 3-step Euler method:
+		\begin{align*}
+			x^{j + \frac{1}{3}} &= \parentheses*{1 + \frac{h\lambda}{3}}x^j,\\
+			x^{j + \frac{2}{3}} &= \parentheses*{1 + \frac{h\lambda}{3}}x^{j + \frac{1}{3}},\\
+			x^{j + 1} &= \parentheses*{1 + \frac{h\lambda}{3}}x^{j + \frac{2}{3}} = \parentheses*{1 + \frac{h\lambda}{3}}^3 x^j.
+		\end{align*}
+		For absolute stability, we require
+		\[
+			\absolute*{g\parentheses*{z}} = \absolute*{1 + \frac{z}{3}} \le 1 \iff \absolute*{3 + z} \le 3
+		\]
+		where \(z = h\lambda \in \C\).
+		Thus the stability region is given by
+		\[
+			S = \braces*{z \in \C : \absolute*{3 + z} \le 3}.
+		\]
+		\item Analogously, for the 4-step Euler method we obtain \(x^{j + 1} = \parentheses*{1 + \frac{h\lambda}{4}}^4 x^j\).
+		This results in the condition \(\absolute*{g\parentheses*{z}} = \absolute*{1 + \frac{z}{4}} \le 1\) with \(z = h\lambda \in \C\), which gives the stability region \(S = \braces*{z \in \C : \absolute*{4 + z} \le 4}\).
+	\end{enumerate}
+
+
+	\section{}
+
+	\begin{quote}
+		Given the following ODE system
+		\begin{align*}
+			y'\parentheses*{t} &= Ay\parentheses*{t} + f\parentheses*{t}, \quad y\parentheses*{t_0} = y_0,\\
+			z'\parentheses*{t} &= Az\parentheses*{t} + f\parentheses*{t}, \quad z\parentheses*{t_0} = z_0
+		\end{align*}
+		with negative semi-definite matrix \(A \in \R^{n \times n}\), this means \(x^T Ax \le 0\) for all \(x \in \R^n\).
+		Show that
+		\[
+			\norm*{y\parentheses*{t} - z\parentheses*{t}}_2 \le \norm*{y_0 - z_0}_2, \quad t \ge t_0.
+		\]
+	\end{quote}
+
+	Using the hint we show
+	\begin{align*}
+		\frac{\d}{\d t}\norm*{y\parentheses*{t} - z\parentheses*{t}}_2^2 &= \frac{\d}{\d t}\parentheses*{y\parentheses*{t} - z\parentheses*{t}}^T \parentheses*{y\parentheses*{t} - z\parentheses*{t}}\\
+		&= \frac{\d}{\d t}\parentheses*{y\parentheses*{t} - z\parentheses*{t}}^T\parentheses*{y\parentheses*{t} - z\parentheses*{t}} + \parentheses*{y\parentheses*{t} - z\parentheses*{t}}^T \frac{\d}{\d t}\parentheses*{y\parentheses*{t} - z\parentheses*{t}}\\
+		&= \parentheses*{y'\parentheses*{t} - z'\parentheses*{t}}^T \parentheses*{y\parentheses*{t} - z\parentheses*{t}} + \parentheses*{y\parentheses*{t} - z\parentheses*{t}}^T \parentheses*{y'\parentheses*{t} - z'\parentheses*{t}}\\
+		&= \parentheses*{Ay\parentheses*{t} + f\parentheses*{t} - \parentheses*{Az\parentheses*{t} + f\parentheses*{t}}}^T \parentheses*{y\parentheses*{t} - z\parentheses*{t}}\\
+		&\quad\, + \parentheses*{y\parentheses*{t} - z\parentheses*{t}}^T \parentheses*{Ay\parentheses*{t} + f\parentheses*{t} - \parentheses*{Az\parentheses*{t} + f\parentheses*{t}}}\\
+		&= \parentheses*{A\parentheses*{y\parentheses*{t} - z\parentheses*{t}}}^T \parentheses*{y\parentheses*{t} - z\parentheses*{t}} + \parentheses*{y\parentheses*{t} - z\parentheses*{t}}^T A\parentheses*{y\parentheses*{t} - z\parentheses*{t}}\\
+		&= \underbrace{\parentheses*{y\parentheses*{t} - z\parentheses*{t}}^T A^T\parentheses*{y\parentheses*{t} - z\parentheses*{t}}}_{\le 0\text{, since }A^T\text{ neg. semi-definite}} + \underbrace{\parentheses*{y\parentheses*{t} - z\parentheses*{t}}^T A\parentheses*{y\parentheses*{t} - z\parentheses*{t}}}_{\le 0\text{, since }A\text{ neg. semi-definite}} \le 0.
+	\end{align*}
+	Thus, it follows that
+	\[
+		\norm*{y\parentheses*{t} - z\parentheses*{t}}_2^2 \le \norm*{y_0 - z_0}_2^2 \iff \norm*{y\parentheses*{t} - z\parentheses*{t}}_2 \le \norm*{y_0 \le z_0}_2, \quad t \ge t_0.
+	\]
+\end{document}

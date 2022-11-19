@@ -14,3 +14,94 @@ For an interval \(\Omega = \brackets*{a, b}\) we consider the positions \(\brace
         0, & \text{otherwise}.
     \end{cases}
 \]
+
+\begin{theorem}
+    Let \(u \in H^1\parentheses*{\Omega}\) with \(\Omega = \parentheses*{a, b}\) and the interior positions \(\braces*{x_i}_{i = 1, \ldots, N} \subset \Omega\) be given.
+    The function
+    \[
+        s^{\parentheses*{N}}\parentheses*{x} = \sum_{j = 1}^N u\parentheses*{x_j}\varphi_j\parentheses*{x},
+    \]
+    with hat-functions \(\varphi_j\), satisfies \(s^{\parentheses*{N}} \in H_0^1\parentheses*{\Omega}\) and is a linear spline interpolating \(u\parentheses*{x_k}\) for \(k = 1, \ldots, N\).
+\end{theorem}
+
+\begin{proof}
+    The hat-functions are continuous piecewise linear functions, hence \(\varphi_j \in H^1\parentheses*{\brackets*{a, b}}\).
+    They have the property \(\varphi_j\parentheses*{x_k} = 1\) if \(j = k\) and \(\varphi_j\parentheses*{x_k} = 0\) if \(j \ne k\), i.e., \(\varphi_j\parentheses*{x_k} = \delta_{jk}\).
+    Hence, \(s^{\parentheses*{N}}\) interpolates \(u\) because for \(k = 1, \ldots, N\)
+    \[
+        s^{\parentheses*{N}}\parentheses*{x_k} = \sum_{j * 1}^N u\parentheses*{x_j}\varphi_j\parentheses*{x_k} = u\parentheses*{x_k}.
+    \]
+    By definition a linear spline is a continuous piecewise linear function.
+    On each interval \(\parentheses*{x_j, x_{j + 1}}\) the function \(s^{\parentheses*{N}}\) is a superposition of two hat-functions \(\varphi_j\) and \(\varphi_{j + 1}\), which gives a linear function connecting \(u\parentheses*{x_j}\) and \(u\parentheses*{x_{j + 1}}\).
+    Because the function values coincide on each side of the intervals \(s^{\parentheses*{N}}\) is continuous.
+    At the boundaries \(x_0 = a\) and \(x_{N + 1} = b\) we find
+    \[
+        s^{\parentheses*{N}}\parentheses*{x_0} = u\parentheses*{x_1}\varphi_1\parentheses*{x_0} = 0, \quad s^{\parentheses*{N}}\parentheses*{x_{N + 1}} = u\parentheses*{x_N}\varphi_N\parentheses*{x_{N + 1}} = 0.
+    \]
+    Alltogether, \(s^{\parentheses*{N}} \in H_0^1\parentheses*{\brackets*{a, b}}\).
+\end{proof}
+
+For a fixed grid we choose the linear splines as approximation space \(V_N \in H_0^1\parentheses*{\brackets*{a, b}}\) and the hat-functions \(\braces*{\varphi_j}_{j = 1, \ldots, N}\) as basis.
+For the Ritz-Galerkin solution of the Poisson problem we compute
+\[
+    a\parentheses*{\varphi_j, \varphi_k} = \begin{cases}
+        \frac{2}{h}, & \text{if }j = k,\\
+        -\frac{1}{h}, & \text{if }j = k + 1\text{ or }j = k - 1,\\
+        0, & \text{otherwise}
+    \end{cases}
+\]
+for an equidistant grid with \(h_j = h = \text{const.}\) and the resulting matrix of the linear system reads
+\[
+    A = \frac{1}{h}\begin{pmatrix}
+        2 & -1 & 0 & \cdots & 0\\
+        -1 & 2 & \ddots & \ddots & \vdots\\
+        0 & \ddots & \ddots & \ddots & 0\\
+        \vdots & \ddots & \ddots & 2 & -1\\
+        0 & \cdots & 0 & -1 & 2
+    \end{pmatrix}.
+\]
+
+\begin{remark}
+    \begin{enumerate}
+        \item The matrix is equivalent to the finite difference case.
+        This is a coincidence.
+        \item As above the solution of the Poisson problem has the form \(u_N = \sum_{k = 1}^N \alpha_k \varphi_k\) with \(\varphi_k\) being hat-functions.
+        In this case, the basis coefficients \(\alpha_k\) approximate the point values of \(u\) at \(x_k\) such that \(\alpha_k = u_N\parentheses*{x_k} \approx u\parentheses*{x_k}\).
+    \end{enumerate}
+\end{remark}
+
+
+\subsection{Triangulation in 2D}
+
+After the basic motivation in 1D, we can now move on to some simple examples in 2D.
+First we will ned the following concepts for a spatial decomposition.
+
+\begin{definition}
+    A \emph{triangulation} \(\mathcal{T} = \braces*{K_i}_{i = 1, 2, \ldots}\) of a polygonal domain \(\Omega \subset \R^2\) is a decomposition of \(K_i, i = 1, 2, \ldots\).
+    A triangulation \(\mathcal{T}\) is called \emph{regular}, if the intersection of two triangles \(K, K' \in \mathcal{T}\) is either empty, a corner (vertex/node), or an entire edge.
+    The \emph{set of vertices} of \(\mathcal{T}\) is denoted by
+    \[
+        \mathcal{N}\parentheses*{\mathcal{T}} = \braces*{p \in \R^2 : p\text{ is a vertex of some }K \in \mathcal{T}}.
+    \]
+\end{definition}
+
+\begin{remark}
+    \begin{enumerate}
+        \item Here we focus on the subdomains \(K_i\) being triangles (i.e., simplices), but one could, in principle, also combine triangle and quadrilaterals, as long as \(\bar{\Omega} = \bigcup_{i = 1}^M \bar{K_i}\) for some \(M \in \N\) with \(K_i \cap K_j = \emptyset\) for \(i \ne j\).
+        \item Regular means that every vertex in \(K\) is also a corner of \(K\).
+        That is, there are no hanging nodes.
+        \item On a computer \(\mathcal{T}\) is typically stored in two parts: a list of coordinates for the vertices \(p_j \in \mathcal{N}\parentheses*{\mathcal{T}}, j = 1, 2, \ldots\) and a connectivity list consisting of the three vertex numbers \(\parentheses*{j_1^{\parentheses*{K}}, j_2^{\parentheses*{K}}, j_3^{\parentheses*{K}}} \in \N^3\) (with respect to a global numbering) for each triangle \(K \in \mathcal{T}\).
+    \end{enumerate}
+\end{remark}
+
+\begin{example}
+    Let's consider the following simple triangulation:
+    \begin{figure}
+        \centering
+        \begin{tikzpicture}
+            \draw[<->] (-.5,2.5) node[right] {\(y\)} -- (-.5, -.5) -- (4.5,-.5) node[above] {\(x\)};
+        \end{tikzpicture}
+        \caption{3 triangles build from 5 vertices}
+        \label{fig:5-1}
+    \end{figure}
+\end{example}
