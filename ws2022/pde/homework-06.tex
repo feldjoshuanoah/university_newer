@@ -1,0 +1,164 @@
+\documentclass[english]{exercise}
+
+\title{Homework 6}
+\author{Joshua Feld (406718)}
+\course{Partial Differential Equations}
+\professor{Prof. Kowalski}
+
+\begin{document}
+    \maketitle
+
+
+    \section{}
+
+    \begin{quote}
+        We are given the reference triangle \(\hat{K} := \braces*{\xi = \parentheses*{\xi_1, \xi_2}^T \in \R^2 : 0 \le \xi_1 \le 1, 0 \le \xi_2 \le 1 - \xi_1}\) and an arbitrary triangle \(K\) with the nodes of the triangle given by \(p_1 = \parentheses*{1, 1}, p_2 = \parentheses*{1, 2}, p_3 = \parentheses*{3, 4}\).
+        On the reference triangle we have the quadrature formula
+        \[
+            \int_{\hat{K}}\hat{f}\parentheses*{\xi}\d\xi \approx \frac{1}{2}\hat{f}\parentheses*{\frac{1}{3}, \frac{1}{3}}.
+        \]
+        The goal is to approximate the integral \(\int_K f\parentheses*{x}\d x\) with \(f\parentheses*{x} := x_1 - x_2^2\).
+        Proceed as follows:
+        \begin{enumerate}
+            \item Determine the affine transformation \(F_K: \hat{K} \to K\) such that
+            \[
+                F_K\parentheses*{0, 0} = p_1, \quad F_K\parentheses*{1, 0} = p_2, \quad F_K\parentheses*{0, 1} = p_3.
+            \]
+            \item Transform the integral over \(K\) to the reference triangle \(\hat{K}\) and then approximate the integral by applying the given quadrature formula.
+        \end{enumerate}
+    \end{quote}
+    
+    \begin{enumerate}
+        \item The desired affine transformation \(F_K: \hat{K} \to K\) is given by
+        \[
+            F_K\parentheses*{\xi} = p_1 + \parentheses*{p_2 - p_1, p_3 - p_2}\xi = \begin{pmatrix}
+                1\\
+                1
+            \end{pmatrix} + \begin{pmatrix}
+                0 & 2\\
+                1 & 3
+            \end{pmatrix}\begin{pmatrix}
+                \xi_1\\
+                \xi_2
+            \end{pmatrix}.
+        \]
+        \item We approximate the integral over \(K\) to transformation on \(\hat{K}\) and application of the given quadrature formula
+        \begin{align*}
+            \int_K f\parentheses*{x}\d x &= \int_{\hat{K}}f\parentheses*{F_K\parentheses*{\xi}}\absolute*{\det\parentheses*{JF_K}\parentheses*{\xi}}\d\xi\\
+            &= \int_{\hat{K}}f\parentheses*{F_K\parentheses*{\xi}}\absolute*{\det A}\d\xi\\
+            &= \int_{\hat{K}}2f\parentheses*{F_K\parentheses*{\xi}}\d\xi\\
+            &\approx f\parentheses*{F_K\parentheses*{\frac{1}{3}, \frac{1}{3}}}\\
+            &= f\parentheses*{\frac{1}{3}\begin{pmatrix}
+                5\\
+                7
+            \end{pmatrix}}\\
+            &= \frac{5}{3} - \parentheses*{\frac{7}{3}}^2 = -\frac{34}{9}.
+        \end{align*}
+    \end{enumerate}
+    
+    
+    \section{}
+    
+    \begin{quote}
+        Given the boundary value problem
+        \begin{align*}
+            -\parentheses*{\parentheses*{1 + x^2}u_x}_x + \parentheses*{\parentheses*{1 + y^2}u_y}_y + 2u &= 2, \quad \text{in }T,\\
+            u & =0, \quad \text{on }\partial T
+        \end{align*}
+        on the reference triangle \(T := \braces*{\parentheses*{x, y} : 0 < x, y < 1, x + y < 1}\) with the vertices \(\parentheses*{0, 0}\), \(\parentheses*{1, 0}\) and \(\parentheses*{0, 1}\).
+        \begin{enumerate}
+            \item Give the weak formulation of the problem.
+            \item We want to solve the problem using piecewise finite elements.
+            For this reason \(T = T_1 \cup T_2 \cup T_3\) is split up into three triangles \(T_i\) with the common inner vertex \(\parentheses*{x_0, y_0} = \parentheses*{\frac{1}{3}, \frac{1}{3}}\).
+            Set up the linear system for the approximate solution \(u_h\) but leave the matrix and vector elements in integral form.
+            \item Determine the integrals of the equation system.
+            Use a transformation \(F_i\) from the triangles \(T_i\) onto the reference triangle \(T\).
+            The transformation should map the common vertex \(\parentheses*{x_0, y_0}\) onto the origin \(\parentheses*{0, 0}\).
+            \item Determine the approximate solution by solving the linear system.
+            What is the approximate value at the position \(\parentheses*{x_0, y_0}\)?
+        \end{enumerate}
+    \end{quote}
+    
+    \begin{enumerate}
+        \item
+        \item
+        \item
+        \item
+    \end{enumerate}
+    
+    \section{}
+    
+    \begin{quote}
+        We define a triangle by the three vertices \(a_1 = \parentheses*{0, 0}, a_2 = \parentheses*{1, 0}, a_3 = \parentheses*{0, 1}\).
+        We would like to approximate the solution in this triangle by a cubic polynomial.
+        Thus we define the basis function as
+        \[
+            p_5\parentheses*{x, y} = \alpha_1 + \alpha_2 x + \alpha_3 y + \alpha_4 xy + \alpha_5 x^2 + \alpha_6 y^2 + \alpha_7 x^2 y + \alpha_8 xy^2 + \alpha_9 x^3 + \alpha_{10}y^3.
+        \]
+        Find the values of the various coefficients appearing in the polynomial such that is satisfies
+        \[
+            p_5\parentheses*{a_i} = 0, \quad p_5\parentheses*{a_{1, 2, 3}} = 0, \quad \partial_x p_5\parentheses*{a_i} = \delta_{i1}, \quad \partial_y p_5\parentheses*{a_i} = 0 \quad \forall i \in \braces*{1, 2, 3}
+        \]
+        where
+        \[
+            a_{1, 2, 3} = \sum_{i = 1}^3 \frac{a_i}{3}.
+        \]
+    \end{quote}
+
+    We first calculate
+    \[
+        a_{1, 2, 3} = \sum_{i = 1}^3 \frac{a_i}{3} = \frac{1}{3} \cdot \parentheses*{\parentheses*{0, 0} + \parentheses*{1, 0} + \parentheses*{0, 1}} = \parentheses*{\frac{1}{3}, \frac{1}{3}}
+    \]
+    and
+    \begin{align*}
+        \partial_x p_5\parentheses*{x, y} &= \alpha_2 + \alpha_4 y + 2\alpha_5 x + 2\alpha_7 xy + \alpha_8 y^2 + 3\alpha_9 x^2,\\
+        \partial_y p_5\parentheses*{x, y} &= \alpha_3 + \alpha_4 x + 2\alpha_6 y + \alpha_7 x^2 + 2\alpha_8 xy + 3\alpha_{10}y^2.
+    \end{align*}
+    Now we can use all of the given conditions to find a linear system of equations for all of the coefficients.
+    The condition \(p_5\parentheses*{a_i} = 0\) gives the equations
+    \begin{align*}
+        p_5\parentheses*{0, 0} &= \alpha_1 = 0,\\
+        p_5\parentheses*{1, 0} &= \alpha_1 + \alpha_2 + \alpha_5 + \alpha_9 = 0,\\
+        p_5\parentheses*{0, 1} &= \alpha_1 + \alpha_3 + \alpha_6 + \alpha_{10} = 0,\\
+    \end{align*}
+    From \(p_5\parentheses*{a_{1, 2, 3}} = 0\) we obtain
+    \[
+        p_5\parentheses*{\frac{1}{3}, \frac{1}{3}} = \alpha_1 + \frac{1}{3}\parentheses*{\alpha_2 + \alpha_3} + \frac{1}{9}\parentheses*{\alpha_4 + \alpha_5 + \alpha_6} + \frac{1}{27}\parentheses*{\alpha_7 + \alpha_8 + \alpha_9 + \alpha_{10}} = 0.
+    \]
+    The third condition gives us
+    \begin{align*}
+        \partial_x p_5\parentheses*{0, 0} &= \alpha_2 = 1,\\
+        \partial_x p_5\parentheses*{1, 0} &= \alpha_2 + 2\alpha_5 + 3\alpha_9 = 0,\\
+        \partial_x p_5\parentheses*{0, 1} &= \alpha_2 + \alpha_4 + \alpha_8 = 0.
+    \end{align*}
+    and finally, the last equation \(\partial_y p_5\parentheses*{a_i} = 0\) results in
+    \begin{align*}
+        \partial_y p_5\parentheses*{0, 0} &= \alpha_3 = 0,\\
+        \partial_y p_5\parentheses*{1, 0} &= \alpha_3 + \alpha_4 + \alpha_7 = 0,\\
+        \partial_y p_5\parentheses*{0, 1} &= \alpha_3 + 2\alpha_6 + 3\alpha_{10} = 0.
+    \end{align*}
+    Thus the complete system of equations in matrix form is given by
+    \[
+        \parentheses*{\begin{array}{cccccccccc|c}
+            1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+            1 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 0\\
+            1 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0\\
+            1 & \frac{1}{3} & \frac{1}{3} & \frac{1}{9} & \frac{1}{9} & \frac{1}{9} & \frac{1}{27} & \frac{1}{27} & \frac{1}{27} & \frac{1}{27} & 0\\
+            0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1\\
+            0 & 1 & 0 & 0 & 2 & 0 & 0 & 0 & 3 & 0 & 0\\
+            0 & 1 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 0\\
+            0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+            0 & 0 & 1 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 0\\
+            0 & 0 & 1 & 0 & 0 & 2 & 0 & 0 & 0 & 3 & 0
+        \end{array}}.
+    \]
+    Using the Gauss algorithm we find the solution
+    \[
+        \alpha = \parentheses*{0, 1, 0, -3, -2, 0, 3, 2, 1, 0}
+    \]
+    and thus, by inserting these coeffiicents into the given cubic polynomial, we find the solution
+    \begin{align*}
+        p_5\parentheses*{x, y} &= x - 3xy - 2x^2 + 3x^2 y + 2xy^2 + x^3\\
+        &= x\parentheses*{-3y - 2x + 3xy + 2y^2 + x^2}.
+    \end{align*}
+\end{document}
