@@ -1,0 +1,93 @@
+\documentclass{exercise}
+
+\include{preamble}
+
+\title{Selbstrechenübung 1}
+\author{Joshua Feld (406718)}
+\professor{Prof. Torrilhon \& Dr. Speck}
+\course{Mathematische Grundlagen III}
+
+\begin{document}
+	\maketitle
+
+
+	\section{}
+
+	\begin{quote}
+		Define \(D = \braces*{w \in C^2\parentheses*{\brackets*{-1, 1}} : w\parentheses*{-1} = 1, w\parentheses*{1} = 1}\) and
+		\[
+			F: D \to \R, y \mapsto F\parentheses*{y} = \frac{1}{2}\int_{-1}^1 \parentheses*{xy'\parentheses*{x}}^2 \d x.
+		\]
+		\begin{enumerate}
+			\item Calculate the first variation \(\partial F\parentheses*{y; v}\) of the functional \(F\) for \(y \in D\) and
+			\[
+				v \in D_0 = \braces*{w \in C^2\parentheses*{\brackets*{-1, 1}} : w\parentheses*{-1} = 0, w\parentheses*{1} = 0}.
+			\]
+			\item Formulate the Euler-Lagrange equation for extremals of \(F\) and work out all solutions \(y \in D\) of it.
+		\end{enumerate}
+	\end{quote}
+
+	\begin{enumerate}
+		\item
+		\item
+	\end{enumerate}
+
+
+	\section{}
+
+	\begin{quote}
+		Gesucht sind die Extrema der Funktion
+		\[
+			f: \R^3 \to \R, \parentheses*{x, y, z} \mapsto f\parentheses*{x, y, z} := x^4 + 2y^2 + z^2 - y\parentheses*{2x^2 + 8} + 4z.
+		\]
+	\end{quote}
+
+
+	\section{}
+
+	\begin{quote}
+		Gegeben sei das Runge-Kutta-Verfahren
+		\begin{align*}
+			k_1 &= f\parentheses*{t_j, y^j},\\
+			k_2 &= f\parentheses*{t_j + ah, y^j + hak_1},\\
+			y^{j + 1} &= y^j + h\parentheses*{b_1 k_1 + b_2 k_2},
+		\end{align*}
+		mit \(a, b_1, b_2 \in \R\).
+		Leiten Sie die Bedingungen für die Koeffizienten \(a, b_1, b_2 \in \R\) her, damit das Verfahren die Konsistenzordnung \(2\) besitzt.
+	\end{quote}
+
+
+	\section{}
+
+	\begin{quote}
+		Consider the ODE
+		\begin{align*}
+			x'\parentheses*{t} &= \lambda x\parentheses*{t} + g\parentheses*{t}, \quad t \in \brackets*{0, T}, \lambda < 0,\\
+			x\parentheses*{0} &= x^0,
+		\end{align*}
+		which we would like to approximate through the implicit Euler scheme
+		\[
+			x^{j + 1} = y^j + h\parentheses*{\lambda x^{j + 1} + g\parentheses*{t_{j + 1}}}.
+		\]
+		For the local truncation error, it holds that \(\absolute*{\delta_{j, h}} \le ch^2\).
+		\begin{enumerate}
+			\item Show that the local truncation error \(\delta_{j, h}\) satisfies
+			\[
+				x\parentheses*{t_{j + 1}} = \frac{x\parentheses*{t_j} + hg\parentheses*{t_{j + 1}}}{1 - h\lambda} + \delta_{j, h}.
+			\]
+			\item Using recursion, show that the global error \(e_j := x\parentheses*{t_j} - x^j\) satisfies
+			\begin{align*}
+				e_{j + 1} &= \frac{1}{1 - h\lambda}e_j + \delta_{j, h}, \quad j = 0, \ldots, n - 1,\\
+				e_0 &= 0,
+			\end{align*}
+			where \(n = \frac{T}{h}\).
+			\item Show that \(\absolute*{e_n} \le cTh\).
+		\end{enumerate}
+	\end{quote}
+
+	\begin{enumerate}
+		\item
+		\item
+		\item
+	\end{enumerate}
+\end{document}

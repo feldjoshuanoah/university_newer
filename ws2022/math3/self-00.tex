@@ -1,0 +1,264 @@
+\documentclass{exercise}
+
+\include{preamble}
+
+\title{Selbstrechenübung 0}
+\author{Joshua Feld (406718)}
+\professor{Prof. Torrilhon \& Dr. Speck}
+\course{Mathematische Grundlagen III}
+
+\begin{document}
+	\maketitle
+
+
+	\section{}
+
+	\begin{quote}
+		Vorgelegt sei das Funktional
+		\[
+			F: C^2\parentheses*{\brackets*{-1, 1}} \to \R, y \mapsto F\parentheses*{y} := \int_{-1}^1 \parentheses*{y\parentheses*{x}y'\parentheses*{x} + e^{{y'}^2\parentheses*{x}}}\d x.
+		\]
+		Bestimmen Sie die erste Variation von \(F\) in Richtung \(v\), wobei \(v \in C^2\parentheses*{\brackets*{-1, 1}}\).
+	\end{quote}
+
+	\begin{align*}
+		\partial F\parentheses*{y; v} &= \lim_{t \to 0}\frac{1}{t}\parentheses*{F\parentheses*{y + tv} - F\parentheses*{y}}\\
+		&= \lim_{t \to 0}\frac{1}{t}\parentheses*{\int_{-1}^1 \parentheses*{\parentheses*{y + tv}\parentheses*{x}\parentheses*{y + tv}'\parentheses*{x} + \exp\parentheses*{{\parentheses*{y + tv}'}^2\parentheses*{x}}}\d x - \int_{-1}^1 \parentheses*{y\parentheses*{x}y'\parentheses*{x} + e^{{y'}^2\parentheses*{x}}}\d x}\\
+		&= \lim_{t \to 0}\frac{1}{t}\int_{-1}^1 \parentheses*{y\parentheses*{x}y'\parentheses*{x} + ty'\parentheses*{x}v\parentheses*{x} + ty\parentheses*{x}v'\parentheses*{x} + t^2 v\parentheses*{x}v'\parentheses*{x} - y\parentheses*{x}y'\parentheses*{x}}\d x\\
+		&\quad\, - \lim_{t \to 0}\frac{1}{t}\int_{-1}^1 \parentheses*{\exp\parentheses*{{y'}^2\parentheses*{x}} - \exp\parentheses*{{\parentheses*{y + tv}'}^2\parentheses*{x}}}\d x\\
+		&= \lim_{t \to 0}\int_{-1}^1 \parentheses*{y'\parentheses*{x}v\parentheses*{x} + y\parentheses*{x}v'\parentheses*{x} + tv\parentheses*{x}v'\parentheses*{x}}\d x\\
+		&\quad\, + \lim_{t \to 0}\frac{1}{t}\int_{-1}^1 \parentheses*{\exp\parentheses*{{\parentheses*{y\parentheses*{x} + tv\parentheses*{x}}'}^2} - \exp\parentheses*{{y'}^2\parentheses*{x}}}\d x\\
+		&= \int_{-1}^1 \lim_{t \to 0}\parentheses*{y'\parentheses*{x}v\parentheses*{x} + y\parentheses*{x}v'\parentheses*{x} + tv\parentheses*{x}v'\parentheses*{x}}\d x\\
+		&\quad\, + \int_{-1}^1 \exp\parentheses*{{y'}^2\parentheses*{x}}\lim_{t \to 0}\underbrace{\parentheses*{\frac{\exp\parentheses*{2ty'\parentheses*{x}v'\parentheses*{x} + t^2 {v'}^2\parentheses*{x}} - 1}{t}}}_{\text{l'Hospital}}\d x\\
+		&= \int_{-1}^1 \parentheses*{y'\parentheses*{x}v\parentheses*{x} + y\parentheses*{x}v'\parentheses*{x}}\d x\\
+		&\quad\, + \int_{-1}^1 \exp\parentheses*{{y'}^2\parentheses*{x}}\lim_{t \to 0}\parentheses*{\parentheses*{2y'\parentheses*{x}v'\parentheses*{x} + s{v'}^2\parentheses*{x}}\exp\parentheses*{2ty'\parentheses*{x}v'\parentheses*{x} + t^2 {v'}^2\parentheses*{x}}}\d x\\
+		&= \int_{-1}^1 \parentheses*{\parentheses*{yv}'\parentheses*{x} + 2y'\parentheses*{x}v'\parentheses*{x}\exp\parentheses*{{y'}^2\parentheses*{x}}}\d x.
+	\end{align*}
+	Daher
+	\[
+		\partial F\parentheses*{y; v} = y\parentheses*{1}v\parentheses*{1} - y\parentheses*{-1}v\parentheses*{-1} + 2\int_{-1}^1 y'\parentheses*{x}v'\parentheses*{x}\exp\parentheses*{{y'}^2\parentheses*{x}}\d x.
+	\]
+
+
+	\section{}
+
+	\begin{quote}
+		Consider the following real vector space
+		\[
+			\ell^2 = \braces*{\parentheses*{x_n}_{n \in \N} : \sum_{n = 0}^\infty x_n^2 < \infty}.
+		\]
+		Define the functional
+		\[
+			F: \ell^2 \to \R, \parentheses*{x_n}_{n \in \N} \mapsto F\parentheses*{\parentheses*{x_n}_n} \equiv \sum_{n = 0}^\infty x_n^2.
+		\]
+		\begin{enumerate}
+			\item Show that \(\parentheses*{2^{-n}}_n \in \ell^2\) by explicitly calculating \(F\parentheses*{\parentheses*{2^{-n}}_n}\).
+			\item Let the sequence \(\parentheses*{y_n}_n\) be \(\parentheses*{2^{-n}}_n\), and let \(\parentheses*{v_n}_n\) be \(\parentheses*{\parentheses*{-2}^{-n}}_n\).
+			Calculate the directional derivative of the functional \(F\) in the direction of \(\parentheses*{v_n}_n\), evaluated in the vector \(\parentheses*{y_n}_n\).
+		\end{enumerate}
+	\end{quote}
+
+	\begin{enumerate}
+		\item
+		\[
+			F\parentheses*{\parentheses*{2^{-n}}_n} = \sum_{n = 0}^\infty 2^{-2n} = \sum_{n = 0}^\infty \parentheses*{\frac{1}{4}}^n = \frac{4}{3} < \infty.
+		\]
+		\item
+		\begin{align*}
+			\partial F\parentheses*{\parentheses*{y_n}_n, \parentheses*{v_n}_n} &:= \lim_{t \to 0}\frac{1}{t}\parentheses*{F\parentheses*{\parentheses*{y_n}_n + t\parentheses*{v_n}_n} - F\parentheses*{\parentheses*{y_n}_n}}\\
+			&= \lim_{t \to 0}\frac{1}{t}\parentheses*{\sum_{n = 0}^\infty \parentheses*{2^{-n} + t\parentheses*{-2}^{-n}}^2 - \sum_{n = 0}^\infty 2^{-2n}}\\
+			&= \lim_{t \to 0}\frac{1}{t}\sum_{n = 0}^\infty \parentheses*{2t \cdot 2^{-n} \cdot \parentheses*{-2}^{-n} + t^2 \cdot 2^{-2n}}\\
+			&= \lim_{t \to 0}\sum_{n = 0}^\infty \parentheses*{2 \cdot 2^{-n} \cdot \parentheses*{-2}^{-n} + t \cdot 2^{-2n}}\\
+			&= \sum_{n = 0}^\infty \lim_{t \to 0}\parentheses*{2 \cdot 2^{-n} \cdot \parentheses*{-2}^{-n} + t \cdot 2^{-2n}}\\
+			&= \sum_{n = 0}^\infty 2 \cdot \parentheses*{-4}^{-n}\\
+			&= 2\sum_{n = 0}^\infty \parentheses*{-\frac{1}{4}}^n.
+		\end{align*}
+		Therefore, the directional derivative of the functional \(F\) in the direction of \(\parentheses*{v_n}_n\) is
+		\[
+			\partial F\parentheses*{\parentheses*{y_n}_n, \parentheses*{v_n}_n} = \frac{8}{5}.
+		\]
+	\end{enumerate}
+
+
+	\section{}
+
+	\begin{quote}
+		\begin{enumerate}
+			\item Check that \(y\parentheses*{t} = \cos\parentheses*{t}\) is a solution of the equation
+			\[
+				\frac{\d}{\d t}y\parentheses*{t} = -y\parentheses*{t}\tan\parentheses*{t}.
+			\]
+			\item Calculate \(\cos\parentheses*{1}\) numerically by the explicit Euler method
+			\[
+				y^{j + 1} = y^j + hy^j \tan\parentheses*{t_j}
+			\]
+			for different values of \(h\), i.e., for respectively different number of steps \(n\), for example \(n \in \braces*{1, 2, 3, 4}\).
+			Start from the initial value \(y\parentheses*{0} = 1\).
+			\item Compare the solutions of the explicit Euler method in b) to the exact value of \(\cos\parentheses*{1}\).
+		\end{enumerate}
+	\end{quote}
+
+	\begin{enumerate}
+		\item For \(y\parentheses*{t} = \cos\parentheses*{t}\) we have
+		\[
+			\frac{\d}{\d t}y\parentheses*{t} = \frac{\d}{\d t}\cos\parentheses*{t} = -\sin\parentheses*{t} = -\cos\parentheses*{t}\tan\parentheses*{t} = -y\parentheses*{t}\tan\parentheses*{t}.
+		\]
+		\item We start with \(t_0 = 0\) and the initial value \(y^0 = y\parentheses*{0} = 1\) and calculate \(y^{j + 1}\) by the explicit Euler method, as follows:
+		\begin{align*}
+			t_{j + 1} &= t_j + h,\\
+			y^{j + 1} &= y^j - hy^j \tan\parentheses*{t_j}.
+		\end{align*}
+		This leads to
+		\begin{align*}
+			n = 1 \implies h = 1, \quad &y^1 = y^0 - hy^0 \tan\parentheses*{t_0} = 1 - 1 \cdot 1 \cdot 0 = 1,\\
+			n = 2 \implies h = \frac{1}{2}, \quad &y^1 = y^0 - hy^0 \tan\parentheses*{t_0} = 1, y^2 = 0.7269,\\
+			n = 3 \implies h = \frac{1}{3}, \quad &y^1 = 1, y^2 = 0.8846, y^3 = 0.6526,\\
+			n = 4 \implies h = \frac{1}{4}, \quad &y^1 = 1, y^2 = 0.9362, y^3 = 0.8083, y^4 = 0.6201.
+		\end{align*}
+		\item We can see that the approximations come closer to the real value
+		\[
+			\cos\parentheses*{1} \approx 0,5403
+		\]
+		and that the method always over-estimates the value.
+	\end{enumerate}
+
+
+	\section{}
+
+	\begin{quote}
+		Gegeben sei das Anfangswertproblem
+		\[
+			y'''\parentheses*{t} + y'\parentheses*{t} = ty\parentheses*{t},
+		\]
+		mit Anfangsbedingungen
+		\[
+			y\parentheses*{0} = 0,\quad y'\parentheses*{0} = 1, \quad y''\parentheses*{0} = 2.
+		\]
+		\begin{enumerate}
+			\item Transformieren Sie dieses Problem auf ein System gewöhnlicher Differentialgleichungen erster Ordnung.
+			\item Führen Sie zwei Schritte des expliziten Euler-Verfahrens mit Schrittweite \(h\) durch.
+		\end{enumerate}
+	\end{quote}
+
+	\begin{enumerate}
+		\item Seien \(y\parentheses*{t}\), \(y'\parentheses*{t}\) und \(y''\parentheses*{t}\) wie folgt definiert:
+		\[
+			y\parentheses*{t} := y_0\parentheses*{t}, \quad y'\parentheses*{t} := y_1\parentheses*{t}, \quad y''\parentheses*{t} := y_2\parentheses*{t}.
+		\]
+		Dann erhalten wir entsprechend die folgenden Zusammenhänge:
+		\[
+			\begin{array}{l}
+				y_0'\parentheses*{t} = y_1\parentheses*{t},\\
+				y_1'\parentheses*{t} = y_2\parentheses*{t},\\
+				y_2'\parentheses*{t} = ty_0\parentheses*{t} - y_1\parentheses*{t}
+			\end{array} \iff \begin{pmatrix}
+				y_0\parentheses*{t}\\
+				y_1\parentheses*{t}\\
+				y_2\parentheses*{t}
+			\end{pmatrix}' = \begin{pmatrix}
+				0 & 1 & 0\\
+				0 & 0 & 1\\
+				t & -1 & 0
+			\end{pmatrix}\begin{pmatrix}
+				y_0\parentheses*{t}\\
+				y_1\parentheses*{t}\\
+				y_2\parentheses*{t}
+			\end{pmatrix},
+		\]
+		mit Anfangsbedingungen
+		\[
+			y_0\parentheses*{0} = 0, \quad y_1\parentheses*{0} = 1, \quad y_2\parentheses*{0} = 2,
+		\]
+		welche eine äquivalentes System von drei gewöhnlichen Differentialgleichungen erster Ordnung formen.
+		\item Sei die numerische Lösung des Euler-Verfahrens nach \(k\) Schritten notiert als
+		\[
+			\phi_k = \parentheses*{y_0^{\parentheses*{k}}, y_1^{\parentheses*{k}}, y_2^{\parentheses*{k}}}^T.
+		\]
+		Dann erhalten wir die folgenden Ausdrücke:
+		\begin{align*}
+			\phi_0 &= \begin{pmatrix}
+				0\\
+				1\\
+				2
+			\end{pmatrix},\\
+			\phi_1 &= \begin{pmatrix}
+				0\\
+				1\\
+				2
+			\end{pmatrix} + h\begin{pmatrix}
+				1\\
+				2\\
+				-1
+			\end{pmatrix} = \begin{pmatrix}
+				h\\
+				1 + 2h\\
+				2 - h
+			\end{pmatrix},\\
+			\phi_2 &= \begin{pmatrix}
+				h\\
+				1 + 2h\\
+				2 - h
+			\end{pmatrix} + h\begin{pmatrix}
+				1 + 2h\\
+				2 - h\\
+				h^2 - 2h - 1
+			\end{pmatrix} = \begin{pmatrix}
+				2h\parentheses*{h + 1}\\
+				-h^2 + 4h + 1\\
+				h^3 - 2h^2 - 2h + 2
+			\end{pmatrix}.
+		\end{align*}
+	\end{enumerate}
+
+
+	\section{}
+
+	\begin{quote}
+		Die Lösung der gewöhnlichen Differentialgleichung \(y'\parentheses*{t} = f\parentheses*{t, y\parentheses*{t}}\) wird mit Hilfe des \emph{verbesserten} Euler-Verfahrens mit Schrittweite \(h\)
+		\[
+			y^{j + 1} = y^j + hf\parentheses*{t_j + \frac{h}{2}, y^j + \frac{h}{2}f\parentheses*{t_j, y^j}}
+		\]
+		approximiert.
+		Zeigen Sie, dass die Konsistenzordnung des verbesserten Euler-Verfahrens mindestens \(2\) ist.
+	\end{quote}
+
+	Ausgehend von \(y^j := y\parentheses*{t}\) wird ein Zeitschritt des verbesserten Euler-Verfahrens durchgeführt und mit der exakten Lösung \(y\parentheses*{t + h}\) verglichen.
+	Die exakte Lösung kann um die Stelle \(t\) entwickelt werden:
+	\[
+		y\parentheses*{t + h} = y\parentheses*{t} + hy'\parentheses*{t} + \frac{1}{2}h^2 y''\parentheses*{t} + \mathcal{O}\parentheses*{h^3}.
+	\]
+	Es gilt
+	\begin{align*}
+		y' = f\parentheses*{t, y} \quad \text{und} \quad y'' = \frac{\d}{\d t}f\parentheses*{t, y} &= \partial_t f\parentheses*{t, y\parentheses*{t}} + \partial_y f\parentheses*{t, y\parentheses*{t}}y'\parentheses*{t}\\
+		&= \partial_t f\parentheses*{t, y\parentheses*{t}} + \partial_y f\parentheses*{t, y\parentheses*{t}}f\parentheses*{t, y\parentheses*{t}},
+	\end{align*}
+	bzw. eingesetzt:
+	\[
+		y\parentheses*{t + h} = y^j + hf\parentheses*{t, y^j} + \frac{1}{2}h^2 \parentheses*{\partial_t f\parentheses*{t, y^j} + \partial_y f\parentheses*{t, y^j}f\parentheses*{t, y^j}} + \mathcal{O}\parentheses*{h^3}.
+	\]
+	Außerdem kann die Approximation geschrieben werden als
+	\[
+		y^{j + 1} = y^j + h\psi\parentheses*{h}, \quad \text{mit} \quad \psi\parentheses*{h} = f\parentheses*{t + \frac{h}{2}, y^j + \frac{h}{2}f\parentheses*{t, y^j}}.
+	\]
+	Wir entwickeln jetzt \(\psi\parentheses*{h}\) um die Stelle \(0\):
+	\[
+		\psi\parentheses*{h} = \psi\parentheses*{0} + h\psi'\parentheses*{0} + \mathcal{O}\parentheses*{h^2}.
+	\]
+	Da
+	\[
+		\psi'\parentheses*{h} = \frac{1}{2}\partial_t f\parentheses*{t + \frac{h}{2}, y^j + \frac{h}{2}f\parentheses*{t, y^j}} + frac{1}{2}f\parentheses*{t, y^j}\partial_y f\parentheses*{t + \frac{h}{2}, y^j + \frac{h}{2}f\parentheses*{t, y^j}}
+	\]
+	folgt
+	\[
+		\psi\parentheses*{h} = f\parentheses*{t, y^j} + \frac{h}{2}\parentheses*{\partial_t f\parentheses*{t, y^j} + \partial_y f\parentheses*{t, y^j}f\parentheses*{t, y^j}} + \mathcal{O}\parentheses*{h^2}
+	\]
+	und
+	\[
+		y^{j + 1} = y^j + hf\parentheses*{t, y^j} + \frac{1}{2}h^2 \parentheses*{\partial_t f\parentheses*{t, y^j} + \partial_y f\parentheses*{t, y^j}f\parentheses*{t, y^j}} + \mathcal{O}\parentheses*{h^3}.
+	\]
+	Der Konsistenzfehler ist
+	\[
+		\absolute*{y\parentheses*{t + h} - y^{j + 1}} = \mathcal{O}\parentheses*{h^3}
+	\]
+	und somit hat das Verfahren zumindest Konsistenzordnung \(2\).
+\end{document}

@@ -1,0 +1,124 @@
+\documentclass{exercise}
+
+\include{preamble}
+
+\title{Selbstrechenübung 2}
+\author{Joshua Feld (406718)}
+\professor{Prof. Torrilhon \& Dr. Speck}
+\course{Mathematische Grundlagen III}
+
+\begin{document}
+	\maketitle
+
+
+	\section{}
+
+	\begin{quote}
+		Consider a system of a finite number (say \(n\)) of point masses \(M_i\) (with respective masses \(m_i\)), located at positions \(\vec{x}\parentheses*{t} = \parentheses*{x_1\parentheses*{t}, \ldots, x_n\parentheses*{t}}\).
+		We seek the critical points of the action
+		\[
+			I\parentheses*{\vec{x}} = \int_{t_0}^{t_1}L\parentheses*{t, \vec{x}\parentheses*{t}, \dot{\vec{x}}\parentheses*{t}}\d t \quad \text{with} \quad L\parentheses*{t, \vec{x}\parentheses*{t}, \dot{\vec{x}}\parentheses*{t}} = T\parentheses*{t, \vec{x}\parentheses*{t}, \dot{\vec{x}}\parentheses*{t}} - V\parentheses*{t, \vec{x}\parentheses*{t}, \dot{\vec{x}}\parentheses*{t}},
+		\]
+		where \(L: \brackets*{a, b} \times \R^{3 \times n} \times \R^{3 \times n} \to \R\) is the Lagrange function and \(T: \brackets*{a, b} \times \R^{3 \times n} \times \R^{3 \times n}\) and \(V: \brackets*{a, b} \times \R^{3 \times n} \times \R^{3 \times n}\) denotes the (total) kinetic and potential energy of the system respectively.
+		Now, consider the simple system \(n = 2\) with the restriction that the two mass points are connected to each other by a wire of length \(l\) as inidcated in figure \ref{fig:1-1}.
+		Hereby, \(M_1\) can move in the \(\parentheses*{x, y}\)-plane, which has a hole in the origin, through which the wire connects \(M_1\) to \(M_2\), which can move along the \(z\)-axis.
+		\begin{enumerate}
+			\item The kinetic energy of the system is given by \(T\parentheses*{x_1, x_2, \dot{x}_1, \dot{x}_2} = \frac{1}{2}m_1 \absolute*{\dot{x}_1}^2 + \frac{1}{2}m_2 \absolute*{\dot{x}_2}^2\).
+			Rewrite this expression explicitly in cylindrical coordinates, i.e.
+			\[
+				x_i = \begin{pmatrix}
+					x_i\\
+					y_i\\
+					z_i
+				\end{pmatrix} = \begin{pmatrix}
+					r_i \cos\phi_i\\
+					r_i \sin\phi_i\\
+					z_i
+				\end{pmatrix}.
+			\]
+			\item The potential energy is given by \(V\parentheses*{x_1, x_2} = m_1 g\parentheses*{x_1^T \vec{e}_z} + m_2 g\parentheses*{x_2^T \vec{e}_z}\).
+			Also rewrite this expression in cylindrical coordinates, i.e., as \(T\parentheses*{z_2, \dot{\phi}_i, \dot{z}_2}\).
+			\item State the Euler-Lagrange equations, which are satisfied for critical points of the action \(I\parentheses*{\tilde{x}}\).
+		\end{enumerate}
+	\end{quote}
+
+	\begin{enumerate}
+		\item
+		\item
+		\item
+	\end{enumerate}
+
+
+	\section{}
+
+	\begin{quote}
+		Für welche Werte von \(\beta\) besitzt
+		\[
+			F\parentheses*{y} = \int_{-1}^1 \parentheses*{y^2 + \frac{2}{3}x^3 y' - 2xy'}\d x
+		\]
+		mindestens ein Extremum mit \(y\parentheses*{-1} = 0, y\parentheses*{1} = \beta\)?
+	\end{quote}
+
+	Eine Lösung erfüllt notwendigerweise die Euler-Lagrange Differentialgleichung
+	\[
+		0 = \frac{\partial f}{\partial y} - \frac{\d}{\d x}\frac{\partial f}{\partial y'} = 2y - \frac{\d}{\d x}\parentheses*{\frac{2}{3}x^3 - 2x} = 2y - 2x^2 + 2 = 2\parentheses*{y - x^2 + 1}
+	\]
+	woraus \(y = x^2 - 1\) folgt.
+	Dann ist \(y\parentheses*{-1} = 0\) wie gefordert und \(\beta = y\parentheses*{1} = 0\).
+
+
+	\section{}
+
+	\begin{quote}
+		Gegeben sei ein Einschrittverfahren mit
+		\[
+			\Phi_f\parentheses*{t, y, h} = af\parentheses*{t, y} + \frac{1}{4}f\parentheses*{t + bh, y + chf\parentheses*{t, y}}.
+		\]
+		\begin{enumerate}
+			\item Geben Sie das Runge-Kutta Tableau für dieses Verfahren an.
+			Ist das Verfahren explizit oder implizit?
+			\item Für welche Werte von \(\parentheses*{a, b, c}\) ist die Konsistenzordnung des Verfahrens mindestens \(2\)?
+			\item Existieren für die Parameter \(\parentheses*{a, b, c}\) Werte, so dass das Schema mit der speziellen Flussfunktion \(f\parentheses*{t, y} = t^2\) von dritter Ordnung ist?
+		\end{enumerate}
+	\end{quote}
+
+	\begin{enumerate}
+		\item
+		\item
+		\item
+	\end{enumerate}
+
+
+	\section{}
+
+	\begin{quote}
+		Sei \(f: \R^+ \times \R^d \to \R^d\) stetig differenzierbar und bezüglich \(y\) global Lipschitz-stetig.
+		Ist \(y\) die eindeutige Lösung des Anfangswertproblems
+		\[
+			y'\parentheses*{t}, f\parentheses*{t, y}, \quad y\parentheses*{0} = y_0, \quad 0 \le t \le T,
+		\]
+		so erfüllen die Approximationen des Eulerverfahrens zu den Zeitpunkten \(t_i = ih \in \brackets*{0, T}\) die Abschätzung
+		\begin{equation}
+			\norm*{y\parentheses*{t_i} - y_i}_2 \le \frac{\parentheses*{1 + Lh}^i - 1}{2L}\norm*{y''}_{\brackets*{0, T}}h \le \frac{e^{LT} - 1}{2L}\norm*{y''}_{\brackets*{0, T}}h,
+		\end{equation}
+		wobei \(\norm*{y''}_{\brackets*{0, T}} = \max_{0 \le t \le T}\norm*{y''\parentheses*{t}}_2\).
+		Wenn wir annehmen, dass durch die Rechnung mit Maschinenzahlen bei jedem Schritt ein zusätzlicher Rundungsfehler \(\epsilon > 0\) auftritt, so gilt für die Approximationen die Abschätzung
+		\begin{equation}\label{eq:4-2}
+			\norm*{y\parentheses*{t_i} - y_i}_2 \le \frac{\parentheses*{1 + Lh}^i - 1}{2L}\parentheses*{\norm*{y''}_{\brackets*{0, T}}h + 2\frac{\epsilon}{h}} \le \frac{e^{LT} - 1}{2L}\parentheses*{\norm*{y''}_{\brackets*{0, T}}h + 2\frac{\epsilon}{h}}.
+		\end{equation}
+		\begin{enumerate}
+			\item Beweisen Sie die Abschätzung \eqref{eq:4-2} induktiv.
+			Benutzen Sie dazu die Rekursionsformel
+			\[
+				\norm*{y_{i + 1} - y\parentheses*{t_{i + 1}}}_2 \le \parentheses*{1 + hL}\norm*{y_i - y\parentheses*{t_i}}_2 + \frac{1}{2}\norm*{y''}_{\brackets*{0, T}}h^2 + \epsilon
+			\]
+			für den Gesamtfehler des Euler-Verfahrens.
+			\item Für welchen Zeitschritt \(h\) ist der abgeschätzte Fehler minimal?
+		\end{enumerate}
+	\end{quote}
+
+	\begin{enumerate}
+		\item
+		\item
+	\end{enumerate}
+\end{document}

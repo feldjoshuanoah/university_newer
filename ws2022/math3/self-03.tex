@@ -1,0 +1,83 @@
+\documentclass{exercise}
+
+\include{preamble}
+
+\title{Selbstrechenübung 3}
+\author{Joshua Feld (406718)}
+\professor{Prof. Torrilhon \& Dr. Speck}
+\course{Mathematische Grundlagen III}
+
+\begin{document}
+	\maketitle
+
+
+	\section{}
+
+	\begin{quote}
+		Gesucht ist eine Funktion \(y \in D\) mit
+		\[
+			D := \braces*{w \in C^2\parentheses*{\brackets*{0, 1}} : w\parentheses*{0} = w\parentheses*{1} = 1},
+		\]
+		die das Funktional
+		\[
+			F: D \to \R, y \mapsto F\parentheses*{y} = \int_0^1 \parentheses*{{y'}^2\parentheses*{t} + e^{ay\parentheses*{t}}}\d t,
+		\]
+		welches von einer Konstanten \(a \in \R\) abhängt, minimiert.
+		\begin{enumerate}
+			\item Bestimmen Sie die erste Variation \(\partial F\parentheses*{y; v}\) von \(F\) in Richtung \(v\), wobei
+			\[
+				v \in D_0 := \braces*{w \in C^2\parentheses*{\brackets*{0, 1}} : w\parentheses*{0} = w\parentheses*{1} = 0}.
+			\]
+			\item Welcher Differentialgleichung müssen die Extremalen des Funktionals \(F\) genügen?
+			\item Ist \(D\) konvex?
+			Ist das Funktional \(F\) konvex?
+			Was können Sie über globale Extremalen des Funktionals \(F\) aussagen?
+			Gibt es eine Lösung für \(a = 0\)?
+		\end{enumerate}
+	\end{quote}
+
+
+	\section{}
+
+	\begin{quote}
+		Define \(D = \braces*{w \in C^2\parentheses*{\brackets*{-1, 1}} : w\parentheses*{-1} = -1}\) and
+		\[
+			F: D \to \R, y \mapsto F\parentheses*{y} = \int_{-1}^1 \exp\parentheses*{{y'}^2\parentheses*{x}}\d x, \quad y \in D.
+		\]
+		\begin{enumerate}
+			\item Calculate the first variation \(\partial F\parentheses*{u; v}\) of the functional \(F\) for \(u \in D\) and
+			\[
+				v \in H = \braces*{w \in C^2\parentheses*{\brackets*{-1, 1}} : w\parentheses*{-1} = 0, w\parentheses*{1} = 0}.
+			\]
+			\item Formulate the Euler-Lagrange equation for extremals of \(F\) and work out all solutions \(u \in D\) which fulfill
+			\begin{enumerate}
+				\item the boundary condition \(w\parentheses*{1} = 1\),
+				\item the natural boundary condition at \(x = 1\).
+			\end{enumerate}
+		\end{enumerate}
+	\end{quote}
+
+
+	\section{}
+
+	\begin{quote}
+		Following the notations used in the lecture, let a linear \(m\)-step method be given by \(\parentheses*{\alpha_l, \beta_l}\) where \(l = 0, \ldots, m\) satisfy the following equations
+		\begin{align}
+			\sum_{l = 0}^m a_l &= 0,\\
+			\sum_{l = 0}^m \parentheses*{l^q \alpha_l - ql^{q - 1}\beta_l} &= 0, \quad q = 1, \ldots, p.
+		\end{align}
+		Then the linear \(m\)-step method has the consistency order of \(p\).
+		Prove this statement.
+	\end{quote}
+
+
+	\section{}
+
+	\begin{quote}
+		Bestimme für das lineare 2-Schrittverfahren
+		\[
+			y^{j + 2} = y^j + \frac{h}{3}\parentheses*{f\parentheses*{t_j, y^j} + 4f\parentheses*{t_{j + 1}, y^{j + 1}} + f\parentheses*{t_{j + 2}, y^{j + 2}}}
+		\]
+		die Konsistenzordnung.
+	\end{quote}
+\end{document}

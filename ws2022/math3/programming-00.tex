@@ -1,0 +1,108 @@
+\documentclass[english]{exercise}
+
+\include{preamble}
+
+\title{Programming Exercise 0}
+\author{René Dopichay (356986) \quad Joshua Feld (406718)\\Thilo Kloos (410343) \quad Shunta Takushima (430043)}
+\professor{Prof. Torrilhon \& Dr. Speck}
+\course{Mathematische Grundlagen III}
+
+\begin{document}
+	\maketitle
+
+
+	\section{}
+
+	\begin{quote}
+		We consider an ordinary differential equation (ODE) of the following form
+		\begin{equation}\label{eq:1-1}
+			\frac{\d X\parentheses*{t}}{\d t} = F\parentheses*{t, X\parentheses*{t}},
+		\end{equation}
+		where \(X\parentheses*{t} \in \R^n\), where \(n \in \R\), and \(t \in \brackets*{t_{\text{initial}}, T}\), where \(t_{\text{initial}}, T \in \R^+\), with a given initial condition as
+		\begin{equation}\label{eq:1-2}
+			X\parentheses*{t_{\text{initial}}} = X_{\text{initial}}.
+		\end{equation}
+		Since we want to use computer algorithms to solve our abstract problem \eqref{eq:1-1} and \eqref{eq:1-2}, we must first convert the continuous abstract problem into a discrete one.
+		Consider the continuous variable \(t\) and discretize it by \(t_j \in \mathcal{T}\), where \(\mathcal{T}\) is given by
+		\begin{equation}
+			\mathcal{T} := \braces*{t_j \in \R^+ : t_{\text{initial}} = t_0 < t_{j - 1} < t_j < t_{j + 1} < t_N = T, j = 0, \ldots, N, N \in \N}.
+		\end{equation}
+		The above fuzzy-looking mathematical cypher can be decyphered into the following picture:
+		\begin{figure}[h]
+			\centering
+			\begin{tikzpicture}
+				\draw[<->] (0,-.5) -- node[midway,sloped,above] {continuous} (0,4.5) node[right] {\(\R^+\)};
+				\draw (-.125,0) -- (.125,0) node[right] {\(t_{\text{initial}}\)};
+				\node[anchor=west] at (0,2) {\(t\)};
+				\draw (-.125,4) -- (.125,4) node[right] {\(T\)};
+
+				\foreach \i in {-.5,0,...,4.5}
+					\filldraw (5,\i) circle (.0625);
+				\node[anchor=south,rotate=90] at (4.96875,2) {discrete};
+				\node[anchor=west] at (5.03125,0) {\(t_0 = t_{\text{initial}}\)};
+				\node[anchor=west] at (5.03125,1.5) {\(t_{j - 1}\)};
+				\node[anchor=west] at (5.03125,2) {\(t_j\)};
+				\node[anchor=west] at (5.03125,2.5) {\(t_{j + 1}\)};
+				\node[anchor=west] at (5.03125,4) {\(t_N = T\)};
+				\node[anchor=west] at (5.03125,4.5) {\(\mathcal{T}\)};
+				\draw[<->] (2,2) -- (3,2);
+			\end{tikzpicture}
+			\caption{Discretization of a continuous interval}
+			\label{fig:1-1}
+		\end{figure}
+
+		For convenience you can imagine the variable \(t\) as time but it does not necessarily have to be time and it could be anything.
+		Then, \(t_0\) is the initial time which is equal to the given initial time \(t_{\text{initial}}\) which could be zero or any value in \(\R^+\).
+		At this point, we introduce the quantities
+		\begin{equation}
+			h_j = t_{j + 1} + t_j \quad \forall j \in \braces*{0, \ldots, N},
+		\end{equation}
+		which are the timesteps between two successive points in the discrete time axis.
+		For this programming exercise we consider \(h_j = h\).
+
+		Having discretized the independent variable \(t\), we introduce the following notation for the dependent variable \(X\parentheses*{t_j} := X_j\).
+		You may understand \(X_j\) as the function \(X\parentheses*{t_j}\) evaluated at time \(t_j\).
+		We apply these notations in the equation \eqref{eq:1-1} to approximate the time derivative of \(X\parentheses*{t}\) which gives
+		\begin{equation}
+			\frac{\d X\parentheses*{t}}{\d t} \approx \frac{X_{j + 1} - X_j}{h_j}.
+		\end{equation}
+		But what about \(F\parentheses*{t, X\parentheses*{t}}\)?
+		We have several choices to approximate it.
+		Based on our choices we have different numerical schemes which we compiled below:
+		\begin{align}
+			X_{j + 1} &= X_j + h_j F\parentheses*{t_j, X_j} && \text{(explicit Euler method)},\label{eq:1-6}\\
+			X_{j + 1} &= X_j + h_j F\parentheses*{t_{j + 1}, X_{j + 1}} && \text{(implicit Euler method)},\\
+			X_{j + 1} &= X_j + h_j F\parentheses*{t_j + \frac{h_j}{2}, \frac{X_j + X_{j + 1}}{2}} && \text{(implicit Midpoint rule method)},\\
+			X_{j + 1} &= X_j + h_j F\parentheses*{t_j + \frac{h_j}{2}, X_j + \frac{h_j}{2}F\parentheses*{t_j, X_j}} && \text{(explicit modified Euler method)},\\
+			X_{j + 1} &= X_j + h_j \frac{F\parentheses*{t_j, X_j} + F\parentheses*{t_{j + 1}, X_{j + 1}}}{2} && \text{(Trapeziodal method)}.\label{eq:1-10}
+		\end{align}
+		\begin{enumerate}[label=\arabic*.]
+			\item Consider an ODE
+			\begin{equation}
+				\frac{\d X\parentheses*{t}}{\d t} = \exp\parentheses*{-t},
+			\end{equation}
+			where \(X: \R \to \R\) and \(t \in \brackets*{0, 1.3}\), with the initial condition
+			\begin{equation}
+				X\parentheses*{0} = -1.
+			\end{equation}
+			\item Consider an ODE
+			\begin{equation}
+				\frac{\d^2 X\parentheses*{t}}{\d t^2} = -wX\parentheses*{t},
+			\end{equation}
+			where \(X: \R \to \R\), \(w \in \R^+\) (for e.g. you may take \(w = 16\)) and \(t \in \brackets*{0, 4}\), with the initial conditions
+			\begin{equation}
+				X\parentheses*{0} = -1, \quad X'\parentheses*{0} = 0.
+			\end{equation}
+		\end{enumerate}
+		\begin{enumerate}
+			\item Implement the numerical schemes \eqref{eq:1-6} -- \eqref{eq:1-10} in Python.
+			\item Derive the exact solutions for the initial value problems.
+			\item Compare the numerical solutions of \eqref{eq:1-6} -- \eqref{eq:1-10} with the derived exact solutions by plotting it.
+			\item Provide a convergence plot for \eqref{eq:1-6} -- \eqref{eq:1-10}.
+			You may consider the following formula to calculate the \(L_2\)-errors
+			\begin{equation}
+				\frac{\norm*{f^{\text{exact}} - f^{\text{approx.}}}_2}{\norm*{f^{\text{exact}}}_2}.
+			\end{equation}
+		\end{enumerate}
+	\end{quote}
+\end{document}

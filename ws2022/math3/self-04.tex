@@ -1,0 +1,61 @@
+\documentclass{exercise}
+
+\include{preamble}
+
+\title{Selbstrechenübung 4}
+\author{Joshua Feld (406718)}
+\professor{Prof. Torrilhon \& Dr. Speck}
+\course{Mathematische Grundlagen III}
+
+\begin{document}
+	\maketitle
+
+
+	\section{}
+
+	\begin{quote}
+
+	\end{quote}
+
+
+	\section{}
+
+	\begin{quote}
+		Die Cantormenge ist gegeben durch \(C = \brackets*{0, 1} \setminus \parentheses*{\bigcup_n A_n}\), mit
+		\[
+			A_1 = \parentheses*{\frac{1}{3}, \frac{2}{3}}, \quad A_2 = \parentheses*{\frac{1}{9}, \frac{2}{9}} \cup \parentheses*{\frac{7}{9}, \frac{8}{9}}, \quad \ldots,
+		\]
+		d.h. man schneidet in jedem Schritt jeweils das mittlere Drittel der verbleibenden Intervalle heraus.
+		Zeigen Sie, dass die Cantormenge eine Lebesgue-Nullmenge ist.
+	\end{quote}
+
+
+	\section{}
+
+	\begin{quote}
+		Wir betrachten die 2-Schrittmethode
+		\[
+			y^{j + 2} = -4y^{j + 1} + 5y^j + h\parentheses*{2f\parentheses*{t_j, y^j} + 4f\parentheses*{t_{j + 1}, y^{j + 1}}}.
+		\]
+		Zeigen Sie, dass das Verfahren nicht nullstabil ist.
+	\end{quote}
+
+	The given method can be written as
+	\[
+		y^{j + 2} + 4y^{j + 1} - 5y^j = h\parentheses*{2f\parentheses*{t_j, y^j} + 4f\parentheses*{t_{j + 1}, y^{j + 1}}}.
+	\]
+	Clearly, the characteristic polynomial for the method is
+	\[
+		\rho\parentheses*{z} = z^2 + 4z - 5 = \parentheses*{z + 5}\parentheses*{z - 1}.
+	\]
+	The zeros of the characteristic polynomial \(\rho\parentheses*{z}\) are \(z = -5\) with multiplicity \(1\) and \(z = 1\) with multiplicity \(1\).
+	Obviously, the root \(z = -5\) does not reside in the closed complex unit disc.
+	Therefore, the root condition is not satisfied for the given method.
+
+
+	\section{}
+
+	\begin{quote}
+		
+	\end{quote}
+\end{document}
