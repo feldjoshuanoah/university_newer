@@ -1,0 +1,75 @@
+\documentclass{exercise}
+
+\include{preamble}
+
+\title{Hausaufgabe 6}
+\author{René Dopichay (356986) \quad Joshua Feld (406718)\\Thilo Kloos (410343) \quad Shunta Takushima (430043)}
+\professor{Prof. Torrilhon \& Dr. Speck}
+\course{Mathematische Grundlagen III}
+
+\begin{document}
+	\maketitle
+
+
+	\section{}
+
+	\begin{quote}
+		Use the change of variables \(u = x - y\) and \(v = x + y\) to evaluate the integral
+		\begin{equation}
+			\iint_R \parentheses*{x - y}e^{x^2 - y^2}\d A
+		\end{equation}
+		where \(R\) is the region bounded by the lines \(x + y = 1\) and \(x + y = 3\) and the curves \(x^2 - y^2 = -1\) and \(x^2 - y^2 = 1\).
+	\end{quote}
+
+
+	\section{}
+
+	\begin{quote}
+		Transform the triple integral
+		\begin{equation}
+			\int_0^3 \int_0^4 \int_{\frac{y}{2}}^{\frac{y}{2} + y}\frac{3x + z}{3}\d x\d y\d z
+		\end{equation}
+		in \(xyz\)-space to \(uvw\)-space by using the transformation \(u = \frac{2x - y}{2}\), \(v = \frac{y}{2}\), and \(w = \frac{z}{3}\) and then evaluate the transformed integral in \(uvw\)-space.
+	\end{quote}
+
+
+	\section{}
+
+	\begin{quote}
+		Proof the following statements:
+		\begin{enumerate}
+			\item Every eigenvalue of a hermitian \(n \times n\)-matrix \(H\) is real.
+			\item For every unitary matrix \(U\) it holds for every eigenvalue \(\lambda\): \(\absolute*{\lambda} = 1\).
+		\end{enumerate}
+	\end{quote}
+
+	\begin{enumerate}
+		\item
+		\[
+			\lambda\angles*{x, x} = \angles*{\lambda x, x} = \angles*{Hx, x} = \parentheses*{Hx}^T \bar{x} = x^T H^T \bar{x} = x^T \bar{H}\bar{x} = \angles*{x, Hx} = \bar{\lambda}\angles*{x, Hx}
+		\]
+		and thus
+		\[
+			\parentheses*{\lambda - \bar{\lambda}}\angles*{x, x} = 0.
+		\]
+		Since \(x\) is an eigenvector of \(H\) \(\lambda = \bar{\lambda}\) has to hold and thus \(\lambda \in \R\).
+		\item
+		\[
+			\angles*{x, x} = \angles*{Ix, x} = \angles*{U^* Ux, x} = x^T \parentheses*{\bar{U}^T U}^T \bar{x} = x^T U^T \bar{U}\bar{x} = \angles*{Ux, Ux}
+		\]
+	\end{enumerate}
+
+
+	\section{}
+
+	\begin{quote}
+		Compute \(A^T A\) and \(AA^T\) and their eigenvalues and unit eigenvectors \(V\) and \(U\):
+		\begin{equation}
+			A = \begin{pmatrix}
+				1 & 1 & 0\\
+				0 & 1 & 1
+			\end{pmatrix}.
+		\end{equation}
+		Use this to state the SVD of the matrix \(A\).
+	\end{quote}
+\end{document}

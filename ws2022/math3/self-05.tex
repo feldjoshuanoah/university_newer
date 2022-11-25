@@ -21,8 +21,34 @@
 	\end{quote}
 
 	\begin{enumerate}
-		\item
-		\item
+		\item Let \(M = \braces*{\parentheses*{x, y} \in \R^2 : x^2 + y^2 \le r^2}\), for \(r > 0\), and let
+		\[
+			M_x = \begin{cases}
+				\brackets*{-\sqrt{r^2 - x^2}, \sqrt{r^2 - x^2}}, & \text{if }\absolute*{x} \le r,\\
+				0, & \text{if }\absolute*{x} > r.
+			\end{cases}
+		\]
+		The area of the circle is given as
+		\[
+			\lambda_2\parentheses*{M} = \int_\R \lambda_1\parentheses*{M_x}\d \lambda_1 = \int_{-r}^r 2\sqrt{r^2 - x^2}\d x \stackrel{t = \frac{x}{r}}{=} 4r^2 \int_0^1 \sqrt{1 - t^2}\d t.
+		\]
+		Substituting \(t = \sin\alpha\), we obtain
+		\[
+			\lambda_2\parentheses*{M} = 4r^2 \int_0^{\frac{\pi}{2}}\sqrt{1 - \sin^2 \alpha}\cos\alpha\d\alpha = 4r^2 \int_0^{\frac{\pi}{2}}\cos^2 \alpha\d\alpha = \pi r^2.
+		\]
+		\item Let \(M = \braces*{\parentheses*{x, y, z} \in \R^3 : x^2 + y^2 + z^2 \le r^2}\) for \(r > 0\).
+		The volume of the sphere is given by
+		\[
+			\lambda_3\parentheses*{M} = \int_{-r}^r \lambda_2\parentheses*{M_z}\d\lambda_2,
+		\]
+		where \(M_z\) is the circle defined as
+		\[
+			M_z = \braces*{\parentheses*{x, y} \in \R^2 : x^2 + y^2 \le r^2 - z^2}.
+		\]
+		Using the result for \(\lambda_2\parentheses*{M_z}\) from the first part, we find
+		\[
+			\lambda_3\parentheses*{M} = \int_{-r}^r \lambda_2\parentheses*{M_z}\d\lambda_2 = \int_{-r}^r \pi\parentheses*{r^2 - z^2}\d z = \frac{4}{3}\pi r^3.
+		\]
 	\end{enumerate}
 
 
@@ -32,17 +58,159 @@
 		Integrate the function \(f\parentheses*{x, y} = xy\) over the region between two curves \(y = x\) and \(y = x^2\) for \(0 \le x \le 2\).
 	\end{quote}
 
+	We know that \(x > x^2\) for \(0 < x < 1\) and \(x > x^2\) for \(x > 1\).
+	Thus we split the integral \(I\) into two parts
+	\begin{align*}
+		I &= \int_0^1 \int_{x^2}^x xy\d y\d x + \int_1^2 \int_x^{x^2}xy\d y\d x\\
+		&= \frac{1}{2}\parentheses*{\int_0^1 x\brackets*{y^2}_{x^2}^x \d x + \int_1^2 x\brackets*{y^2}_x^{x^2}}\d x\\
+		&= \frac{1}{2}\parentheses*{\int_0^1 \parentheses*{x^3 - x^5}\d x + \int_1^2 \parentheses*{x^5 - x^3}\d x}\\
+		&= \frac{1}{24}\parentheses*{\brackets*{3x^4 - 2x^6}_0^1 + \brackets*{2x^6 - 3x^4}_1^2}\\
+		&= \frac{1}{24}\parentheses*{1 - 0 + 80 - \parentheses*{-1}} = \frac{41}{12}
+	\end{align*}
+
 
 	\section{}
 
 	\begin{quote}
-		
+		Sei \(\C^- = \braces*{z \in C : \Re\parentheses*{z} < 0}\).
+		Ein Verfahren heißt \(A\)-stabil, falls
+		\[
+			C^- \subset S.
+		\]
+		Ein Verfahren heißt \(L\)-stabil, falls zusätzlich
+		\[
+			\lim_{\Re\parentheses*{z} \to -\infty}\absolute*{R\parentheses*{z}} = 0.
+		\]
+		Wir verwenden zum Lösen der linearen Differentialgleichung
+		\[
+			y' = f\parentheses*{t, y},
+		\]
+		mit \(f\parentheses*{t, y} = Ay, A \in \R^{n \times n}\), das Verfahren
+		\[
+			y^{j + 1} = y^j + \parentheses*{1 - \theta}hf\parentheses*{t_j, y^j} + \theta hf\parentheses*{t_{j + 1}, y^{j + 1}}
+		\]
+		mit \(\theta \in \brackets*{0, 1}\) beliebig.
+		\begin{enumerate}
+			\item Bestimmen Sie die Stabilitätsfunktion.
+			\item Bestimmen Sie für \(\theta = \frac{2}{3}\) den Stabilitätsbereich \(S\) und skizzieren Sie diesen.
+			\item ist das Verfahren für \(\theta = \frac{2}{3}\) \(A\)-stabil?
+			Ist es \(L\)-stabil?
+			Begründen Sie Ihre Antwort.
+		\end{enumerate}
 	\end{quote}
+
+	\begin{enumerate}
+		\item Um die Stabilitätsfunktion \(R\parentheses*{z}\) zu berechnen, führen wir einen Zeitschritt mit der \(\theta\)-Methode für die Differentialgleichung \(y' = \lambda y, \lambda \in \C\) durch, also
+		\[
+			y^{j + 1} = y^j + \parentheses*{1 - \theta}h\lambda y^j + \theta h\lambda y^{j + 1},
+		\]
+		bzw. aufgelöst nach \(y^{j + 1}\)
+		\[
+			y^{j + 1} = \underbrace{\frac{1 + \lambda h\parentheses*{1 - \theta}}{1 - \lambda h\theta}}_{= R\parentheses*{\lambda h}}y^j.
+		\]
+		Wir erhalten also als Stabilitätsfunktion
+		\[
+			R\parentheses*{z} = \frac{1 + \parentheses*{1 - \theta}z}{1 - \theta z}.
+		\]
+		\item Für \(\theta = \frac{2}{3}\) lautet die Stabilitätsfunktion
+		\[
+			R\parentheses*{z} = \frac{1 + \frac{1}{3}z}{1 - \frac{2}{3}z}.
+		\]
+		Damit ein Punkt \(z := x + iy, x = \Re\parentheses*{z}, y 0 \Im\parentheses*{z}\) im Stabilitätsbereich \(S\) liegt, muss \(\absolute*{R\parentheses*{z}} \le 1\) sein, bzw.
+		\begin{align*}
+			\absolute*{R\parentheses*{x + iy}}^2 &\le 1\\
+			\iff \frac{\parentheses*{1 + \frac{1}{3}x}^2 + \frac{y^2}{9}}{\parentheses*{1 - \frac{2}{3}x}^2 + \frac{4}{9}y^2} &\le 1\\
+			\iff 1 + \frac{1}{9}x^2 + \frac{2}{3}x + \frac{1}{9}y^2 &\le 1 - \frac{4}{3}x + \frac{4}{9}x^2 + \frac{4}{9}y^2\\
+			-6x + x^2 + y^2 &\ge 0\\
+			\parentheses*{x - 3}^2 + y^2 &\ge 9.
+		\end{align*}
+		Der Stabilitätsbereich \(S\) ist also der Bereich außerhalb der offenen Kreisscheibe mit Mittelpunkt \(\parentheses*{3, 0}\) und Radius \(3\).
+		\item Da die Menge \(M = \braces*{z \in \C : \Re\parentheses*{z} \le 0}\) im Stabilitätsbereich enthalten ist, ist das Verfahren \(A\) stabil.
+		Da außerdem noch
+		\[
+			\lim_{\Re\parentheses*{z} \to -\infty}R\parentheses*{z} = \lim_{\Re\parentheses*{z} \to -\infty}\frac{1 + \frac{1}{3}z}{1 - \frac{2}{3}z} = -\frac{1}{2}
+		\]
+		ist, ist das Verfahren nicht \(L\)-stabil.
+	\end{enumerate}
 
 
 	\section{}
 
 	\begin{quote}
-		
+		Consider the differential equation \(y'\parentheses*{t} = f\parentheses*{t, y\parentheses*{t}}\) in one space dimension (\(y\parentheses*{t} \in \R\)), where the function \(f\) is uniformly Lipschitz-continuous with respect to the second argument with constant \(L\), and complete the following tasks:
+		\begin{enumerate}
+			\item Show that the implicit Euler method with step size \(h\) such that \(hL < 1\) is well defined, i.e., there exists a unique solution.
+			\item Prove the stability condition
+			\[
+				\absolute*{y^{i + 1} - z^{j + 1}} \le \frac{1}{1 - hL}\absolute*{y^i - z^i}
+			\]
+			where \(y^i\) and \(z^i\) are the numerical solutions at the \(i\)-th time step corresponding to two different initial conditions.
+			\item Suppose that, additionally to the Lischitz condition, \(f\) satisfies the one-sided Lipschitz condition
+			\[
+				\parentheses*{f\parentheses*{t, y} - f\parentheses*{t, z}}\parentheses*{y - z} \le \alpha\parentheses*{y - z}^2 \quad \forall y, z \in \R
+			\]
+			where \(\alpha\) is a positive constant (naturally, not greater than \(L\)).
+			Improve the previously derived condition to
+			\[
+				\absolute*{y^{i + 1} - z^{i + 1}} \le \frac{1}{1 - h\alpha}\absolute*{y^i - z^i}.
+			\]
+			To do so, rewrite the numerical scheme as
+			\[
+				y^{j + 1} = y^{j + 1}\parentheses*{1 - \gamma} + \gamma\parentheses*{y^j + hf\parentheses*{t_{j + 1}, y^{j + 1}}}
+			\]
+			where \(\gamma\) is an arbitrary constant.
+			Define
+			\[
+				\phi\parentheses*{y} = y\parentheses*{1 - \gamma} + \gamma\parentheses*{y^j + hf\parentheses*{t_{j + 1}, y}}
+			\]
+			and study the quantity \(\absolute*{\phi\parentheses*{y} - \phi\parentheses*{z}}^2\) to conclude that \(\phi\) is a contraction under the condition \(\alpha h < 1\).
+		\end{enumerate}
 	\end{quote}
+
+	\begin{enumerate}
+		\item The implicit Euler method is defined as
+		\[
+			y^{j + 1} = y^j + hf\parentheses*{t_{j + 1}, y^{j + 1}}
+		\]
+		so that, if we define \(\phi\parentheses*{y} = y^j + hf\parentheses*{t_{j + 1}, y}\), we need to establish that there exists a unique fixed point \(y = \phi\parentheses*{y}\).
+		Banach fixed point theorem ensures that it is sufficient to verify that \(\phi\) is a contraction.
+		We have that
+		\begin{align*}
+			\absolute*{\phi\parentheses*{y} - \phi\parentheses*{z}} &= \absolute*{y^j + hf\parentheses*{t_{j + 1}, y} - y^j - hf\parentheses*{t_{j + 1}, z}}\\
+			&\le h\absolute*{f\parentheses*{t_{j + 1}, y} - f\parentheses*{t_{j + 1}, z}}\\
+			&\le hL\absolute*{y - z}
+		\end{align*}
+		so that \(\phi\) is a contraction provided that \(hL < 1\).
+		Thus, the implicit Euler method is well defined for every time step \(h < \frac{1}{L}\).
+		\item The Lipschitz condition on \(\phi\) immediately implies
+		\begin{align*}
+			\absolute*{y^{j + 1} - z^{j + 1}} &= \absolute*{y^j + hf\parentheses*{t_{j + 1}, y^{j + 1}} - z^j - hf\parentheses*{t_{j + 1}, z^{j + 1}}}\\
+			&\le \absolute*{y^j - z^j} + hL\absolute*{y^{j + 1}, z^{j + 1}}
+		\end{align*}
+		and, since we are assuming \(hL < 1\), it follows
+		\[
+			\absolute*{y^{j + 1} - z^{j + 1}} \le \frac{1}{1 - hL}\absolute*{y^j - z^j}.
+		\]
+		\item Using the suggested approach, under the restriction \(0 < \gamma < 1\), we have that
+		\[
+			\absolute*{\phi\parentheses*{y} - \phi\parentheses*{z}}^2 &= \absolute*{\parentheses*{\parentheses*{1 - \gamma}\parentheses*{y - z} + \gamma h\parentheses*{f\parentheses*{t_{j + 1}, y} - f\parentheses*{t_{j + 1}, z}}}^2}\\
+			&\le \parentheses*{1 - \gamma}^2 \absolute*{y - z}^2 + 2\parentheses*{1 - \gamma}\gamma h\absolute*{\parentheses*{f\parentheses*{t_{j + 1}, y} - f\parentheses*{t_{j + 1}, z}}\parentheses*{y - z}} + \gamma^2 h^2 \absolute*{f\parentheses*{t_{j + 1}, y} - f\parentheses*{t_{j + 1}, z}}^2\\
+			&\le \parentheses*{1 - \gamma}^2 \absolute*{y - z}^2 + 2\parentheses*{1 - \gamma}\gamma h\alpha\absolute*{y - z}^2 + \gamma^2 h^2 L^2 \absolute*{y - z}^2\\
+			& = \parentheses*{\parentheses*{1 - \gamma}^2 + 2\parentheses*{1 - \gamma}\gamma h\alpha + \gamma^2 h^2 L^2}\absolute*{y - z}^2.
+		\]
+		Let us indicate with \(g\parentheses*{\gamma}\) the term in parentheses.
+		Then \(g\) is a quadratic function with respect to \(\gamma\), and \(g\parentheses*{0} = 1\).
+		Furthermore, \(g'\parentheses*{0} = -2 + 2h\alpha\) so that the condition \(\alpha h < 1\) guarantees that \(g'\parentheses*{0} < 0\).
+		We conclude that there exists a value \(\bar{\gamma}\) such that \(g\parentheses*{\bar{\gamma}} < 1\), so that \(\phi\) is a contraction.
+		Finally, to prove the desired stability estimate, we have that
+		\begin{align*}
+			\absolute*{y^{j + 1}, z^{j + 1}}^2 &= \parentheses*{y^{j + 1} - z^{j + 1}}^2\\
+			&= \parentheses*{y^{j + 1} - z_{j + 1}}\parentheses*{y^j - z^j} + h\parentheses*{y^{j + 1} - z^{j + 1}}\parentheses*{f\parentheses*{t_{j + 1}, y^{j + 1}} - f\parentheses*{t_{j + 1}, z^{j + 1}}}\\
+			&\le \absolute*{y^{j + 1} - z^{j + 1}}\absolute*{y^j - z^j} + h\alpha\absolute*{y^{j + 1} - z^{j + 1}}
+		\end{align*}
+		and recalling the restriction \(h\alpha < 1\) we now obtain
+		\[
+			\absolute*{y^{j + 1} - z^{j + 1}} \le \frac{1}{1 - h\alpha}\absolute*{y^j - z^j}
+		\]
+	\end{enumerate}
 \end{document}
