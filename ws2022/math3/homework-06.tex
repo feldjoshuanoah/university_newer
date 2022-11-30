@@ -21,6 +21,42 @@
 		where \(R\) is the region bounded by the lines \(x + y = 1\) and \(x + y = 3\) and the curves \(x^2 - y^2 = -1\) and \(x^2 - y^2 = 1\).
 	\end{quote}
 
+	First we solve the given transformation for \(x\) and \(y\):
+	\[
+		u = x - y \iff x = u + y \iff x = \frac{1}{2}\parentheses*{u + v}, \quad v = x + y \iff y = v - x \iff y = \frac{1}{2}\parentheses*{v - u}.
+	\]
+	Thus the transformation function \(\Phi\) is given by
+	\[
+		\Phi\parentheses*{u, v} = \parentheses*{\frac{1}{2}\parentheses*{u + v}, \frac{1}{2}\parentheses*{v - u}}.
+	\]
+	For the integrand we obtain
+	\[
+		\parentheses*{x - y}e^{x^2 - y^2} = \parentheses*{x - y}e^{\parentheses*{x - y}\parentheses*{x + y}} = ue^{uv}.
+	\]
+	The transformation also changes the boundaries of the integrals for which we get
+	\begin{align*}
+		x^2 - y^2 = -1 &\iff u = -\frac{1}{v}, & x + y = 1 &\iff v = 1,\\
+		x^2 - y^2 = 1 &\iff u = \frac{1}{v}, & x + y = 3 &\iff v = 3.
+	\end{align*}
+	Lastly \(\d x\d y\) changes to \(\det D\Phi\parentheses*{u, v}\d u\d v\), where \(D\Phi\parentheses*{u, v}\) is the Jacobian of the transformation function.
+	The Jacobian determinant thus solves to
+	\[
+		\det D\Phi\parentheses*{u, v} = \begin{vmatrix}
+			\frac{\partial\Phi_1}{\partial u} & \frac{\partial\Phi_1}{\partial v}\\
+			\frac{\partial\Phi_2}{\partial u} & \frac{\partial\Phi_2}{\partial v}
+		\end{vmatrix} = \begin{vmatrix}
+			\frac{1}{2} & \frac{1}{2}\\
+			-\frac{1}{2} & \frac{1}{2}
+		\end{vmatrix} = \frac{1}{2}.
+	\]
+	Finally, we can evaluate the transformed integral in \(uv\)-space as
+	\begin{align*}
+		\iint_R \parentheses*{x - y}e^{x^2 - y^2}\d A &= \frac{1}{2}\int_1^3 \int_{-\frac{1}{v}}^{\frac{1}{v}} ue^{uv}\d u\d v\\
+		&= \frac{1}{2}\int_1^3 \brackets*{\frac{uv - 1}{v^2}e^{uv}}_{-\frac{1}{v}}^{\frac{1}{v}}\d v\\
+		&= \frac{1}{2}\int_1^3 \frac{2}{ev^2}\d v\\
+		&= -\brackets*{\frac{1}{ev}}_1^3 = \frac{2}{3e}.
+	\end{align*}
+
 
 	\section{}
 
@@ -32,31 +68,85 @@
 		in \(xyz\)-space to \(uvw\)-space by using the transformation \(u = \frac{2x - y}{2}\), \(v = \frac{y}{2}\), and \(w = \frac{z}{3}\) and then evaluate the transformed integral in \(uvw\)-space.
 	\end{quote}
 
+	The approach is analogous to the one we had in the first exercise.
+	First we solve the given transformations for \(x\), \(y\) and \(z\):
+	\[
+		u = \frac{2x - y}{2} \iff x = u + v, \quad v = \frac{y}{2} \iff y = 2v, \quad w = \frac{z}{3} \iff z = 3w.
+	\]
+	Thus the transformation function \(\Phi\) is given by
+	\[
+		\Phi\parentheses*{u, v, w} = \parentheses*{u + v, 2v, 3w}.
+	\]
+	For the integrand we obtain
+	\[
+		\frac{3x + z}{3} = \frac{3\parentheses*{u + v} + 3w}{3} = u + v + w.
+	\]
+	The transformation also changes the boundaries of the integrals for which we get
+	\begin{align*}
+		x = \frac{y}{2} &\iff u = 0, & y = 0 &\iff v = 0, & z = 0 &\iff w = 0,\\
+		x = \frac{y}{2} + y &\iff u = 2v, & y = 4 &\iff v = 2, & z = 3 &\iff w = 1.
+	\end{align*}
+	Lastly \(\d x\d y\d z\) changes to \(\det D\Phi\parentheses*{u, v, w}\d u\d v\d w\), where \(D\Phi\parentheses*{u, v, w}\) is the Jacobian of the transformation function.
+	The Jacobian determinant thus solves to
+	\[
+		\det D\Phi\parentheses*{u, v, w} = \begin{vmatrix}
+			\frac{\partial \Phi_1}{\partial u} & \frac{\partial \Phi_1}{\partial v} & \frac{\partial \Phi_1}{\partial w}\\
+			\frac{\partial \Phi_2}{\partial u} & \frac{\partial \Phi_2}{\partial v} & \frac{\partial \Phi_2}{\partial w}\\
+			\frac{\partial \Phi_3}{\partial u} & \frac{\partial \Phi_3}{\partial v} & \frac{\partial \Phi_3}{\partial w}\\
+		\end{vmatrix} = \begin{vmatrix}
+			1 & 1 & 0\\
+			0 & 2 & 0\\
+			0 & 0 & 3
+		\end{vmatrix} = 6.
+	\]
+	Finally, we can evalute the transformed integral in \(uvw\)-space as
+	\begin{align*}
+		\int_0^3 \int_0^4 \int_{\frac{y}{2}}^{\frac{y}{2} + y}\frac{3x + z}{3}\d x\d y\d z &= 6\int_0^1 \int_0^2 \int_0^{2v}\parentheses*{u + v + w}\d u\d v\d w\\
+		&= 6\int_0^1 \int_0^2 \brackets*{\frac{1}{2}u^2 + vu + wu}_0^{2v}\d v\d w\\
+		&= 12\int_0^1 \int_0^2 v\parentheses*{2v + w}\d v\d w\\
+		&= 12\int_0^1 \brackets*{v^2\parentheses*{\frac{2}{3}v + \frac{w}{2}}}_0^2 \d w\\
+		&= 24\int_0^1 \parentheses*{w + \frac{8}{3}}\d w\\
+		&= 4 \cdot \brackets*{w\parentheses*{3w + 16}}_0^1 = 76
+	\end{align*}
+
 
 	\section{}
 
 	\begin{quote}
 		Proof the following statements:
 		\begin{enumerate}
-			\item Every eigenvalue of a hermitian \(n \times n\)-matrix \(H\) is real.
+			\item Every eigenvalue of a Hermitian \(n \times n\)-matrix \(H\) is real.
 			\item For every unitary matrix \(U\) it holds for every eigenvalue \(\lambda\): \(\absolute*{\lambda} = 1\).
 		\end{enumerate}
 	\end{quote}
 
 	\begin{enumerate}
-		\item
+		\item Let \(\lambda \in \C\) be an arbitrary eigenvalue of the Hermitian matrix \(H\) and let \(v\) be an eigenvector corresponding to the eigenvalue \(\lambda\).
+		Then we have
 		\[
-			\lambda\angles*{x, x} = \angles*{\lambda x, x} = \angles*{Hx, x} = \parentheses*{Hx}^T \bar{x} = x^T H^T \bar{x} = x^T \bar{H}\bar{x} = \angles*{x, Hx} = \bar{\lambda}\angles*{x, Hx}
+			Hv = \lambda v \iff \bar{v}^T \parentheses*{Hv} = \bar{v}^T \parentheses*{\lambda v} = \lambda\bar{v}^T v = \lambda\norm*{v}.
 		\]
-		and thus
+		We also have \(\bar{v}^T \parentheses*{Hv} = \parentheses*{Hv}^T \bar{v} = v^T H^T \bar{v}\).
+		Thus we obtain
 		\[
-			\parentheses*{\lambda - \bar{\lambda}}\angles*{x, x} = 0.
+			v^T H^T \bar{v} = \lambda\norm*{v} \iff \bar{v}^T \bar{H}^T v = \bar{\lambda}\norm*{v}.
 		\]
-		Since \(x\) is an eigenvector of \(H\) \(\lambda = \bar{\lambda}\) has to hold and thus \(\lambda \in \R\).
-		\item
+		Since \(H\) is Hermitian, we have \(\bar{H}^T = H\), which yields that
 		\[
-			\angles*{x, x} = \angles*{Ix, x} = \angles*{U^* Ux, x} = x^T \parentheses*{\bar{U}^T U}^T \bar{x} = x^T U^T \bar{U}\bar{x} = \angles*{Ux, Ux}
+			\bar{\lambda}\norm*{v} = \bar{v}^T Hv = \bar{v}^T \lambda v = \lambda\norm*{v}.
 		\]
+		Recall that \(v\) is an eigenvector, hence \(v\) is not the zero vector and \(\norm*{v} \ne 0\).
+		Therefore, we divide by the length \(\norm*{v}\) and get \(\lambda = \bar{\lambda}\). which means that \(\lambda\) has to be real.
+		\item Let \(\lambda \in \C\) be an arbitrary eigenvalue fo the unitary matrix \(U\) and let \(v\) be an eigenvector corresponding to the eigenvalue \(\lambda\).
+		Then we have
+		\[
+			Uv = \lambda v \quad \text{and} \quad \bar{v}^T \bar{U}^T = \bar{\lambda}\bar{v}^T.
+		\]
+		Let us multiply these equalities:
+		\[
+			\bar{v}^T \bar{U}^T Uv = \bar{\lambda}\bar{v}^T \lambda v = \absolute*{\lambda}^2 \norm*{v}^2,
+		\]
+		but since \(\bar{U}^T U = I\), the left-hand side is \(\norm*{v}^2\). Sice \(v\) is an eigenvector and thus \(v\) is not the zero vector, we have \(\norm*{v} \ne 0\). This implies \(\absolute*{\lambda} = 1\).
 	\end{enumerate}
 
 
@@ -72,4 +162,99 @@
 		\end{equation}
 		Use this to state the SVD of the matrix \(A\).
 	\end{quote}
+
+	We calculate
+	\[
+		A^T A = \begin{pmatrix}
+			1 & 1 & 0\\
+			1 & 2 & 1\\
+			0 & 1 & 1
+		\end{pmatrix}, \quad AA^T = \begin{pmatrix}
+			2 & 1\\
+			1 & 2
+		\end{pmatrix}.
+	\]
+	First we compute the singular values \(\sigma_i\) by finding the eigenvalues \(\lambda_i\) of \(AA^T\).
+	The characteristic polynomial of \(AA^T\) is
+	\[
+		\chi_{AA^T}\parentheses*{\lambda} = \det\parentheses*{AA^T - \lambda I} = \begin{vmatrix}
+			2 - \lambda & 1\\
+			1 & 2 - \lambda
+		\end{vmatrix} = \parentheses*{2 - \lambda}^2 - 1 = \parentheses*{\lambda - 3}\parentheses*{\lambda - 1}.
+	\]
+	Thus the singular values are \(\sigma_1 = \sqrt{3}\) and \(\sigma_2 = 1\).
+	Now we find the right singular vectors (the columns of \(V\)) by finding an orthonormal set of eigenvectors of \(A^T A\).
+	It is also possible to proceed by finding the left singular vectors (columns of \(U\)) instead.
+	The eigenvalues of \(A^T A\) are \(\lambda_1 = 3\), \(\lambda_2 = 1\), and \(\lambda_3 = 0\), and since \(A^T A\) is symmetric we know that the eigenvectors will be orthogonal.
+	For \(\lambda_1 = 3\), we have
+	\[
+		A^T A - 3I = \begin{pmatrix}
+			-2 & 1 & 0\\
+			1 & -1 & 1\\
+			0 & 1 & -2
+		\end{pmatrix}
+	\]
+	which row-reduces to \(\begin{pmatrix}
+		1 & 0 & -1\\
+		0 & 1 & -2\\
+		0 & 0 & 0
+	\end{pmatrix}\).
+	A unit-length vector in the kernel of that matrix is \(v_1 = \begin{pmatrix}
+		\frac{1}{\sqrt{6}}\\
+		\sqrt{\frac{2}{3}}\\
+		\frac{1}{\sqrt{6}}
+	\end{pmatrix}\).
+	For \(\lambda_2 = 1\) we have \(A^T A - I = \begin{pmatrix}
+		0 & 1 & 0\\
+		1 & 1 & 1\\
+		0 & 1 & 0
+	\end{pmatrix}\) which row-reduces to \(\begin{pmatrix}
+		1 & 0 & 1\\
+		0 & 1 & 0\\
+		0 & 0 & 0
+	\end{pmatrix}\).
+	A unit-length vector in the kernel is \(v_2 = \begin{pmatrix}
+		-\frac{1}{\sqrt{2}}\\
+		0\\
+		\frac{1}{\sqrt{2}}
+	\end{pmatrix}\).
+	For the last eigenvector we have \(A^T A\) which row-reduces to \(\begin{pmatrix}
+		1 & 0 & -1\\
+		0 & 1 & 1\\
+		0 & 0 & 0
+	\end{pmatrix}\). A unit-length vector in the kernel is \(v_3 = \begin{pmatrix}
+		\frac{1}{\sqrt{3}}\\
+		-\frac{1}{\sqrt{3}}\\
+		\frac{1}{\sqrt{3}}
+	\end{pmatrix}\).
+	So at this point we know that
+	\[
+		A = U\Sigma V^T = U\begin{pmatrix}
+			3 & 0 & 0\\
+			0 & 1 & 0
+		\end{pmatrix}\begin{pmatrix}
+			\frac{1}{\sqrt{6}} & \sqrt{\frac{2}{3}} & \frac{1}{\sqrt{6}}\\
+			-\frac{1}{\sqrt{2}} & 0 & \frac{1}{\sqrt{2}}\\
+			\frac{1}{\sqrt{3}} & -\frac{1}{\sqrt{3}} & \frac{1}{\sqrt{3}}
+		\end{pmatrix}.
+	\]
+	Finally, we can compute \(U\) by the formula \(\sigma u_i = A v_i\) or \(u_i = \frac{1}{\sigma}Av_i\).
+	This gives \(U = \begin{pmatrix}
+		\frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}}\\
+		\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}}
+	\end{pmatrix}\).
+	So in its full glory the SVD is
+	\[
+		A = U\Sigma V^T = \begin{pmatrix}
+			\frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}}\\
+			\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}}
+		\end{pmatrix}\begin{pmatrix}
+			3 & 0 & 0\\
+			0 & 1 & 0
+		\end{pmatrix}\begin{pmatrix}
+			\frac{1}{\sqrt{6}} & \sqrt{\frac{2}{3}} & \frac{1}{\sqrt{6}}\\
+			-\frac{1}{\sqrt{2}} & 0 & \frac{1}{\sqrt{2}}\\
+			\frac{1}{\sqrt{3}} & -\frac{1}{\sqrt{3}} & \frac{1}{\sqrt{3}}
+		\end{pmatrix}.
+	\]
 \end{document}
