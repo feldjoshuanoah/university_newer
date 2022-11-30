@@ -34,11 +34,11 @@ Mit einer Zerlegung \(Z = \parentheses*{x_0, \ldots, x_m}\) von \(\parentheses*{
 \]
 sind die Obersumme \(O_Z\parentheses*{f}\) und Untersumme \(U_Z\parentheses*{f}\) definiert:
 \begin{align}
-	O_Z^R\parentheses*{f} &:= \sum_{i = 1}^n \parentheses*{\sup_{x_{i - 1} < x < x_i}f\parentheses*{x}}\parentheses*{x_i - x_{i - 1}},\label{equation:1}\\
-	U_Z^R\parentheses*{f} &:= \sum_{i = 1}^n \parentheses*{\inf_{x_{i - 1} < x < x_i}f\parentheses*{x}}\parentheses*{x_i - x_{i - 1}}.\label{equation:2}
+	O_Z^R\parentheses*{f} &:= \sum_{i = 1}^n \parentheses*{\sup_{x_{i - 1} < x < x_i}f\parentheses*{x}}\parentheses*{x_i - x_{i - 1}},\label{eq:1-1}\\
+	U_Z^R\parentheses*{f} &:= \sum_{i = 1}^n \parentheses*{\inf_{x_{i - 1} < x < x_i}f\parentheses*{x}}\parentheses*{x_i - x_{i - 1}}.\label{eq:1-2}
 \end{align}
 Damit sind also die besten Annäherungen des Flächeninhaltes unter \(f\)
-\begin{equation}
+\begin{equation}\label{eq:1-3}
 	O^R\parentheses*{f} := \inf_{Z \in \mathcal{Z}}O_Z^R\parentheses*{f}, \quad \text{beziehungsweise} \quad U^R\parentheses*{f} := \sup_{Z \in \mathcal{Z}}U_Z^R\parentheses*{f},
 \end{equation}
 wobei \(\mathcal{Z}\) alle möglichen Zerlegungen von \(\parentheses*{a, b}\) enthält.
@@ -64,7 +64,7 @@ Und falls ja, gilt
 \end{equation}
 Leider ist dies oft nicht der Fall.
 Das klassische Gegenbeispiel ist die Dirichlet-Funktion \(f = \chi_Q\), wobei \(\chi_A\) die charakteristische Funktion zu einer Menge \(A\),
-\begin{equation}\label{equation:6}
+\begin{equation}\label{eq:1-6}
 	\chi_A\parentheses*{x} = \begin{cases}
 		1, & \text{falls }x \in A,\\
 		0, & \text{falls }x \not\in A
@@ -84,18 +84,18 @@ können wir die Funktionenfolge \(\braces*{f_k}\) mit
 \]
 definieren.
 Dann gilt
-\begin{equation}\label{equation:7}
+\begin{equation}\label{eq:1-7}
 	\lim_{k \to \infty}f_k\parentheses*{x} = \chi_Q\parentheses*{x}
 \end{equation}
 für alle \(x \in \parentheses*{0, 1}\), sowie
-\begin{equation}\label{equation:8}
+\begin{equation}\label{eq:1-8}
 	O^R\parentheses*{f_k} = U^R\parentheses*{f_k} = 0,
 \end{equation}
 aber
 \[
 	0 = U^R\parentheses*{\chi_Q} \ne O^R\parentheses*{\chi_Q} = 1\text{!}
 \]
-Intuitiv würden wir wegen \eqref{equation:7} und \eqref{equation:8} folgern,
+Intuitiv würden wir wegen \eqref{eq:1-7} und \eqref{eq:1-8} folgern,
 \[
 	\int_0^1 \chi_Q = 0.
 \]
@@ -114,7 +114,7 @@ Ein Maß \(\lambda\) ist eine Verallgemeinerung der Länge eines Intervalles in 
 Es ordnet jeder Teilmenge in einem Mengensystem \(\mathcal{S}\) in \(\R^n\) eine nicht negative reelle Zahl zu und sollte intuitiv die vier folgenden Eigenschaften haben:
 \begin{enumerate}
 	\item \emph{(Konsistenz mit dem Volumenmaß)} Für jeden Quader \(I = \parentheses*{a_1, b_1} \times \cdots \times \parentheses*{a_n, b_n}\) gilt
-	\begin{equation}\label{equation:9}
+	\begin{equation}\label{eq:1-9}
 		\lambda\parentheses*{I} = \vol\parentheses*{I} := \parentheses*{b_1 - a_1}\cdots\parentheses*{b_n - a_n}.
 	\end{equation}
 	\item \emph{(Translations-Invarianz)} Seien \(y \in \R^n\), \(A \subset \R^n\) und \(A + y := \braces*{x + y : x \in A}\).
@@ -123,12 +123,12 @@ Es ordnet jeder Teilmenge in einem Mengensystem \(\mathcal{S}\) in \(\R^n\) eine
 		\lambda\parentheses*{A + y} = \lambda\parentheses*{A}.
 	\end{equation}
 	\item \emph{(Monotonie)} Wenn \(B \subset A\), dann gilt
-	\begin{equation}\label{equation:11}
+	\begin{equation}\label{eq:1-11}
 		\lambda\parentheses*{B} \le \lambda\parentheses*{A}.
 	\end{equation}
 	\item \emph{(\(\sigma\)- oder abzählbare Additivität)} Seien \(\braces*{A_1, A_2, \ldots}\) paarweise disjunkte Mengen.\footnote{Die Mengen \(\braces*{A_1, A_2, \ldots}\) sind \emph{paarweise disjunkt}, wenn \(A_i \cap A_j = \emptyset\) für alle \(i \ne j\).}
 	Dann ist
-	\begin{equation}\label{equation:12}
+	\begin{equation}\label{eq:1-12}
 		\lambda\parentheses*{\bigcup_{k = 1}^\infty A_k} = \sum_{k = 1}^\infty \lambda\parentheses*{A_k}.
 	\end{equation}
 \end{enumerate}
@@ -139,15 +139,15 @@ Das \emph{äußere Lebesgue-Maß} \(\lambda^*: \mathcal{P}\parentheses*{\R^n} \t
 \]
 definiert ist, scheint ein sinnvoller Kandidat für ein Maß zu sein.
 Es besitzt die ersten drei Eigenschaften, aber es erfüllt nur
-\begin{equation}\label{equation:13}
+\begin{equation}\label{eq:1-13}
 	\lambda^*\parentheses*{\bigcup_{k = 1}^\infty A_k} \le \sum_{k = 1}^\infty \lambda^*\parentheses*{A_k}.
 \end{equation}
 Denn es gibt disjunkte Mengen \(A\) und \(B\), so dass
-\begin{equation}\label{equation:14}
+\begin{equation}\label{eq:1-14}
 	\lambda^*\parentheses*{A \cup B} < \lambda^*\parentheses*{A} + \lambda^*\parentheses*{B},
 \end{equation}
 oder äquivalent gibt es (nicht unbedingt disjunkte) Mengen \(A\) und \(B\), so dass\footnote{\(B \setminus A := \braces*{x \in B : x \not\in A}\).}
-\begin{equation}\label{equation:15}
+\begin{equation}\label{eq:1-15}
 	\lambda^*\parentheses*{A} < \lambda^*\parentheses*{A \cap B} + \lambda^*\parentheses*{A \setminus B}.
 \end{equation}
 Solche Beispiele liegen sehr tief.\footnote{Z.B. das Banach Tarski Paradox von 1924, bei welchem eine Kugel in zwei Teile zerlegt wird, welche jeweils das Maß der Originalkugel besitzen.}
@@ -167,7 +167,7 @@ Die übrigen Mengen nennen wir \emph{Lebesgue-messbar}.
 	\]
 \end{definition}
 
-Dieses Mengensystem \(\mathcal{L}\) ist ausreichend zu betrachten, weil wir Mengen wie \(A\) und \(B\) in \eqref{equation:14} und \eqref{equation:15} im Weiteren nicht begegnen werden.
+Dieses Mengensystem \(\mathcal{L}\) ist ausreichend zu betrachten, weil wir Mengen wie \(A\) und \(B\) in \eqref{eq:1-14} und \eqref{eq:1-15} im Weiteren nicht begegnen werden.
 
 \begin{proposition}
 	Die Lebesgue-messbaren Mengen \(\mathcal{L}\) bilden eine \emph{\(\sigma\)-Algebra} über \(\R^n\), das heißt:
@@ -179,11 +179,11 @@ Dieses Mengensystem \(\mathcal{L}\) ist ausreichend zu betrachten, weil wir Meng
 			\bigcup_{k = 1}^\infty M_k \in \mathcal{L}.
 		\]
 	\end{enumerate}
-	Außerdem erfüllt das Lebesgue-Maß die vier Eigenschaften \eqref{equation:9} -- \eqref{equation:12}.
+	Außerdem erfüllt das Lebesgue-Maß die vier Eigenschaften \eqref{eq:1-9} -- \eqref{eq:1-12}.
 \end{proposition}
 
 Um nun beantworten zu können, wie klein die Menge \(Q\) ist, müssen wir zunächst kontrollieren, ob \(Q\) messbar ist.
-Weil wir wegen \eqref{equation:7} und \eqref{equation:8} erwarten, dass das Maß von \(Q\) Null ist, betrachten wir sogenannte Nullmengen:
+Weil wir wegen \eqref{eq:1-7} und \eqref{eq:1-8} erwarten, dass das Maß von \(Q\) Null ist, betrachten wir sogenannte Nullmengen:
 Eine Menge \(A \subset \R^n\) heißt \emph{(Lebesgue-)Nullmenge}, falls \(\lambda^*\parentheses*{A} = 0\).
 
 \begin{lemma}
@@ -196,8 +196,8 @@ Eine Menge \(A \subset \R^n\) heißt \emph{(Lebesgue-)Nullmenge}, falls \(\lambd
 	\[
 		\lambda^*\parentheses*{A} \le \lambda^*\parentheses*{A \cap M} + \lambda^*\parentheses*{A \setminus M}
 	\]
-	aus \eqref{equation:13}.
-	Wegen Monotonie \eqref{equation:11} folgt \(\lambda^*\parentheses*{A \cap M} = 0\) aus \(\lambda^*\parentheses*{M} = 0\) und \(A \cap M \subseteq M\), sowie \(\lambda^*\parentheses*{A \setminus M} \le \lambda^*\parentheses*{A}\) aus \(A \setminus M \subseteq A\).
+	aus \eqref{eq:1-13}.
+	Wegen Monotonie \eqref{eq:1-11} folgt \(\lambda^*\parentheses*{A \cap M} = 0\) aus \(\lambda^*\parentheses*{M} = 0\) und \(A \cap M \subseteq M\), sowie \(\lambda^*\parentheses*{A \setminus M} \le \lambda^*\parentheses*{A}\) aus \(A \setminus M \subseteq A\).
 	Also gilt
 	\[
 		\lambda^*\parentheses*{A} \ge \lambda^*\parentheses*{A \setminus M} = \lambda^*\parentheses*{A \cap M} + \lambda^*\parentheses*{A \setminus M}.
@@ -218,7 +218,7 @@ Eine Menge \(A \subset \R^n\) heißt \emph{(Lebesgue-)Nullmenge}, falls \(\lambd
 	woraus wir folgern, dass \(M\) eine Nullmenge sein muss.
 \end{example}
 
-\begin{remark}\label{remark:5}
+\begin{remark}\label{rem:1-5}
 	Abzählbare Vereinigungen von Nullmengen sind wieder Nullmengen.
 	Demnach ist zum Beispiel die Menge \(\Q\) auch eine Nullmenge.
 \end{remark}
@@ -231,8 +231,8 @@ Zuerst betrachten wir den Fall \(\lambda\parentheses*{M} < \infty\) und \(W = \b
 Um ihr Integral zu definieren, betrachten wir im ersten Schritt Funktionen, die wir inuitiv genau integrieren können.
 
 \emph{Schritt 1:} Für den Fall der Riemann-Integration haben wir die \emph{Treppenfunktionen} betrachtet.
-Dies ist eine Funktion, die sich als eine lineare Kombination von charakteristischen Funktion (s. \eqref{6}) schreiben lässt:
-\begin{equation}\label{equation:16}
+Dies ist eine Funktion, die sich als eine lineare Kombination von charakteristischen Funktion (s. \eqref{eq:1-6}) schreiben lässt:
+\begin{equation}\label{eq:1-16}
 	\psi\parentheses*{x} = \sum_{i = 1}^m y_i \chi_{Q_i}\parentheses*{x},
 \end{equation}
 wobei jedes \(Q_i \subset M\) ein Quader ist.
@@ -240,7 +240,7 @@ Das Integral von \(\psi\) ist also trivialerweise
 \begin{equation}
 	\int_M \psi = \sum_{i = 1}^m y_i \vol\parentheses*{Q_i}.
 \end{equation}
-Nun, da wir aber das Maß von mehr als nur Quadern kennen, können wir die Treppenfunktion \eqref{equation:16} verallgemeinern, indem wir ihre Quader durch messbare Mengen ersetzen.
+Nun, da wir aber das Maß von mehr als nur Quadern kennen, können wir die Treppenfunktion \eqref{eq:1-16} verallgemeinern, indem wir ihre Quader durch messbare Mengen ersetzen.
 
 \emph{Schritt 2:} Eine soche Funktion heißt eine \emph{einfache Funktion}.
 Eine Funktion \(f: M \to W\) nennt man eine einfache Funktion, wenn
@@ -253,13 +253,13 @@ Daher lässt sich eine einfache Funktion folgendermaßen schreiben:
 	\phi\parentheses*{x} = \sum_{i = 1}^m y_i \chi_{M_i}\parentheses*{x}.
 \end{equation}
 Das Integral von \(\phi\) ist also mit
-\begin{equation}\label{equation:19}
+\begin{equation}\label{eq:1-19}
 	\int_M \phi := \sum_{i = 1}^m y_i \lambda\parentheses*{M_i}
 \end{equation}
 sinnvoll definiert.
 
 \begin{remark}
-	Gleichung \eqref{equation:19} ist tatsächlich eine neue Definition, da zum Beispiel \(\chi_Q\) eine einfache Funktion ist, die wir aber bisher als nicht integrierbar angesehen haben.
+	Gleichung \eqref{eq:1-19} ist tatsächlich eine neue Definition, da zum Beispiel \(\chi_Q\) eine einfache Funktion ist, die wir aber bisher als nicht integrierbar angesehen haben.
 	Das heißt, \(y_1 = 0\), \(y_2 = 1\) und \(M_1 = \parentheses*{0, 1} \setminus \Q\), \(M_2 = Q\) und
 	\[
 		\int_0^1 \chi_Q = 0 \cdot \underbrace{\lambda\parentheses*{\parentheses*{0, 1} \setminus \Q}}_{= \lambda\parentheses*{\parentheses*{0, 1}} = 1} + 1 \cdot \underbrace{\lambda\parentheses*{Q}}_{= 0} = 0.
@@ -267,7 +267,7 @@ sinnvoll definiert.
 \end{remark}
 
 \emph{Schritt 3:} Als nächstes definieren wir das Integral einer nicht einfachen Funktion.
-So wie wir in \eqref{equation:1} und \eqref{equation:2} Annäherungen mit Treppenfunktionen von oben und unten betrachtet haben, definieren wir nun soche Annäherungen mit einfachen Funktionen neu.
+So wie wir in \eqref{eq:1-1} und \eqref{eq:1-2} Annäherungen mit Treppenfunktionen von oben und unten betrachtet haben, definieren wir nun soche Annäherungen mit einfachen Funktionen neu.
 Diese einfachen Funktionen können mittels einer Zerlegung des Wertbereiches (statt der Definitionsmenge wie in der Herleitung des Riemann-Integrals) gebildet werden.
 Dafür brauchen wir die \emph{Urbilder} von \(A \subseteq W\):
 \[
@@ -295,7 +295,7 @@ Wir beschränken uns also auf solche Funktionen.
 \end{remark}
 
 Wir werden keine andere Art von Messbarkeit betrachten, also sagen wir im Folgenden lediglich \emph{messbar} statt Lebesgue-messbar.
-Die besten Annäherungen sind so wie in \eqref{equation:3} mittels Infimum und Supremum definiert:
+Die besten Annäherungen sind so wie in \eqref{eq:1-3} mittels Infimum und Supremum definiert:
 \begin{align}
 	O\parentheses*{f} &:= \inf\braces*{\int_M \phi : \phi\text{ ist eine einfache Funktion mit }\phi \ge f},\\
 	U\parentheses*{f} &:= \sup\braces*{\int_M \phi : \phi\text{ ist eine einfache Funktion mit }\phi \le f}.
@@ -328,7 +328,7 @@ Um dieses Ergebnis im Allgemeinen zu erklären, brauchen wir die folgende Defini
 	\]
 \end{example}
 
-\begin{proposition}\label{proposition:12}
+\begin{proposition}\label{prop:1-12}
 	Sei \(\braces*{f_1, f_2, \ldots}\) eine Folge von Lebesgue-messbaren Funktionen auf \(M\), die an fast jeder Stelle gegen die Funktion \(f\) konvergiert.
 	Dann ist \(f\) Lebesgue-messbar.
 \end{proposition}
@@ -343,11 +343,11 @@ Um dieses Ergebnis im Allgemeinen zu erklären, brauchen wir die folgende Defini
 	\]
 	für alle \(k \ge j\).
 	Also gilt
-	\begin{equation}\label{equation:22}
+	\begin{equation}\label{eq:1-22}
 		x \in \bigcup_{k = j}^\infty f_k^{-1}\parentheses*{\parentheses*{-\infty, y - \frac{1}{m}}} =: M_{m, j}\parentheses*{y}.
 	\end{equation}
 	Da jede Funktion \(f_k\) messbar ist und das Mengensystem der messbaren Mengen eine \(\sigma\)-Algebra bildet, ist \(M_{m, j}\parentheses*{y}\) messbar.
-	Ebenso lässt sich für jedes \(x\) ein Paar \(m\) und \(j\) finden, so dass \eqref{equation:22} gilt.
+	Ebenso lässt sich für jedes \(x\) ein Paar \(m\) und \(j\) finden, so dass \eqref{eq:1-22} gilt.
 	Daher gilt
 	\[
 		f^{-1}\parentheses*{\parentheses*{-\infty, y}} \subseteq \bigcup_{m = 1}^\infty \bigcup_{j = 1}^\infty M_{m, j}\parentheses*{y} =: M\parentheses*{y}.
@@ -402,7 +402,7 @@ Das Lebesgue-Integral ist tatsächlich eine Verallgemeinerung des Riemann-Integr
 
 Das Lebesgue-Integral besitzt außerdem die erwartete Eigenschaft von Linearität.
 
-\begin{proposition}[Linearität des Lebesgue-Integrales]
+\begin{proposition}[Linearität des Lebesgue-Integrales]\label{prop:1-15}
 	Seien \(f\) und \(g\) Lebesgue-messbare Funktionen auf \(M\) und \(\alpha\) und \(\beta\) reelle Zahlen.
 	Dann gilt
 	\begin{equation}
@@ -413,7 +413,7 @@ Das Lebesgue-Integral besitzt außerdem die erwartete Eigenschaft von Linearitä
 Es könnte aber immer geschehen, dass der Limes der Integrale einer Funktionenfolge nicht das Integral des Limes der Funktionenfolge ist.
 Der durchschlagende Erfolg der Lebesgue'schen Theorie basiert auf den folgenden drei Theoremen über die Integrale von Funktionenfolgen:
 
-\begin{proposition}[Lebesgues Satz von der monotonen Konvergenz]\label{proposition:16}
+\begin{proposition}[Lebesgues Satz von der monotonen Konvergenz]\label{prop:1-16}
 	Sei \(E \subset \R^n\) messbar, und \(\parentheses*{f_k}_{k \in \N}\) eine Folge messbarer Funktionen mit
 	\begin{equation}
 		0 \le f_1\parentheses*{x} \le f_2\parentheses*{x} \le \cdots
@@ -424,12 +424,12 @@ Der durchschlagende Erfolg der Lebesgue'schen Theorie basiert auf den folgenden 
 	\end{equation}
 	für alle \(x \in E\).
 	Dann ist \(f\) auf \(E\) messbar, und es gilt
-	\begin{equation}\label{equation:26}
+	\begin{equation}\label{eq:1-26}
 		\lim_{k \to \infty}\int_E f_k = \int_E f.
 	\end{equation}
 \end{proposition}
 
-\begin{lemma}[Fatous Lemma]\label{lemma:17}
+\begin{lemma}[Fatous Lemma]\label{lem:1-17}
 	Sei \(E \subset \R^n\) messbar, und \(\parentheses*{f_k}_{k \in \N}\) eine Folge nicht negativer messbarer Funktionen.
 	Setze
 	\begin{equation}
@@ -466,7 +466,7 @@ Wir beweisen zum Abschluss den Satz der monotonen Konvergenz.
 Beim Beweis spielen viele der eingeführten Techniken zusammen.
 
 \begin{proof}
-	\emph{(von Satz \ref{proposition:16})} Nach Satz \ref{proposition:12} ist \(f\) messbar.
+	\emph{(von Satz \ref{prop:1-16})} Nach Satz \ref{prop:1-12} ist \(f\) messbar.
 	Nach Definition \ref{definition:13} gilt
 	\[
 		\int_E f = \sup\braces*{\int_E \phi : \phi \le f, \phi\text{ einfach}}.
@@ -498,7 +498,7 @@ Beim Beweis spielen viele der eingeführten Techniken zusammen.
 	\[
 		\lim_{k \to \infty}\int_E f_k \le \int_E f,
 	\]
-	also die Gleichheit \eqref{equation:26}.
+	also die Gleichheit \eqref{eq:1-26}.
 \end{proof}
 
 
@@ -522,7 +522,7 @@ Dieses \(p\) kann gewissermaßen beschreiben, wie die Funktion \(f\) aussieht.
 
 Die wichtigsten Fälle sind \(p \in \braces*{1, 2, \infty}\), aber in anderen Vorlesungen werden wir auch Gleichungen betrachten, deren Lösung \(p\)-integrierbar für weitere \(p\) ist.
 
-Da nach Satz \ref{proposition:15} Lebesgue-Integration linear ist, hat die Menge der integrierbaren Funktionen die Struktur eines Vektorraums.
+Da nach Satz \ref{prop:1-15} Lebesgue-Integration linear ist, hat die Menge der integrierbaren Funktionen die Struktur eines Vektorraums.
 Dies gilt auch für \(p > 1\), da
 \[
 	\absolute*{f + g}^p \le \parentheses*{\absolute*{f} + \absolute*{g}}^p \le \parentheses*{2\max\braces*{\absolute*{f}, \absolute*{g}}}^p = 2^p \max\braces*{\absolute*{f}^p, \absolute*{g}^p} \le 2^p \parentheses*{\absolute*{f}^p + \absolute*{g}^p},
@@ -567,7 +567,7 @@ Damit zerfällt die Menge der \(p\)-integrierbaren Funktionen in Äquivalenzklas
 \]
 Nun gilt
 \[
-	\norm*{f}_p = 0 ßiff f \in \brackets*{0}_\simeq.
+	\norm*{f}_p = 0 \iff f \in \brackets*{0}_\simeq.
 \]
 
 \begin{definition}[\(L^p\)-Raum]
@@ -577,7 +577,7 @@ Nun gilt
 	\]
 	heißt \emph{\(L^p\)-Raum}.
 	Die \(p\)-Norm einer Äquivalenzklasse ist mit
-	\begin{equation}
+	\begin{equation}\label{eq:1-31}
 		\norm*{\brackets*{f}_\simeq}_p := \norm*{f}_p
 	\end{equation}
 	definiert.
@@ -587,7 +587,7 @@ Nun gilt
 Leicht nachzuprüfen sind:
 \begin{enumerate}
 	\item \(L^p\parentheses*{M}\) ist ein Vektorraum,
-	\item mit \eqref{equation:22} ist die \(p\)-Norm einer Äquivalenzklasse eindeutig definiert.
+	\item mit \eqref{eq:1-31} ist die \(p\)-Norm einer Äquivalenzklasse eindeutig definiert.
 \end{enumerate}
 Wenn die Definitionsmenge \(M\) im Zusammenhang klar ist, schreiben wir lediglich \(L^p\).
 
@@ -600,7 +600,7 @@ Um dies zu zeigen, brauchen wir die folgenden drei Lemmas.
 		\frac{1}{p} + \frac{1}{q} = 1
 	\]
 	gilt
-	\begin{equation}\label{equation:32}
+	\begin{equation}\label{eq:1-32}
 		ab \le \frac{a^p}{p} + \frac{b^q}{q}.
 	\end{equation}
 \end{lemma}
@@ -614,11 +614,11 @@ Um dies zu zeigen, brauchen wir die folgenden drei Lemmas.
 
 \begin{lemma}[Hölder-Ungleichung]
 	Seien \(1 < p < \infty\) und \(q\) mit
-	\begin{equation}\label{equation:33}
+	\begin{equation}\label{eq:1-33}
 		\frac{1}{p} + \frac{1}{q} = 1.
 	\end{equation}
 	Falls \(f \in L^p\) und \(g \in L^q\), gelten \(fg \in L^1\) und
-	\begin{equation}\label{equation:34}
+	\begin{equation}\label{eq:1-34}
 		\norm*{fg}_1 \le \norm*{f}_p \norm*{g}_q.
 	\end{equation}
 \end{lemma}
@@ -627,7 +627,7 @@ Um dies zu zeigen, brauchen wir die folgenden drei Lemmas.
 	Es reicht aus, den Fall \(\norm*{f}_p > 0, \norm*{g}_q > 0\) zu betrachten.
 	Aus der Young-Ungleichung folgt
 	\[
-		\int_M \frac{\absolute*{f\parentheses*{x}}}{\norm*{f}_p}\frac{\absolute*{g\parentheses*{x}}}{\norm*{g}_q}\d x \stackrel{\eqref{equation:32}}{\le} \int_M \parentheses*{\frac{1}{p}\frac{\absolute*{f\parentheses*{x}}^p}{\norm*{f}_p^p} + \frac{1}{q}\frac{\absolute*{g\parentheses*{x}}^q}{\norm*{g}_q^q}} = \frac{1}{p} + \frac{1}{q} \stackrel{\eqref{equation:33}}{=} 1.
+		\int_M \frac{\absolute*{f\parentheses*{x}}}{\norm*{f}_p}\frac{\absolute*{g\parentheses*{x}}}{\norm*{g}_q}\d x \stackrel{\eqref{eq:1-32}}{\le} \int_M \parentheses*{\frac{1}{p}\frac{\absolute*{f\parentheses*{x}}^p}{\norm*{f}_p^p} + \frac{1}{q}\frac{\absolute*{g\parentheses*{x}}^q}{\norm*{g}_q^q}} = \frac{1}{p} + \frac{1}{q} \stackrel{\eqref{eq:1-33}}{=} 1.
 	\]
 \end{proof}
 
@@ -643,18 +643,18 @@ Um dies zu zeigen, brauchen wir die folgenden drei Lemmas.
 	Der Fall \(p = 1\) ist wegen der Dreiecksungleichung des Absolutbetrages klar.
 	Sei \(1 < p < \infty\) und \(q\) wie zuvor mit \(\frac{1}{p} + \frac{1}{q} = 1\).
 	Die Summe \(f + g \in L^p\) erfüllt mit Hilfe der Dreiecksungleichung des Absolutbetrages
-	\begin{equation}\label{equation:35}
+	\begin{equation}\label{eq:1-35}
 		\norm*{f + g}_p^p = \int_M \absolute*{f + g}\absolute*{f + g}^{p - 1} \le \norm*{f\absolute*{f + g}^{p - 1}}_1 + \norm*{g\absolute*{f + g}^{p - 1}}_1.
 	\end{equation}
 	Nun möchten wir die Hölder-Ungleichung verwenden, aber wir müssen erst kontrollieren, ob \(\parentheses*{f + g}^{p - 1} \in L^q\) gilt.
 	Tatsächlich, wenn \(h \in L^p\) liegt, gilt
-	\begin{equation}\label{equation:36}
+	\begin{equation}\label{eq:1-36}
 		\norm*{h^{p - 1}}_q = \parentheses*{\int_M \absolute*{h}^{pq - q}}^{\frac{1}{q}} = \parentheses*{\int_M \absolute*{h}^p}^{1 - \frac{1}{p}} = \norm*{h}_p^{p - 1} < \infty.
 	\end{equation}
-	Also können wir mit der Hölder-Ungleichung aus \eqref{equation:35} folgern:
+	Also können wir mit der Hölder-Ungleichung aus \eqref{eq:1-35} folgern:
 	\begin{align*}
-		\norm*{f + g}_p^p &\stackrel{\eqref{equation:34}}{\le} \norm*{f}_p \norm*{\parentheses*{f + g}^{p - 1}}_q + \norm*{g}_p \norm*{\parentheses*{f + g}^{p - 1}}_q\\
-		&\stackrel{\eqref{equation:36}}{=} \norm*{f}_p \norm*{f + g}_p^{p - 1} + \norm*{g}_p \norm*{f + g}_p^{p - 1}\\
+		\norm*{f + g}_p^p &\stackrel{\eqref{eq:1-34}}{\le} \norm*{f}_p \norm*{\parentheses*{f + g}^{p - 1}}_q + \norm*{g}_p \norm*{\parentheses*{f + g}^{p - 1}}_q\\
+		&\stackrel{\eqref{eq:1-36}}{=} \norm*{f}_p \norm*{f + g}_p^{p - 1} + \norm*{g}_p \norm*{f + g}_p^{p - 1}\\
 		&= \parentheses*{\norm*{f}_p + \norm*{g}_p}\norm*{f + g}_p^{p - 1}.
 	\end{align*}
 \end{proof}
@@ -714,7 +714,7 @@ Wir können dort zum Beispiel den Banach'schen Fixpunktsatz als Konvergenzkriter
 \end{proposition}
 
 \begin{proof}
-	Der Beweis für \(1 \le p < \infty\) ist eine zweifache Anwendung von Fatous Lemma \ref{lemma:17}:
+	Der Beweis für \(1 \le p < \infty\) ist eine zweifache Anwendung von Fatous Lemma \ref{lem:1-17}:
 	Sei \(\parentheses*{f_n}_{n \in \N}\) eine Cauchy-Folge in \(L^p\).
 	O.B.d.A. gelte
 	\begin{equation}
@@ -739,7 +739,7 @@ Wir können dort zum Beispiel den Banach'schen Fixpunktsatz als Konvergenzkriter
 		S\parentheses*{x} := f_1\parentheses*{x} + \sum_{n = 1}^\infty \parentheses*{f_{n + 1}\parentheses*{x} - f_n\parentheses*{x}}
 	\end{equation}
 	konvergiert also a.e. absolut.
-	In diesem Fall setze \(f\parentheses+{x} := S\parentheses*{x}\).
+	In diesem Fall setze \(f\parentheses*{x} := S\parentheses*{x}\).
 	Natürlich konvergiert die Folge \(\parentheses*{f_k}\) a.e. gegen \(f\).
 	Wir zeigen nun, dass \(f\) in \(L^p\) liegt.
 	Sei dafür \(\varepsilon > 0\) fest.
@@ -760,7 +760,7 @@ Wir können dort zum Beispiel den Banach'schen Fixpunktsatz als Konvergenzkriter
 		A_k &:= \braces*{x : \absolute*{f_k\parentheses*{x}} > \norm*{f_k}_\infty},\\
 		B_{m, n} &:= \braces*{x : \absolute*{f_m\parentheses*{x} - f_n\parentheses*{x}} > \norm*{f_m - f_n}_\infty}.
 	\end{align*}
-	Das sind Nullmengen und mit Bemerkung \ref{remark:5} ist auch
+	Das sind Nullmengen und mit Bemerkung \ref{rem:1-5} ist auch
 	\[
 		E := \parentheses*{\bigcup_{k = 1}^\infty A_k} \cup \parentheses*{\bigcup_{m, n = 1}^\infty B_{m, n}}
 	\]
