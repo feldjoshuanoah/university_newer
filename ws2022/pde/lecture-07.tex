@@ -1,0 +1,487 @@
+\section{Stokes problem}
+
+We will consider the Stokes problem as a standard example of so-called ``mixed problems'' in which the FEM is applied to PDE problems that are described by systems of differential equations, for which different function spaces need to be considered at once (i.e., ``mixed'').
+Functions appearing in these equations are vector-valued and are therefore also called \emph{fields}.
+
+
+\subsection{Stokes problem}
+
+The field equations for an incompressible fluid in a physical domain \(\Omega \subset \R^n\) are given by the Navier-Stokes equations
+\begin{align*}
+	\partial_t \bm{u} + \bm{u} \cdot \nabla\bm{u} + \nabla p &= \mu\Delta \bm{u} + \bm{f},\\
+	\nabla \cdot \bm{u} &= 0
+\end{align*}
+for the unknown \emph{velocity field} \(\bm{u}: \Omega \to \R^n\) and unknown \emph{pressure} \(p: \Omega \to \R\), given the \emph{force field} \(\bm{f}: \Omega \to \R^n\) and \emph{fluid viscosity} constant \(\mu\).
+Here, the nonlinear differential operator is understood componentwise, in the sense that
+\[
+	\bm{u} \cdot \nabla \bm{u} \equiv \parentheses*{\bm{u} \cdot \nabla}\bm{u} = \parentheses*{\sum_{j = 1}^n u_j \partial_{x_j}}\bm{u} = \parentheses*{\sum_{j = 1}^n u_j \partial_{x_j}u_i}_{i = 1, \ldots, n} \in \R^n
+\]
+for the \(\R^n\)-valued function \(\bm{u} = \parentheses*{u_1, \ldots, u_n}^\top\).
+Moreover, we use the usual multivariate extensions for the gradient operator
+\[
+	\grad v \equiv \nabla v = \begin{cases}
+		\parentheses*{\partial_{x_1}v, \ldots, \partial_{x_n}v}^\top \in \R^n, & \text{if }v\text{ is }\R\text{-valued},\\
+		\parentheses*{\partial_{x_j}v_i}_{1 \le i \le m, 1 \le j \le n} \in \R^{m \times n}, & \text{if }v\text{ is }\R^{m \times n}\text{-valued}
+	\end{cases}
+\]
+as well as for the divergence
+\[
+	\div v \equiv \nabla \cdot v = \begin{cases}
+		\sum_{i = 1}^n \partial_{x_i}v_i \in \R, & \text{if }v\text{ is }\R^n\text{-valued},\\
+		\parentheses*{\sum_{j = 1}^n \partial_{x_j}v_{i, j}}_{1 \le i \le m} \in \R^m, & \text{if }v\text{ is }\R^{m \times n}\text{-valued}.
+	\end{cases}
+\]
+Cosequently, \(\Delta \bm{u} = \div\parentheses*{\nabla \bm{u}}\) and \(\partial_t \bm{u}\) are also understood componentwise in the PDE.
+Here, we consider the steady case \(\partial_t \bm{u} = 0\).
+Moreover we neglect the nonlinear term \(\bm{u} \cdot \nabla\bm{u}\) and set \(\mu = 1\).
+We also drop bold-face for vectors for notational convenience.
+
+\begin{definition}
+	Given the functions \(f, g: \Omega \to \R^n\), the system of PDEs
+	\begin{align*}
+		-\Delta u + \nabla p &= f,\\
+		\nabla \cdot u &= 0
+	\end{align*}
+	in \(\Omega \subset \R^n\), which is equipped with the boundary conditions
+	\[
+		u = g \quad \text{on }\partial\Omega,
+	\]
+	is called the \emph{Stokes problem} for the unknown \emph{velocity field} \(u: \Omega \to \R^n\) and \emph{pressure} \(p: \Omega \to \R\).
+\end{definition}
+
+A typical scenario is, for example, the flow around a sphere or a disk in two dimensions.
+
+
+\subsection{Variational formulation}
+
+We choose \(\parentheses*{v, q}\) as test functions for the two unknowns \(\parentheses*{u, p}\) of the Stokes problem, that is, \(v: \Omega \to \R^n\) and \(q: \Omega \to \R\) both sufficiently smooth.
+Multiplying the first equation by \(v\) and integrating yields
+\[
+	-\int_\Omega v \cdot \Delta u\d x + \int_\Omega v \cdot \nabla p\d x = \int_\Omega v \cdot f\d x.
+\]
+Next, we integrate the first integral by parts to find
+\begin{align*}
+	-\int_\Omega v \cdot \Delta u\d x &= -\sum_{i = 1}^n \int_\Omega v_i \Delta u_i \d x\\
+	&= \sum_{i = 1}^n \int_\Omega \nabla v_i \cdot \nabla u_i\d x - \sum_{i = 1}^n \int_{\partial\Omega}v_i \partial_n u_i\d s\\
+	&= \int_\Omega \nabla v : \nabla u\d x - \int_{\partial\Omega}v \cdot \partial_n u\d s,
+\end{align*}
+where we have set \(\partial_n u := \parentheses*{\partial_n u_i}_{1 \le i \le n} \in \R^n\) and used \(A : B := \sum_{i = 1}^m \sum_{i = 1}^n A_{i, j}B_{i, j}\) to denote the \emph{double contraction} of two matrices \(A, B \in \R^{m \times n}\).
+Similarly, for the second integral we find
+\begin{align*}
+	-\int_\Omega v \cdot \nabla p\d x &= \sum_{i = 1}^n \int_\Omega v_i \partial_{x_i}p \d x\\
+	&= \sum_{i = 1}^n \int_\Omega \partial_{x_i}\parentheses*{v_i p}\d x - \sum_{i = 1}^n \int_\Omega p \partial_{x_i} v_i\d x\\
+	&= \int_\Omega \div\parentheses*{vp}\d x - \int_\Omega p\div\parentheses*{v}\d x,
+\end{align*}
+which eventually leads to
+\[
+	\int_\Omega \nabla v : \nabla u\d x - \int_\Omega p\div\parentheses*{v}\d x + \int_{\partial\Omega}n \cdot vp\d s - \int_{\partial\Omega}v \cdot \partial_n u\d s = \int_\Omega fv\d x
+\]
+for the first PDE.
+The seocnd equation is multiplied by \(q\), but will not be integrated by parts:
+\[
+	\int_\Omega q \cdot \nabla u\d x = 0.
+\]
+With this, there are only first derivatives in \(u\) and \(v\) and no derivatives in \(p\) and \(q\).
+Boundary conditions:
+For simplicity we choose \(g = 0\), that is, \(u = 0\) on \(\partial\Omega\), and also require that the test function \(v\) satisfies \(v = 0\) on \(\partial\Omega\).
+Consequently, both boundary integrals vanish.
+
+\begin{definition}
+	Consider the bilinear forms
+	\[
+		a\parentheses*{u, v} := \int_\Omega \nabla u : \nabla v\d x, \quad b\parentheses*{p, v} := -\int_\Omega p\nabla \cdot v\d x
+	\]
+	and the linear functional
+	\[
+		\ell\parentheses*{v} := \int_\Omega v \cdot f\d x.
+	\]
+	Then the mixed variational formulation of the Stokes problem reads:
+	\begin{quote}
+		``Find \(\parentheses*{u, p} \in \parentheses*{H_0^1\parentheses*{\Omega}}^n \times L^2\parentheses*{\Omega}\), such that
+		\[
+			a\parentheses*{u, v} + b\parentheses*{p, v} = \ell\parentheses*{v}, \quad b\parentheses*{q, u} = 0
+		\]
+		for all \(\parentheses*{v, q} \in \parentheses*{H_0^1\parentheses*{\Omega}}^n \times L^2\parentheses*{\Omega}\).''
+	\end{quote}
+\end{definition}
+
+\begin{remark}
+	\begin{enumerate}
+		\item Every component of \(u\) and \(v\) requires one weak derivative, like in the Poisson case, hence \(H_0^1\parentheses*{\Omega}\) for each component is natural.
+		The scalar function \(p\) and \(q\) require no derivative, hence \(L^2\parentheses*{\Omega}\).
+		\item However, the full space \(L^2\parentheses*{\Omega}\) is too large.
+		Indeed, the pressure \(p\) is only specific up to an additive constant (cf., Neumann-Poisson).
+		For uniqueness, typically its (spatial) average is required to be zero \(\int_\Omega p\d x = 0\), similarly for \(q\).
+		In that case the space \(L^2\parentheses*{\Omega}\) will be replaced by the subspace
+		\[
+			L_{\int = 0}^2\parentheses*{\Omega} := \braces*{r \in L^2\parentheses*{\Omega} : \int_\Omega r\d x = 0}
+		\]
+		in the definition of the variational problem above.
+		\item The second equation in the weak formulation is a constraint for the solution \(u\); the so-called \emph{incompressibility} or \emph{divergence constraint}.
+	\end{enumerate}
+\end{remark}
+
+
+\subsection{Abstract formulation}
+
+Let us consider a variational formulation based on two different abstract function spaces \(V\) and \(W\).
+Then the variational formulation of the stokes problem is an example of the following class of abstract variational formulations:
+\begin{quote}
+	``Find \(\parentheses*{u, v} \in V \times W\) such that
+	\[
+		a\parentheses*{u, v} + b\parentheses*{p, v} = \ell\parentheses*{v}, \quad b\parentheses*{q, u} = 0
+	\]
+	for all \(\parentheses*{v, q} \in V \times W\).''
+\end{quote}
+An alternative formulation of the above abstract variational formulation can be derived by incorporating the second equation directly as a ``constraint'' into the function space.
+
+\begin{definition}
+	The function space \(X \subset V\) given by
+	\[
+		X := \braces*{v \in V : b\parentheses*{q, v} = 0 \forall q \in W}
+	\]
+	is called the \emph{constrained function space}, consisting only of functions from \(V\) that satisfy the second equation.
+\end{definition}
+
+\begin{remark}
+	\begin{enumerate}
+		\item For the Stokes problem the constrained space \(X\) is equivalent to the space
+		\[
+			\braces*{v \in \parentheses*{H_0^1\parentheses*{\Omega}}^n : \nabla \cdot v = 0}.
+		\]
+		\item If we consider both the solution \(u\) and the test function \(v\) for the Stokes problem to be from the constrained space \(X\), then \(b\parentheses*{p, v} = 0\) and \(b\parentheses*{q, u} = 0\).
+		The \emph{reduced} (or \emph{constrained}) \emph{mixed variational formulation} reads:
+		\begin{quote}
+			``Find \(u \in X\) such that \(a\parentheses*{u, v} = \ell\parentheses*{v}\) for all \(v \in X\).''
+		\end{quote}
+		\item Existence and uniqueness of solutions for the reduced/constrained problem can then be studied using the Lax-Milgram theorem.
+		In fact, \(X\) is a closed subspace of \(V\) (i.e., a Hilbert space endowed with the usual inner product and norm) provided the bilinear form \(b\) is continuous.
+		\item A technical note:
+		One can show that (open mapping theorem combined with \(\nabla \cdot \equiv \div: \parentheses*{H_0^1\parentheses*{\Omega}}^n \to L_{\int = 0}^2\parentheses*{\Omega}\) surjective), there exists a constant \(c\) such that for all \(r \in L_{\int = 0}^2\parentheses*{\Omega}\), there is a \(u_r \in \parentheses*{H_0^1\parentheses*{\Omega}}^n\) the function \(\bar{u} := u - \left.u_r\right|_{r = 0} \in X\) solves the unconstrained mixed variational formulation.
+		Note that the ``\(\impliedby\)'' direction is immediate by construction.
+	\end{enumerate}
+\end{remark}
+
+As we did for ``normal'' (i.e., unconstrained) variational formulations, for symmetric bilinear forms \(a\) we can take advantage of an equivalent characterization via a constrained minimization problem.
+
+\begin{theorem}\label{thm:7-6}
+	Suppose that \(a: X \times X \to \R\) is symmetric and coercive in \(X \subset V\).
+	Then:
+	\begin{enumerate}
+		\item\label{thm:7-6:1} The function \(u \in X\) is a solution to the reduced/constrained mixed variational formulation, if and only if \(u\) solves the constrained variational problem
+		\[
+			\min_{v \in X}J\parentheses*{v}, \quad \text{where} \quad J\parentheses*{v} := \frac{1}{2}a\parentheses*{v, v} - \ell\parentheses*{v}.
+		\]
+		\item\label{thm:7-6:2} The above is equivalent to minimizing the Lagrange functional
+		\[
+			L\parentheses*{v, \lambda} := J\parentheses*{v} + b\parentheses*{\lambda, v}
+		\]
+		with \(u \in V\) and a Lagrange multiplier \(\lambda \in W\).
+		\item\label{thm:7-6:3} Let the pair \(\parentheses*{u, p} \in V \times W\) be a saddle point of the Lagrange functional \(L\), in the sense that
+		\[
+			L\parentheses*{u, q} \le L\parentheses*{u, p} \le L\parentheses*{v, p} \quad \forall \parentheses*{v, q} \in V \times W.
+		\]
+		Then \(u \in V\) is a solution to the variational problem in \ref{thm:7-6:1}.
+	\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+	Statement \ref{thm:7-6:1} is clear in view of the general equivalence of variational formulaions and variational problems. We will sketch the idea of the proof for \ref{thm:7-6:2} in an intuitive manner for the concrete case of the Stokes problem.
+	In that case
+	\[
+		J\parentheses*{v} = \frac{1}{2}\int_\Omega \nabla v : \nabla v\d x - \int_\Omega v \cdot f\d x.
+	\]
+	The constraint is enforced pointwise, that is
+	\[
+		\nabla v = 0, \quad \text{for all (almost all) }x \in \Omega.
+	\]
+	Formally, we introduce a Lagrange multiplier \(\lambda: \Omega \to \R\) for (almost) every point \(x \in \Omega\), which can be thought of adding Lagrange multipliers in the classical fashion by \(L\parentheses*{v, \lambda} = J\parentheses*{v} + \sum_{x \in \Omega}\lambda\parentheses*{x}\parentheses*{0 - \nabla \cdot v}\parentheses*{x}\).
+	To make this approach rigorous, the sum becomes an integral, meaning that we enforce the constraint almost everywhere:
+	\[
+		L\parentheses*{v, \lambda} = J\parentheses*{v} - \int_\Omega \lambda\nabla \cdot v\d x = J\parentheses*{v} + b\parentheses*{\lambda, v}.
+	\]
+	For the statement \ref{thm:7-6:3}, let \(\parentheses*{u, p} \in V \times W\) be a saddle point of \(L\).
+	We first show that \(u\) then satisfies the constraint, that is, \(u \in X\).
+	The first inequality of the saddle point definition gives
+	\[
+		L\parentheses*{u, q} \le L\parentheses*{u, p} \iff b\parentheses*{q - p, u} \le 0
+	\]
+	for all \(q \in W\) in view of the linearity of the bilinear form \(b\).
+	As \(W\) is a linear space, we can write any \(q \in W\) as \(q = p + r\) for some \(r \in W\).
+	The preceding inequality thus implies
+	\[
+		b\parentheses*{r, u} \le 0 \quad \forall r \in W.
+	\]
+	Because \(r \in W\) implies \(-r \in W\), using the linearity again, we find
+	\[
+		b\parentheses*{r, u} \le 0\text{ and }-b\parentheses*{r, u} = b\parentheses*{-r, u} \le 0 \iff b\parentheses*{r, u} = 0
+	\]
+	for all \(r \in W\) and therefore \(u \in X\).
+	Next, the second inequality of the saddle point definition states
+	\[
+		J\parentheses*{u} + b\parentheses*{p, u} = J\parentheses*{u} \le J\parentheses*{v} + b\parentheses*{p, v} \quad \forall v \in V,
+	\]
+	where the first equality is a consequence of \(u \in X\).
+	Choosing \(v \in X \subset V\) so that \(b\parentheses*{p, v} = 0\) implies that
+	\[
+		J\parentheses*{u} \le J\parentheses*{v} \quad \forall v \in X,
+	\]
+	which concludes the proof.
+\end{proof}
+
+\begin{remark}
+	\begin{enumerate}
+		\item It follows that the solution \(\parentheses*{u, p}\) of the unconstrained mixed variational formulation is a saddle point of the Lagrange functional.
+		For a fixed value \(p = q\) we have a minimum at \(u\), because \(L\parentheses*{u, p} \le L\parentheses*{v, p}\) for all \(v \in V\).
+		But if at fixed \(u \in V\) the Lagrange multiplier varies so that the Lagrange functional decreases further \(L\parentheses*{u, p} \ge L\parentheses*{u, q}\) for all \(q \in W\).
+		\item The minimization setting explains why the pressure \(p\) in the Stokes problem is often referred to as the Lagrange-multiplier.
+	\end{enumerate}
+\end{remark}
+
+
+\subsection{The Ladyshenskaya-Babuska-Brezzi conditions}
+
+To complete the discussion on the existence of (weak) solutions for mixed unconstrained variational problems, we would like to have conditions for the bilinear forms \(a\parentheses*{\cdot, \cdot}\) and \(b\parentheses*{\cdot, \cdot}\) that ensure existence of solutions in analogy to the Lax-Milgram theorem.
+These conditions are called Ladyshenskaya-Babuska-Brezi (LBB) conditions, which we will state below.
+However, to understand where these conditions originate from, we will first consider the special case of finite dimensional Hilbert spaces \(V\) and \(W\).
+That is, we consider
+\[
+	a\parentheses*{u, v} \hat{=} = v^\top Au, \quad b\parentheses*{p, v} \hat{=} v^\top Bp, \quad \ell\parentheses*{v} \hat{=} v^\top f,
+\]
+for matrices \(A \in \R^{n \times n}\),  \(B \in \R^{n \times m}\), and a vector \(f \in \R^n\).
+We have \(m < n\), because \(\R^n \hat{=} V\), which containes vector-valued functions, and \(\R^m \hat{=} W\) only scalars.
+Consequently, \(B\) is a tall matrix.
+Moreover, notice that
+\[
+	b\parentheses*{q, u} = uT Bq = \parentheses*{u^\top Bq}^\top = q^\top B^\top u.
+\]
+The corresponding mixed variational formulation then is:
+\begin{quote}
+	``Find \(\parentheses*{u, v} \in \R^n \times \R^m\) such that
+	\begin{align*}
+		v^\top \parentheses*{Au + Bp} &= v^\top f \quad \forall v \in \R^n,\\
+		q^\top B^\top u &= 0, \quad \forall q \in \R^m.\text{''}
+	\end{align*}
+\end{quote}
+which can be transformed into a linear system by choosing canonical unit basis vectors of \(\R^n\) and \(\R^m\) for \(v\) and \(q\) respectively, yielding the following linear system in block structure
+\[
+	\begin{pmatrix}
+		A & B\\
+		B^\top & 0
+	\end{pmatrix}\begin{pmatrix}
+		u\\
+		p
+	\end{pmatrix} = \begin{pmatrix}
+		f\\
+		0
+	\end{pmatrix}.
+\]
+The special block structure allows to solve the linear system.
+
+\begin{theorem}
+	The linear system above is solved by
+	\[
+		p = \parentheses*{B^\top A^{-1}B}^{-1} B^\top A^{-1} f \quad \text{and} \quad u = A^{-1}\parentheses*{f - Bp},
+	\]
+	provided that \(A^{-1}\) and \(\parentheses*{B^\top A^{-1}B}^{-1}\) exist.
+\end{theorem}
+
+\begin{proof}
+	We first solve the equation \(Au + Bp = f\) for \(u\) and insert the result into the second equation.
+	Specifically, as \(A\) is regular, we find
+	\[
+		Au = f - Bp \iff u = A^{-1}\parentheses*{f - Bp},
+	\]
+	yielding
+	\[
+		0 = B^\top u = B^\top A^{-1}\parentheses*{f - Bp} \iff B^\top A^{-1}Bp = B^\top A^{-1}f,
+	\]
+	which can be solved for \(p\) in view the hypotheses.
+\end{proof}
+
+\begin{remark}
+	\begin{enumerate}
+		\item Because \(B\) is a tall matrix, \(B^{-1}\) does not exist and we have
+		\[
+			\parentheses*{B^\top A^{-1}B}^{-1} \ne B^{-1}AB^{-T}.
+		\]
+		Consequently, the regularity conditions above are not yet satisfactory as they require regularity of a matrix that combines \(A\) and \(B\).
+		\item Because \(B^\top\) is flat, it will have a non-trivial null-space:
+		\[
+			\ker\parentheses*{B^\top} = \braces*{v \in \R^n : B^\top v = 0} \hat{=} X,
+		\]
+		with \(\dim X = \dim\ker\parentheses*{B^\top} = \tilde{n} > 0\).
+		We can thus decompose \(\R^n\) into the \(\tilde{n}\)-dimensional kernel \(X\) and its orthogonal complement \(Y = X^\bot\) of dimension \(\tilde{m} = n - \tilde{n}\), such that \(\R^n = X \oplus Y\). If \(\braces*{e_k}_{k = 1, \ldots, \tilde{n}}\) is a basis of \(X\) and \(\braces*{\hat{e}_\ell}_{\ell = 1, \ldots, \tilde{m}}\) a basis of \(Y\), then we can write the unknown vector \(u \in \R^n\) as
+		\[
+			u = \sum_{k = 1}^{\tilde{n}}\alpha_k e_k + \sum_{\ell = 1}^{\tilde{m}}\beta_\ell \hat{e}_\ell \hat{=} \begin{pmatrix}
+				u_X\\
+				u_Y
+			\end{pmatrix}.
+		\]
+		Similarly, we can project \(A\) and \(B\) onto its \(\parentheses*{X, Y}\) components, so that
+		\[
+			A \hat{=} \begin{pmatrix}
+				A_{XX} & A_{XY}\\
+				A_{XY} & A_{YY}
+			\end{pmatrix}, \quad B \hat{=} \begin{pmatrix}
+				B_X\\
+				B_Y
+			\end{pmatrix}.
+		\]
+	\end{enumerate}
+\end{remark}
+
+Although the previous theorem states solvability conditions for the linear system, they are not yet satisfactory as it requires the regularity of a matrix that combines \(A\) and \(B\).
+However, using the projection onto the kernel \(B^\top\) and its orthogonal complement, we can relate the solvability of the constrained mixed variational formulation to suitable regularity conditions for \(A\) and \(B\) by exploiting this projection approach.
+
+\begin{theorem}
+	The linear system
+	\[
+		\begin{pmatrix}
+			A & B\\
+			B^\top & 0
+		\end{pmatrix}\begin{pmatrix}
+			u\\
+			p
+		\end{pmatrix} = \begin{pmatrix}
+			f\\
+			0
+		\end{pmatrix}
+	\]
+	is uniquely solvable, if the projected matrices \(A_{XX}\) and \(B_Y\) are regular (i.e., invertible).
+\end{theorem}
+
+\begin{proof}
+	Essentially, we make the idea, sketched in the remark above, precise here.
+	That is, let \(X = \ker\parentheses*{B^\top}\) with \(\dim X = \dim \ker\parentheses*{B^\top} = \tilde{n} > 0\) and \(Y := X^\bot\) with \(\dim Y = \tilde{m} = n - \tilde{n}\), so that \(\R^n = X \oplus Y\).
+	Moreover, let \(\braces*{e_k}_{k = 1, \ldots, \tilde{n}}\) be an orthonormal basis of \(X\) and \(\braces*{\hat{e}_\ell}_{\ell = 1, \ldots, \tilde{m}}\) an orthonormal basis of \(Y\), respectively.
+	Representing \(u \in \R^n\) in that combined orthonormal basis reads
+	\[
+		u = \sum_{k = 1}^{\tilde{n}}\alpha_k e_k + \sum_{\ell = 1}^{\tilde{m}}\beta_\ell \hat{e}_\ell = E\begin{pmatrix}
+			\alpha_1\\
+			\vdots\\
+			\alpha_{\tilde{n}}\\
+			\beta_1\\
+			\vdots\\
+			\beta_{\tilde{m}}
+		\end{pmatrix}
+	\]
+	with orthogonal matrix \(E: \parentheses*{e_1, \ldots, e_{\tilde{n}}, \hat{e}_1, \ldots, \hat{e}_{\tilde{m}}} \in \R^{n \times n}\) whose columns are the orthonormal basis vectors of \(X\) and \(Y = X^\bot\), so that \(E^\top = E^{-1}\).
+	Setting \(u_X := \parentheses*{\alpha_1, \ldots, \alpha_{\tilde{n}}}^\top \in \R^{\tilde{n}}\) as well as \(u_Y := \parentheses*{\beta_1, \ldots, \beta_{\tilde{m}}} \top \in \R^{\tilde{m}}\), such that \(E^\top u = \parentheses*{u_X^\top, u_Y^\top}^\top\), the equation \(Au + Bp = f\) can be written as
+	\[
+		EE^\top f = EE^\top \parentheses*{Au + Bp} \iff \begin{pmatrix}
+			f_X\\
+			f_Y
+		\end{pmatrix} = \begin{pmatrix}
+			A_{XX} & A_{XY}\\
+			A_{YX} & A_{YY}
+		\end{pmatrix}\begin{pmatrix}
+			u_X\\
+			u_Y
+		\end{pmatrix} + \begin{pmatrix}
+			B_X\\
+			B_Y
+		\end{pmatrix}p
+	\]
+	where we have used \(E^\top f =: \parentheses*{f_X^\top, f_Y^\top}^\top\).
+	Here the block matrices are given by
+	\[
+		E^\top AE =: \begin{pmatrix}
+			A_{XX} & A_{XY}\\
+			A_{YX} & A_{YY}
+		\end{pmatrix} \quad \text{and} \quad E^\top B =: \begin{pmatrix}
+			B_X\\
+			B_Y
+		\end{pmatrix}
+	\]
+	where \(A_{XX} \in \R^{\tilde{n} \times \tilde{n}}\), \(A_{XY} \in \R^{\tilde{n} \times \tilde{m}}\), \(A_{YX} \in \R^{\tilde{m} \times \tilde{n}}\), and \(A_{YY} \in \R^{\tilde{m} \times \tilde{m}}\) as well as \(B_X \in \R^{\tilde{n} \times m}\) and \(B_Y \in \R^{\tilde{m} \times m}\).
+	In fact, we find that \(B_X = 0\) because for any \(\xi \in \R^{\tilde{n}}\) we have
+	\[
+		B_X^\top \xi = \parentheses*{B_X^\top, B_Y^\top}\begin{pmatrix}
+			\xi\\
+			0
+		\end{pmatrix} = \parentheses*{E^\top B}^\top \begin{pmatrix}
+			\xi\\
+			0
+		\end{pmatrix} = B^\top \underbrace{E\begin{pmatrix}
+			\xi\\
+			0
+		\end{pmatrix}}_{\in X} = 0.
+	\]
+	Similarly, the second equation yields
+	\[
+		0 = B^\top u = B^\top E\begin{pmatrix}
+			u_X\\
+			u_Y
+		\end{pmatrix} = \begin{pmatrix}
+			B_X\\
+			B_Y
+		\end{pmatrix}^\top \begin{pmatrix}
+			u_X\\
+			u_Y
+		\end{pmatrix} = B_X^\top u_X + B_Y^\top u_Y = B_Y^\top u_Y,
+	\]
+	since \(u_X \in X\).
+	Consequently, the full system simplifies to
+	\begin{align*}
+		A_{XX}u_X + A_{XY}u_Y &= f_X,\\
+		A_{YX}u_X + A_{YY}u_Y + B_Y p &= f_Y,\\
+		B_Y^\top u_Y &= 0.
+	\end{align*}
+	It follows from the hypotheses that \(B_Y^\top\) is invertible, so that we conclude \(u_Y = 0\).
+	Inserting this into the first equation, we find that this is uniquely solvable and yields \(u_X = A_{XX}^{-1} f_X\).
+	From the second equation we then find
+	\[
+		p = B_Y^{-1}\parentheses*{f_Y - A_{YX}A_{XX}^{-1}f_X}
+	\]
+	for the pressure.
+	Furthermore, for \(B_Y \in \R^{\tilde{m} \times m}\) to be regular, it has to be quadratic, hence \(\tilde{m} = m\) and \(\tilde{n} = n - m\).
+\end{proof}
+
+We now state the corresponding result for the infinite-dimensional function space setting.
+
+\begin{theorem}[Ladyshenskaya-Babuska-Brezzi]
+	Let \(V, W\) be Hilbert spaces with norms \(\norm*{\cdot}_V\), and \(\norm*{\cdot}_W\), respectively.
+	Consider the mixed variational formulation
+	\begin{quote}
+		``Find \(\parentheses*{u, p} \in V \times W\) such that
+		\begin{align*}
+			a\parentheses*{u, v} + b\parentheses*{p, v} &= \ell\parentheses*{v},\\
+			b\parentheses*{q, u} &= 0
+		\end{align*}
+		for all \(\parentheses*{v, q} \in V \times W\).''
+	\end{quote}
+	where the bilinear forms \(a: V \times V \to \R\) and \(b: W \times V \to \R\) as well as the linear functional \(\ell: V \to \R\) are continuous.
+	Moreover, let \(X = \braces*{v \in V : b\parentheses*{q, v} = 0 \forall q \in W}\) and suppose that there exist constants \(\beta, \gamma > 0\) such that the bilinear forms satisfy:
+	\begin{enumerate}
+		\item \(a\parentheses*{v, v} \ge \gamma\norm*{u}_V^2\) for all \(v \in X\),
+		\item \(\sup_{v \in V, \norm*{v} = 1}b\parentheses*{q, v} \ge \beta\norm*{q}_W\) for all \(q \in W\).
+	\end{enumerate}
+	Then there exists a unique solution \(\parentheses*{u, p} \in V \times W\) to the mixed variational problem.
+\end{theorem}
+
+\begin{proof}
+	Decent book on FEM.
+\end{proof}
+
+\begin{remark}
+	\begin{enumerate}
+		\item This theorem is the analog of Lax-Milgram for mixed problems.
+		\item The first condition corresponds to the coercivity for \(a\parentheses*{\cdot, \cdot}\) on \(X\) (or \(X\)-ellipticity) and we already know this condition.
+		\item The second condition is called \emph{LBB-condition} or \emph{\(\inf\)-\(\sup\)-condition}, because we can take the infimum and obtain
+		\[
+			\inf_{q \in V, \norm*{q} = 1}\sup_{v \in V, \norm*{v} = 1}b\parentheses*{q, v} \ge \beta.
+		\]
+		\item In the introductory matrix example we have
+		\[
+			b\parentheses*{q, v} = v^\top Bq = v_X^\top B_X q + v_Y^\top B_Y q = v_Y^\top B_Y q,
+		\]
+		because \(v_X \in X\).
+		By construction \(v_Y^\top B_Y\) never vanishes (\(v_Y \in Y = X^\bot\)), hence,
+		\[
+			\sup_{\norm*{v_Y} = 1} v_Y^\top B_Y q \ge \beta\norm*{q}
+		\]
+		for all \(q\), which is only possible of and only if \(B_Y\) is regular.
+		\item One can show that both conditions are satisfied for the Stokes problem, hence we have a unique solution.
+	\end{enumerate}
+\end{remark}
