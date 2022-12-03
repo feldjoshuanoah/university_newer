@@ -1,0 +1,204 @@
+\documentclass{exercise}
+
+\include{preamble}
+
+\title{Hausaufgabe 7}
+\author{René Dopichay (356986) \quad Joshua Feld (406718)\\Thilo Kloos (410343) \quad Shunta Takushima (430043)}
+\professor{Prof. Torrilhon \& Dr. Speck}
+\course{Mathematische Grundlagen III}
+
+\begin{document}
+	\maketitle
+
+
+	\section{}
+
+	\begin{quote}
+		Let \(f_n: \brackets*{0, 1} \to \R, n \in \N\) be defined as
+		\[
+			f_n\parentheses*{x} = \begin{cases}
+				\frac{n}{\sqrt{x}}\sin\parentheses*{\frac{x}{n}}, & \text{if }x \in \left(0, 1\right],\\
+				0, & \text{if }x = 0.
+			\end{cases}
+		\]
+		\begin{enumerate}
+			\item For an arbitrary \(n \in \N\), show that \(f_n\) is measurable.
+			\item Show that \(\braces*{f_n} \subset L^1\parentheses*{\brackets*{0, 1}}\) for all \(n \in \N\).
+			\item Show that \(\braces*{f_n}\) converges to \(f\parentheses*{x} = \sqrt{x}\)
+			\begin{enumerate}
+				\item pointwise and
+				\item uniformly.
+			\end{enumerate}
+			\item Show that \(\braces*{f_n}\) converges to \(f\) in \(L^1\parentheses*{\brackets*{0, 1}}\).
+		\end{enumerate}
+	\end{quote}
+
+	\begin{enumerate}
+		\item For any arbitrary \(n \in \N\), \(f_n\) is continuous over \(\brackets*{0, 1}\) and thus also measurable.
+		\item
+		\[
+			\int_0^1 \absolute*{f_n\parentheses*{x}}\d x = \int_0^1 \absolute*{\frac{n}{\sqrt{x}}\sin\parentheses*{\frac{x}{n}}} \le \int_0^1 \frac{n}{\sqrt{x}}\frac{x}{n}\d x = \int_0^1 \sqrt{x}\d x = \frac{2}{3}.
+		\]
+		\item
+		\begin{enumerate}
+			\item
+			\[
+				\absolute*{f_n\parentheses*{x} - \sqrt{x}} = \sqrt{x}\absolute*{\frac{n}{x}\sin\parentheses*{\frac{x}{n}} - 1} \to 0.
+			\]
+			\item
+			\[
+				\frac{n}{x}\sin\parentheses*{\frac{x}{n}} = \frac{n}{x}\parentheses*{\frac{x}{n}\sin^{\parentheses*{1}}\parentheses*{0} + \frac{1}{6}\parentheses*{\frac{x}{n}}^3 \sin^{\parentheses*{3}}\parentheses*{\xi}}, \quad \xi \in \brackets*{0, \frac{x}{n}}.
+			\]
+			\begin{align*}
+				\absolute*{f_n\parentheses*{x} - \sqrt{x}} &= \sqrt{x}\absolute*{\frac{n}{x}\sin\parentheses*{\frac{x}{n}} - 1}\\
+				&= \sqrt{x}\absolute*{\frac{n}{x}\parentheses*{\frac{x}{n}\sin^{\parentheses*{1}}\parentheses*{0} + \frac{1}{6}\parentheses*{\frac{x}{n}}^3 \sin^{\parentheses*{3}}\parentheses*{\xi}} - 1}\\
+				&\le \absolute*{\frac{1}{6n^2}}.
+			\end{align*}
+			\[
+				\lim_{n \to \infty}\sup_{x \in \brackets*{0, 1}}\absolute*{f_n\parentheses*{x} - \sqrt{x}} \le \lim_{n \to \infty}\absolute*{\frac{1}{6n^3}} = 0.
+			\]
+		\end{enumerate}
+		\item
+		\[
+			\norm*{f_n - f}_{L^1} = \int_0^1 \absolute*{f_n\parentheses*{x} - \sqrt{x}}\d x \le \absolute*{\frac{1}{6n^3}}\int_0^1 \d x = \absolute*{\frac{1}{6n^3}} \xrightarrow{n \to \infty} 0.
+		\]
+	\end{enumerate}
+
+
+	\section{}
+
+	\begin{quote}
+		Let us define the functions
+		\[
+			f: \brackets*{1, 2} \to \R, f\parentheses*{x} = \begin{cases}
+				x^{-1}, & \text{if }x \in \Q,\\
+				\parentheses*{x - 1}^{-\frac{1}{2}}, & \text{otherwise}
+			\end{cases}
+		\]
+		and
+		\[
+			g: \brackets*{1, 2} \to \R, g\parentheses*{x} = \sin^6\parentheses*{x}.
+		\]
+		\begin{enumerate}
+			\item Is \(f\) Lebesgue-integrable?
+			Is \(g\) Lebesgue-integrable?
+			\item Show that \(f \in L^p\parentheses*{\brackets*{1, 2}}\) for \(1 \le p < 2\), and \(g \in L^p\parentheses*{\brackets*{1, 2}}\) for \(1 \le p\).
+			\item Show that \(fg \in L^1\parentheses*{\brackets*{1, 2}}\).
+			\item Construct a sequence \(\braces*{g_k} \subset L^1\parentheses*{\brackets*{1, 2}}\), with \(g_k \ne g\), such that \(g_k \to g\) in \(L^1\) and prove the convergence.
+		\end{enumerate}
+	\end{quote}
+
+	\begin{enumerate}
+		\item
+		\[
+			\int_1^2 g\parentheses*{x}\d x = \int_1^2 \sin^6 \parentheses*{x}\d x \le \int_1^2 \d x = 1 < \infty.
+		\]
+		\item 
+	\end{enumerate}
+
+
+	\section{}
+
+	\begin{quote}
+		Consider the disturbed matrix
+		\[
+			M = \begin{pmatrix}
+				9 & \epsilon & \delta & 0\\
+				-8 & 2 & 0 & 4\\
+				7 + \delta & \frac{7}{2} & \epsilon - 5 & -\frac{7}{2}\\
+				6 + \epsilon & \delta & 0 & 6
+			\end{pmatrix}
+		\]
+		Estimate the eigenvalues for this disturbed matrix using the theorem of Bauer-Fike in terms of the parameters \(\delta\) and \(\epsilon\) in the \(1\)-norm and \(\infty\)-norm.
+	\end{quote}
+
+	Following the hint we choose a decomposition \(M = A + B\) with
+	\[
+		A = \begin{pmatrix}
+			9 & 0 & 0 & 0\\
+			-8 & 2 & 0 & 4\\
+			7 & \frac{7}{2} & -5 & -\frac{7}{2}\\
+			6 & 0 & 0 & 6
+		\end{pmatrix}, \quad B = \begin{pmatrix}
+			0 & \epsilon & \delta & 0\\
+			0 & 0 & 0 & 0\\
+			\delta & 0 & \epsilon & 0\\
+			\epsilon & \delta & 0 & 0
+		\end{pmatrix}.
+	\]
+	Using the given matrix \(T\) we obtain
+	\[
+		D = T^{-1}AT = \diag\parentheses*{9, 2, -5, 6} \implies \sigma\parentheses*{A} = \braces*{-5, 2, 6, 9}
+	\]
+
+
+	\section{}
+
+	\begin{quote}
+		Gegeben sei die Matrix
+		\[
+			A = \begin{pmatrix}
+				6 & 0 & 1\\
+				0 & 2 & -1\\
+				1 & -1 & 3
+			\end{pmatrix}.
+		\]
+		\begin{enumerate}
+			\item Geben Sie Abschätzungen für die Eigenwerte von der Matrix \(A\) an.
+			\item Führen Sie zwei Schritte der klassischen Vektoriteration mit dem Startvektor \(x^{\parentheses*{0}} = \parentheses*{1, 0, 0}^T\) durch, und geben Sie eine Näherung für den betragsgrößten Eigenwert von der Matrix \(A\) an.
+		\end{enumerate}
+	\end{quote}
+
+	\begin{enumerate}
+		\item Da \(A\) symmetrisch ist, müssen die Eigenwerte reell sein. Für die gegebene Matrix erhalten wir die Geschgorin-Kreise
+		\[
+			D_1 = \braces*{\lambda \in \R : \absolute*{\lambda - 6} < 1}, \quad D_2 = \braces*{\lambda \in \R : \absolute*{\lambda - 2} < 1}, \quad D_3 = \braces*{\lambda \in \R : \absolute*{\lambda - 3} < 1}.
+		\]
+		Nach dem Satz von Gerschgorin gilt für das Spektrum von \(A\) somit
+		\[
+			\sigma\parentheses*{A} \subseteq \bigcup_{i = 1}^3 D_i.
+		\]
+		\item
+		\begin{align*}
+			q^{\parentheses*{1}} &= \frac{x^{\parentheses*{0}}}{\norm*{x^{\parentheses*{0}}}} = \begin{pmatrix}
+				1\\
+				0\\
+				0
+			\end{pmatrix},\\
+			x^{\parentheses*{1}} &= Aq^{\parentheses*{1}} = \begin{pmatrix}
+				6 & 0 & 1\\
+				0 & 2 & -1\\
+				1 & -1 & 3
+			\end{pmatrix}\begin{pmatrix}
+				1\\
+				0\\
+				0
+			\end{pmatrix} = \begin{pmatrix}
+				6\\
+				0\\
+				1
+			\end{pmatrix},\\
+			\theta^{\parentheses*{1}} &= q^{\parentheses*{1}} \cdot x^{\parentheses*{1}} = 6,\\
+			q^{\parentheses*{2}} &= \frac{x^{\parentheses*{1}}}{\norm*{x^{\parentheses*{1}}}} = \frac{1}{\sqrt{37}}\begin{pmatrix}
+				6\\
+				0\\
+				1
+			\end{pmatrix},\\
+			x^{\parentheses*{2}} &= Aq^{\parentheses*{2}} = \frac{1}{\sqrt{37}}\begin{pmatrix}
+				6 & 0 & 1\\
+				0 & 2 & -1\\
+				1 & -1 & 3
+			\end{pmatrix}\begin{pmatrix}
+				6\\
+				0\\
+				1
+			\end{pmatrix} = \frac{1}{\sqrt{37}}\begin{pmatrix}
+				37\\
+				-1\\
+				9
+			\end{pmatrix},\\
+			\theta^{\parentheses*{2}} &= q^{\parentheses*{2}} \cdot x^{\parentheses*{2}} = \frac{231}{37}.
+		\end{align*}
+		Folglich können wir den betragsgrößten Eigenwert von \(A\) mit \(\lambda \approx \frac{231}{37}\) abschätzen.
+	\end{enumerate}		
+\end{document}
