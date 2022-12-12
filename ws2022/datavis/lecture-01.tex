@@ -1,0 +1,80 @@
+\section{Lecutre Nov 30}
+
+\subsection{Spectral clustering}
+
+Given an enumerated set of data points, the similarity matrix may be defined as a symmetric matrix \(A\), where \(A_{ij} \ge 0\) represents a measure of the similarity between data points with indices \(i\) and \(j\).
+The general approach to spectral clustering is to use a standard clustering method (there are many such methods, \(k\)-means is discussed below) on relevant eigenvectors of a Laplacian matrix of \(A\).
+There are many different ways to define a Laplacian which have different mathematical interpretations, and so the clustering will also have different interpretations.
+The eigenvectors that are relevant are the ones that correspond to smallest several eigenvalues of the Laplacian except for the smallest eigenvalue whic will have a value of \(0\).
+For computational efficiency, these eigenvectors are often computed as the eigenvectors corresponding to the largest several eigenvalues of a function of the Laplacian.
+
+Spectral clustering is well known to relate to partitioning of a mass-spring system, where each mass is associated with a data point and each spring stiffness corresponds to a weight of an edge describing a similarity of the two related data points, as in the spring system.
+Specifically, the classical reference explains that the eigenvalue problem describing transversal vibration modes of a mass-spring system is exactly the same as the eigenvalue problem for the graph Laplacian matrix defined as
+\[
+	L := D - A,
+\]
+where \(D\) is the diagonal matrix
+\[
+	D_{ii} = \sum_{j}A_{ij},
+\]
+and \(A\) is the adjacency matrix.
+
+The masses that are tightly connected by the springs in the mass-spring system evidently move together from the equilibrium position in low-frequency vibration modes, so that the components of the eigenvectors corresponding to the smallest eigenvalues of the graph Laplacian can be used for meaningful clustering of the masses.
+For example, assuming that all the springs and the masses are identical in a \(2\)-dimensional spring system, one would intuitively expect that the loosest conncted masses would move in the largest amplitude  and in the opposite direction to the rest of the masses when the system is shaken -- and this expectation will be confirmed by analyzing components of the eigenvectors of the graph Laplacian corresponding to the smallest eigenvalues, i.e., the smallest vibration frequencies. 
+
+The goal of normalization is making the diagonal entries of the Laplacian matrix to be all unit, also scaling off-diagonal entries correspondingly.
+In a weighted graph, a vertex may have a large degree because of a small number of connected edges but with large weights just as well as due to a large number of connected edges with unit weights.
+
+A popular normalized spectral clustering technique is the normalized cuts algorithm or Shi-Malik algorithm introduced by Jianbo Shi and Jitendra Malik, commonly used for image segmentation.
+It partitions points into two sets \(\parentheses*{B_1, B_2}\) based in the eigenvector \(v\) corresponding to the second-smallest eigenvalue of the symmetric normalized Laplacian defined as
+\[
+	L^{\text{norm}} := I - D^{-\frac{1}{2}}AD^{-\frac{1}{2}}.
+\]
+The vector \(v\) is also the eigenvector corresponding to the second-largest eigenvalue of the symmetrically normalized adjacency matrix \(D^{-\frac{1}{2}}AD^{-\frac{1}{2}}\).
+
+The random walk (or left) normalized Laplacian is defined as
+\[
+	L^{\text{rw}} := D^{-1}L = I - D^{-1} A
+\]
+and can also be used for spectral clustering.
+A mathematically equivalent algorithm takes the eigenvector \(u\) corresponding to the largest eigenvalue of the random walk normalized adjacency matrix \(P = D^{-1}A\).
+
+The eigenvector \(v\) of the symmetrically normalized Laplacian and the eigenvector \(u\) of the left normalized Laplacian are related by the identity \(D^{-\frac{1}{2}}v = u\).
+
+Denoting the number of the data points by \(n\), it is important to estimate the memory footprint and compute time or number of arithmetic operations (AO) performed, as a function of \(n\).
+No matter the algorithm of the spectral clustering, the two main costly items are the construction of the graph Laplacian and determining its \(k\) eigenvectors for the spectral embedding.
+The last step -- determining the labes from the \(n \times k\)-matrix of eigenvectors -- is typically the least expensive requiring only \(kn\) AO and creating just a \(n\)-vector of the labels in memory.
+
+The need to construct the graph Laplacian is common for all distance- or correlation-based clustering methods.
+Computing the eigenvectors is specific to spectral clustering only.
+
+Knowing the \(n \times k\)-matrix \(V\) of selected eigenvectors, mapping -- called spectral embedding -- of the original \(n\) data points is performed to a \(k\)-dimensional vector space using the rows of \(V\).
+Now the analysis is reduced to clustering vectors with \(k\) components, which may be done in various ways.
+
+In the simplest case \(k = 1\), the selected single eigenvector \(v\), called the Fiedler vector, corresponds to the second smallest eigenvalue.
+Using the components of \(v\), one can place all points whose components in \(v\) are positive in the set \(B_+\) and the rest in \(B_-\), thus bi-partioning the graph and labeling the data points with two labels.
+This sign-based approach follows the intuitive explanation of spectral clustering via the mass-spring model -- in the low frequency vibration mode that the Fiedler vector \(v\) represents, one cluster data points identified with mutually strongly connected masses would move together in one direction, while in the complement cluster data points identified with remaining masses would move together in the opposite direction.
+The algorithm can be used for hierarchical clustering by repeatedly partitioning the subsets in the same fashion.
+
+In the general case \(k > 1\), any vector clustering technique can be used, e.g., DBSCAN.
+
+\subsubsection{Algorithms}
+
+Basic algortihm:
+\begin{enumerate}
+	\item Calculate the Laplacian \(L\) (or the normalized Laplacian).
+	\item Calculate the first \(k\) eigenvectors (the eigenvectors corresponding to the \(k\) smallest eigenvalues of \(L\)).
+	\item Consider the matrix formed by the first \(k\) eigenvectors; the \(\ell\)-th row defines the features of graph node \(\ell\).
+	\item Cluster the graph nodes based on these features (e.g., using \(k\)-means clustering).
+\end{enumerate}
+
+
+\subsubsection{Relationship with other clustering methods}
+
+The ideas behind spectral clustering may not be immediately obvious.
+It may be useful to highlight relationships with other methods.
+In particular, it can be described in the context of kernel clustering methods, which reveals several similarities with other approaches.
+
+The weighted kernel \(k\)-means problem shares the objective function with the spectral clustering problem, which can be optimized directly by multi-level methods.
+
+In the trivial case of determining connected graph components -- the optimal clusters with no edges cut -- spectral clustering is also related to a spectral version of DBSCAN clustering that finds density-connected components.

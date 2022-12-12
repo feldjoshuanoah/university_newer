@@ -1,8 +1,8 @@
 \documentclass[english]{exercise}
 
-\include{preamble}
+\input{preamble}
 
-\title{Exercise 1}
+\title{Exercise 3}
 \author{Joshua Feld (406718)}
 \professor{Prof. Kobbelt}
 \course{Data Analysis and Visualization}
@@ -18,4 +18,63 @@
 		The horizontal histogram is called \(X\) and the vertical one \(Y\).
 		Which constraints for the EMD are violated?
 	\end{quote}
+
+	\begin{enumerate}
+		\item The capacity of \(Y\) is exceeded.
+		\item No constraints are violated.
+		\item The entries of the transport plan have to be \(\ge 0\). The capacity of \(Y\) is also exceeded.
+	\end{enumerate}
+
+
+	\section{}
+
+	\begin{quote}
+		Give an example each for the following dimensionalities of the domains and ranges of samples:
+		\begin{center}
+			\begin{tabular}{r|ccccccc}
+				\toprule
+				Domain \(d\) & \(1\) & \(2\) & \(2\) & \(2\) & \(3\) & \(3\) & \(4\)\\
+				\midrule
+				Range \(k\) & \(1\) & \(1\) & \(2\) & \(3\) & \(3\) & \(6\) & \(3\)\\
+				\bottomrule
+			\end{tabular}
+		\end{center}
+	\end{quote}
+
+	\begin{itemize}
+		\item \(d = 1, k = 1\): Sound pressure over time at a fixed location (e.g. picked up by a microphone).
+		\item \(d = 2, k = 1\): Atmospheric pressure on a 2D weather forecast map.
+		\item \(d = 2, k = 2\): Airflow velocity in a weather forecast.
+		\item \(d = 2, k = 3\): RGB image.
+		\item \(d = 3, k = 3\): Orientation of an object at a location in 3D space.
+		\item \(d = 3, k = 6\): Electromagnetic fields consisting of 3D electric and magnetic field strengths.
+		\item \(d = 4, k = 3\): Time-varying 3D flow field.
+	\end{itemize}
+
+
+	\section{}
+
+	\begin{quote}
+		Compute a 1D embedding of the following dataset using PCA.
+	\end{quote}
+
+	Due tu the symmetry of the dataset, we can see that the ais of largest variance is facing along the \(x\)-direction, while the axis of smallest variance points orthogonally to it along the \(y\)-direction.
+	To compute a 1D embedding of the data, each point can be projected on the axis of largest variance, by projecting it down onto the vector above facing in \(x\)-direction.
+	This corresponds to simply dropping the \(y\)-coordinate of each point.
+
+
+	\section{}
+
+	\begin{quote}
+		Which of the following datasets can be properly captured by a PCA analysis?
+		Explain why this is the case.
+	\end{quote}
+
+	Only the first set of samples can be adequately approximated, because the data is roughly distributed like a multi-variate Gaussian.
+	A linear subspace projection like PCA is not able to properly capture
+	\begin{itemize}
+		\item containment relations between subsets of samples in the embedding space (top-right),
+		\item datasets that live on a non-linear lower-dimensional manifold (bottom-left),
+		\item clusters of datasets that are generated from different distributions (bottom-right).
+	\end{itemize}
 \end{document}

@@ -1,0 +1,105 @@
+\documentclass{exercise}
+
+\input{preamble}
+
+\title{Hausaufgabe 8}
+\author{René Dopichay (356986) \quad Joshua Feld (406718)\\Thilo Kloos (410343) \quad Shunta Takushima (430043)}
+\professor{Prof. Torrilhon \& Dr. Speck}
+\course{Mathematische Grundlagen III}
+
+\begin{document}
+	\maketitle
+
+
+	\section{}
+
+	\begin{quote}
+		\begin{enumerate}
+			\item Gegeben sei die Funktion \(f\) wie folgt.
+			Zeigen Sie, dass \(f \not\in L^1\parentheses*{\Omega}\) aber \(f \in L^2\parentheses*{\Omega}\).
+			\[
+				f: \Omega := \parentheses*{0, \infty} \to \R, x \mapsto f\parentheses*{x} := \begin{cases}
+					1, & \text{falls }0 \le x \le 1,\\
+					x^{-\frac{2}{3}}, & \text{falls }x > 1.
+				\end{cases}
+			\]
+			\item Gegeben sei die Funktion \(g\) wie folgt.
+			Zeigen Sie dass \(g \in L^1\parentheses*{\Omega}\) aber \(g \not\in L^2\parentheses*{\Omega}\).
+			\[
+				g: \Omega := \parentheses*{0, \infty} \to \R, x \mapsto g\parentheses*{x} := \begin{cases}
+					x^{-\frac{3}{4}}, & \text{falls }0 < x \le 1,\\
+					0, & \text{falls }x > 1.
+				\end{cases}
+			\]
+			\item Benutzen Sie die Hölder-Ungleichung in der Form
+			\[
+				\norm*{fg}_1 \le \norm*{f}_p \norm*{g}_q = \norm*{f}_3 \norm*{g}_{\frac{3}{2}},
+			\]
+			um das folgende Integral abzuschätzen:
+			\[
+				\int_\Omega \frac{\exp\parentheses*{-\frac{2}{3}x}}{\sqrt[3]{\parentheses*{x + 2}^4}}\d x.
+			\]
+		\end{enumerate}
+	\end{quote}
+
+
+	\section{}
+
+	\begin{quote}
+		\begin{enumerate}
+			\item Berechnen Sie die Bogenlängen der Kurven, die durch ihre Trajektorien gegeben sind:
+			\begin{enumerate}
+				\item \(\Gamma_1 = \braces*{\parentheses*{x, y} \in \R^2 : x \in \brackets*{-1, 1}, y = a\cosh\parentheses*{\frac{x}{a}}}\) mit \(a \ne 0\),
+				\item \(\Gamma_2 = \gamma_2\parentheses*{\brackets*{0, 2\pi}}\), wobei \(\gamma_2\parentheses*{t} = \begin{pmatrix}
+					a\parentheses*{1 - \cos\parentheses*{t}}\cos\parentheses*{t}\\
+					a\parentheses*{1 - \cos\parentheses*{t}}\sin\parentheses*{t}
+				\end{pmatrix}\) mit \(a \ne 0\),
+				\item \(\Gamma_3 = \gamma_3\parentheses*{\brackets*{1, e^{2\pi}}}\), wobei \(\gamma_3\parentheses*{t} = \parentheses*{\cos\parentheses*{\ln\parentheses*{t}}, \sin\parentheses*{\ln\parentheses*{t}}, h\ln\parentheses*{t}}^\top\) mit \(h > 0\).
+			\end{enumerate}
+			\item Ist \(\Gamma_1 \cup \Gamma_2\) ein Weg?
+			\item Was ist das begleitende Dreibein von \(\Gamma_3\) bzw. \(\gamma_3\)?
+			\item Finden Sie die natürliche Parametrisierung von \(\gamma_1\) mit \(a = 1\).
+		\end{enumerate}
+	\end{quote}
+
+
+	\section{}
+
+	\begin{quote}
+		Consider the matrix \(A \in \R^{3 \times 3}\) given as follows
+		\[
+			A = \begin{pmatrix}
+				3 & 2 & 0\\
+				2 & 0 & 0\\
+				0 & 0 & 2
+			\end{pmatrix}
+		\]
+		with the following eigenvalues and their corresponding eigenvectors:
+		\[
+			\lambda_1 = -1, v_1 = \parentheses*{-1, 2, 0}^\top, \quad \lambda_2 = 2, v_2 = \parentheses*{0, 0, 1}^\top, \quad \lambda_3 = 4, v_3 = \parentheses*{2, 1, 0}^\top.
+		\]
+		\begin{enumerate}
+			\item To which eigenvalue will the vector iteration converge, when we choose the starting vector \(v^{\parentheses*{0}} = \parentheses*{1, 1, 1}^\top\)?
+			\item To which eigenvalue will the Wielandt's method converge, when we choose the starting vector \(v^{\parentheses*{0}} = \parentheses*{1, 1, 1}^\top\) and the initial guess \(\lambda = 0\)?
+			\item To which eigenvalue will the inverse vector iteration with spectral shift converge, when we choose the starting vector \(v^{\parentheses*{0}} = \parentheses*{1, 1, 1}^\top\) and the initial guess \(\lambda = 1\)?
+			Likewise, what do we expect for a different starting vector \(v^{\parentheses*{0}} = \parentheses*{1, 3, 0}^\top\)?
+			\item How do we approximate the eigenvalue \(\lambda_2\) with the help of the QR-method?
+		\end{enumerate}
+	\end{quote}
+
+
+	\section{}
+
+	\begin{quote}
+		Consider the matrix \(A\) given as follows
+		\[
+			A = \begin{pmatrix}
+				5 & 1 & 2\\
+				1 & -1 & 0\\
+				0 & 0 & 6
+			\end{pmatrix}.
+		\]
+		\item Estimate the value of the eigenvalues of matrix \(A\).
+		\item Perform one step of the QR-method to approximate the eigenvalues of the matrix \(A\).
+	\end{quote}
+\end{document}
