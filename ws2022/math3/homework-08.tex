@@ -62,6 +62,47 @@
 		\end{enumerate}
 	\end{quote}
 
+	\begin{enumerate}
+		\item
+		\begin{enumerate}
+			\item Wir können die gegebene Kurve schreiben als \(\Gamma_1 = \gamma_1\parentheses*{\brackets*{-1, 1}}\), wobei \(\gamma_1\parentheses*{x} = \begin{pmatrix}
+				x\\
+				a\cosh\parentheses*{\frac{x}{a}}
+			\end{pmatrix}\) und folglich \(\gamma_1'\parentheses*{x} = \begin{pmatrix}
+				1\\
+				\sinh\parentheses*{\frac{x}{a}}.
+			\end{pmatrix}\).
+			Damit können wir nun die Bogenlänge berechnen:
+			\begin{align*}
+				L\parentheses*{\gamma_1} &= \int_{-1}^1 \norm*{\gamma_1'\parentheses*{x}}\d x\\
+				&= \int_{-1}^1 \sqrt{1 + \sinh^2\parentheses*{\frac{x}{a}}}\d x\\
+				&= \int_{-1}^1 \cosh\parentheses*{\frac{x}{a}}\d x\\
+				&= \brackets*{a\sinh\parentheses*{\frac{x}{a}}}_{-1}^1 = 2a\sinh\parentheses*{\frac{1}{a}}.
+			\end{align*}
+			\item Die Ableitung ist \(\gamma_2'\parentheses*{t} = a\begin{pmatrix}
+				\sin\parentheses*{t}\parentheses*{2\cos\parentheses*{t} - 1}\\
+				\sin^2\parentheses*{t} + \parentheses*{1 - \cos\parentheses*{t}}\cos\parentheses*{t}.
+			\end{pmatrix}\) und es folgt
+			\begin{align*}
+				L\parentheses*{\gamma_2} &= \int_0^{2\pi}\norm*{\gamma_2'\parentheses*{t}}\d t\\
+				&= a\int_0^{2\pi}\sqrt{\parentheses*{\sin\parentheses*{t}\parentheses*{2\cos\parentheses*{t} - 1}}^2 + \parentheses*{\sin^2\parentheses*{t} + \parentheses*{1 - \cos\parentheses*{t}}\cos\parentheses*{t}}^2}\d t\\
+				&= a\int_0^{2\pi}\sqrt{\sin^2\parentheses*{t} + 1 - 2\cos\parentheses*{t} + \cos^2\parentheses*{t}}\d t\\
+				&= 2a\int_0^{2\pi}\absolute*{\sin\parentheses*{\frac{t}{2}}}\d t = 8a.
+			\end{align*}
+			\item In diesem Fall erhalten wir \(\gamma_3'\parentheses*{t} = \frac{1}{t}\begin{pmatrix}
+				-\sin\parentheses*{\ln\parentheses*{t}}\\
+				\cos\parentheses*{\ln\parentheses*{t}}\\
+				h
+			\end{pmatrix}\) und für die Bogenlänge von \(\Gamma_3\) dann
+			\begin{align*}
+				L\parentheses*{\gamma_3} &= \int_1^{e^{2\pi}}\norm*{\gamma_3'\parentheses*{t}}\d t\\
+				&= \int_1^{e^{2\pi}}\frac{1}{t}\sqrt{-\sin^2\parentheses*{\ln\parentheses*{t}} + \cos^2\parentheses*{\ln\parentheses*{t}} + h^2}\d t\\
+				&= \sqrt{1 + h^2}\int_1^{e^{2\pi}}\frac{1}{t}\d t\\
+				&= \sqrt{1 + h^2}\brackets*{\ln\parentheses*{t}}_1^{e^{2\pi}} = 2\pi\sqrt{1 + h^2}.
+			\end{align*}
+		\end{enumerate}
+	\end{enumerate}
+
 
 	\section{}
 
@@ -87,6 +128,13 @@
 		\end{enumerate}
 	\end{quote}
 
+	\begin{enumerate}
+		\item The vector iteration converges to the eigenvalue with the largest absolute value, e.g. \(\lambda_3 = 4\).
+		\item The Wielandt's method converges to the eigenvalue with the smallest absolute value, e.g. \(\lambda_1 = -1\).
+		\item The inverse vector iteration with spectral shift converges to the eigenvalue with the smallest distance to the initial guess. For the starting vector \(v = \parentheses*{1, 1, 1}^\top\) and the initial guess \(\lambda = -1\) we thus expect it to converge to the eigenvalue \(\lambda_2 = 2\). For \(v = \parentheses*{1, 3, 0}^\top\) we won't obtain the covergence to \(\lambda_2 = 2\).
+		\item The eigenvalues are on the diagonal of the iteration matrix of the QR-method.
+	\end{enumerate}
+
 
 	\section{}
 
@@ -99,7 +147,109 @@
 				0 & 0 & 6
 			\end{pmatrix}.
 		\]
-		\item Estimate the value of the eigenvalues of matrix \(A\).
-		\item Perform one step of the QR-method to approximate the eigenvalues of the matrix \(A\).
+		\begin{enumerate}
+			\item Estimate the value of the eigenvalues of matrix \(A\).
+			\item Perform one step of the QR-method to approximate the eigenvalues of the matrix \(A\).
+		\end{enumerate}
 	\end{quote}
+
+	\begin{enumerate}
+		\item Since \(A\) is not symmetric, the eigenvalues may be complex.
+		For the given matrix we get the Gerschgorin disks
+		\[
+			D_1 = \braces*{\lambda \in \C : \absolute*{\lambda - 5} < 3}, \quad D_2 = \braces*{\lambda \in \C : \absolute*{\lambda + 1} \le 1}, \quad D_3 = \braces*{\lambda \in \C : \absolute*{\lambda - 6} < 0}.
+		\]
+		For the spectrum of \(A\) we thus obtain by the Gerschgorin theorem that
+		\[
+			\sigma\parentheses*{A} \subseteq \bigcup_{i = 1}^3 D_i.
+		\]
+
+		\item We first want to calculate a QR-decomposition of the matrix \(A_0 = A\) by using the Gram-Schmidt process.
+		We denote by \(a_i\) and \(q_i\) the \(i\)-th column vector of \(A\) and the resulting matrix \(Q\). Then
+		\begin{align*}
+			a_1^\bot &= a_1 = \begin{pmatrix}
+				5\\
+				1\\
+				0
+			\end{pmatrix},\\
+			q_1 &= \frac{a_1^\bot}{\norm*{a_1^\bot}} = \frac{1}{\sqrt{26}}\begin{pmatrix}
+				5\\
+				1\\
+				0
+			\end{pmatrix},\\
+			a_2^\bot &= a_2 - \angles*{a_2, q_1}q_1 = \begin{pmatrix}
+				1\\
+				-1\\
+				0
+			\end{pmatrix} - \frac{4}{\sqrt{26}} \cdot \frac{1}{\sqrt{26}}\begin{pmatrix}
+				5\\
+				1\\
+				0
+			\end{pmatrix} = \frac{3}{13}\begin{pmatrix}
+				1\\
+				-5\\
+				0
+			\end{pmatrix},\\
+			q_2 &= \frac{a_2^\bot}{\norm*{a_2^\bot}} = \frac{1}{\sqrt{26}}\begin{pmatrix}
+				1\\
+				-5\\
+				0
+			\end{pmatrix},\\
+			a_3^\bot &= a_3 - \angles*{a_3, q_1}q_1 - \angles*{a_3, q_2}q_2 = \begin{pmatrix}
+				2\\
+				0\\
+				6
+			\end{pmatrix} - \frac{10}{\sqrt{26}} \cdot \frac{1}{\sqrt{26}}\begin{pmatrix}
+				5\\
+				1\\
+				0
+			\end{pmatrix} - \frac{2}{\sqrt{26}} \cdot \frac{1}{\sqrt{26}}\begin{pmatrix}
+				1\\
+				-5\\
+				0
+			\end{pmatrix} = \begin{pmatrix}
+				0\\
+				0\\
+				6
+			\end{pmatrix},\\
+			q_3 &= \frac{a_3^\bot}{\norm*{a_3^\bot}} = \begin{pmatrix}
+				0\\
+				0\\
+				1
+			\end{pmatrix}.
+		\end{align*}
+		The resulting QR-factorization is
+		\begin{align*}
+			A &= \begin{pmatrix}
+				\vert & \vert & \vert\\
+				q_1 & q_2 & q_3\\
+				\vert & \vert & \vert
+			\end{pmatrix}\begin{pmatrix}
+				\angles*{a_1, q_1} & \angles*{a_2, q_1} & \angles*{a_3, q_1}\\
+				0 & \angles*{a_2, q_2} & \angles*{a_3, q_2}\\
+				0 & 0 & \angles*{a_3, q_3}
+			\end{pmatrix}\\
+			&= \underbrace{\begin{pmatrix}
+				\frac{5}{\sqrt{26}} & \frac{1}{\sqrt{26}} & 0\\
+				\frac{1}{\sqrt{26}} & -\frac{5}{\sqrt{26}} & 0\\
+				0 & 0 & 1
+			\end{pmatrix}}_{=: Q}\underbrace{\begin{pmatrix}
+				\sqrt{26} & \frac{4}{\sqrt{26}} & \frac{10}{\sqrt{26}}\\
+				0 & \frac{6}{\sqrt{26}} & \frac{2}{\sqrt{26}}\\
+				0 & 0 & 6
+			\end{pmatrix}}_{=: R}.
+		\end{align*}
+		The new iteration matrix can then be calculated as follows:
+		\[
+			A_1 = RQ = \begin{pmatrix}
+				\frac{67}{13} & \frac{3}{13} & 5\sqrt{\frac{2}{13}}\\
+				\frac{3}{13} & -\frac{15}{13} & \sqrt{\frac{2}{13}}\\
+				0 & 0 & 6
+			\end{pmatrix}.
+		\]
+		The approximated eigenvalues are on the diagonal of \(A_1\):
+		\[
+			\lambda_1 \approx \frac{67}{13}, \quad \lambda_2 \approx -\frac{15}{13}, \quad \lambda_3 \approx 6.
+		\]
+	\end{enumerate}
 \end{document}
