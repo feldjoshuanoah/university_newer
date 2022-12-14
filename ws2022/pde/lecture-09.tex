@@ -1,3 +1,13 @@
+\part{Finite volume methods for hyperbolic equations}
+
+
+\section*{Scalar conservation laws}
+
+\begin{remark}
+	
+\end{remark}
+
+
 \section{Solution theory}
 
 As we have seen above, we cannot rule out the emergence of discontinuities for conservation laws. We thus need a ``weaker'' solution concept to make sense of these PDEs for discontinuous solutions.
@@ -90,3 +100,166 @@ As we have seen above, we cannot rule out the emergence of discontinuities for c
 		\item This follows analogously by using the arguments ``backwards'', which requires \(u\) to be differentiable.
 	\end{enumerate}
 \end{proof}
+
+
+\subsection{Rankine-Hugoniot condition}
+
+\begin{theorem}[Rankine-Hugoniot condition]
+	
+\end{theorem}
+
+\begin{proof}
+	
+\end{proof}
+
+\begin{remark}
+	
+\end{remark}
+
+\begin{example}[Admissible discontinuities]
+	
+\end{example}
+
+\begin{theorem}[Integral form]
+	
+\end{theorem}
+
+\begin{proof}
+	Direct, by simply integrating
+	\[
+		\int_{t_1}^{t_2}\int_a^b \parentheses*{\partial_t u + \partial_x f\parentheses*{u}}\d x\d t = 0.
+	\]
+\end{proof}
+
+\begin{remark}
+	
+\end{remark}
+
+
+\subsection{Non-uniqueness and entropy}
+
+\begin{example}[Non-unique shock solutions]
+	
+\end{example}
+
+\begin{definition}[Viscosity solution]
+	
+\end{definition}
+
+\begin{remark}
+	
+\end{remark}
+
+\begin{definition}[Entropy/entropy flux]
+	
+\end{definition}
+
+\begin{remark}
+	
+\end{remark}
+
+\begin{example}[Entropy]
+	
+\end{example}
+
+\begin{definition}[Entropy solution]
+	
+\end{definition}
+
+\begin{remark}
+	
+\end{remark}
+
+\begin{theorem}[Entropy and viscosity solutions]
+	
+\end{theorem}
+
+\begin{remark}
+	
+\end{remark}
+
+\begin{theorem}[Admissible discontinuities]
+	
+\end{theorem}
+
+\begin{example}[Entropy]
+	
+\end{example}
+
+
+\subsection{Theorem of Kruzkov}
+
+\begin{theorem}[Kruzkov]
+	
+\end{theorem}
+
+\begin{remark}
+	
+\end{remark}
+
+\begin{definition}[Total variation]
+	Let \(u \in L^\infty\parentheses*{G}\) for \(G \subset \R\) with \(\bar{G} = \brackets*{a, b}\).
+	Then
+	\begin{enumerate}
+		\item the \emph{total variation} of a function \(u\) is given by
+		\[
+			TV\parentheses*{u} := \sup_{\xi_0, \ldots, \xi_N \in \R}\braces*{\sum_{j = 1}^N \absolute*{u\parentheses*{\xi_j} - u\parentheses*{\xi_{j - 1}}} : a = \xi_0 < \cdots < \xi_N = b, N \in \N}
+		\]
+		where the supremum is over all possible finite subdivisions of \(\brackets*{a, b}\).
+		\item the function space of \emph{bounded variation} is
+		\[
+			BV\parentheses*{G} := \braces*{u \in L^\infty\parentheses*{G} : TV\parentheses*{u} < \infty},
+		\]
+		which contains all functions with bounded total variation.
+	\end{enumerate}
+\end{definition}
+
+\begin{remark}
+	\begin{enumerate}
+		\item A function \(u \in BV\) only has finitely many discontinuities or oscillations.
+		\item Another possible, equivalent, definition of the total variation is
+		\[
+			TV\parentheses*{u} := \limsup_{\varepsilon \to 0}\frac{1}{\varepsilon}\int_G \absolute*{u\parentheses*{x + \varepsilon} - u\parentheses*{x}}\d x.
+		\]
+		\item The case \(G = \R\) can be defined accordingly.
+		\item If \(u\) is differentiable, in the sense that \(u' \in L^1\parentheses*{G}\), then
+		\[
+			TV\parentheses*{u} = \int_G \absolute*{u'\parentheses*{x}}\d x.
+		\]
+		\item The concept of bounded variation functions then allows for a supplement to Kruzkov's theorem with entropy solution \(u\) with initial condition \(u_0 \in BV\parentheses*{\R}\), namely \emph{\(TV\)-stability} (or \emph{total variation boundedness}):
+		\[
+			TV\parentheses*{\left.u\parentheses*{t}\right|_{B_r\parentheses*{z}}} \le TV\parentheses*{\left.u\parentheses*{t}\right|_{B_{r + s_{\text{max}}t}\parentheses*{z}}} \quad \forall t \in \R^+,
+		\]
+		or even \(TV\parentheses*{u\parentheses*{t}} \le TV\parentheses*{u_0}\) for all \(t \in \R^+\), if the flux \(f\) is convex.
+	\end{enumerate}
+\end{remark}
+
+\begin{example}[Total variation]
+	\begin{enumerate}
+		\item Consider \(u\parentheses*{x} = \sin\parentheses*{x}\) for \(x \in \brackets*{0, 2\pi}\).
+		We choose \(\xi_0 = 0, \xi_1 = \frac{\pi}{2}, \xi_2 = \frac{3}{2}\pi, \xi_3 = 2\pi\) and compute
+		\[
+			\absolute*{\sin\parentheses*{\xi_1} - \sin\parentheses*{\xi_0}} + \absolute*{\sin\parentheses*{\xi_2} - \sin\parentheses*{\xi_1}} + \absolute*{\sin\parentheses*{\xi_3} - \sin\parentheses*{\xi_2}} = 4,
+		\]
+		which is the maximal value among any subdivision, so that \(TV\parentheses*{u} = 4\).
+		Indeed, it also holds that
+		\[
+			TV\parentheses*{u} = \int_0^{2\pi}\absolute*{u'\parentheses*{x}}\d x = \int_0^{\frac{\pi}{2}}\cos\parentheses*{x}\d x - \int_{\frac{\pi}{2}}^{\frac{3}{2}\pi}\cos\parentheses*{x}\d x + \int_{\frac{3}{2}\pi}^{2\pi}\cos\parentheses*{x}\d x = 4.
+		\]
+		\item Let \(x \in \brackets*{0, 4}\).
+		For constants \(a, b, c, d \in \R\) consider
+		\[
+			u\parentheses*{x} = \begin{cases}
+				a, & \text{if }0 \le x < 1,\\
+				b, & \text{if }1 \le x < 2,\\
+				c, & \text{if }2 \le x < 3,\\
+				d, & \text{if }3 \le x < 4.
+			\end{cases}
+		\]
+		The total variation of \(u\) is
+		\[
+			TV\parentheses*{u} = \absolute*{b - a} + \absolute*{c - b} + \absolute*{d - c},
+		\]
+		which is the sum of all jumps of \(u\) in \(\brackets*{0, 4}\).
+	\end{enumerate}
+\end{example}

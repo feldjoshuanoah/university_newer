@@ -1,0 +1,117 @@
+\section{The Riemann problem}
+
+The Riemann problem will become a building block of finite-volume methods for conservation laws.
+To introduce it, we will first need some more details on systems of conservation laws.
+We will begin by focusing on systems on the real line.
+
+
+\subsection{Hyperbolic systems}
+
+In this section we will consider systems of conservation laws on the real line, for which the unknown is a vector-valued function
+\[
+	U: \R \times \R^+ \to \R^N
+\]
+that solves the initial value problem (i.e., Cauchy problem)
+\begin{align*}
+	\partial_t U + \partial_x F\parentheses*{U} &= 0, \quad \text{in }\R \times \parentheses*{0, \infty},\\
+	U\parentheses*{\cdot, 0} &= U^{\parentheses*{0}}, \quad \text{in }\R,
+\end{align*}
+for a vector-valued flux function \(F: \R^N \to \R^N\), where \(\partial_t U\) is understood componentwise.
+We assume the system is (strictly) hyperbolic, recall that
+\[
+	\text{system is (stricly) hyperbolic} \iff \text{Jacobian }D_U F\parentheses*{U}\text{is diagonalizable with real (distinct) eigenvalues.}
+\]
+The concepts of weak solutions, Rankine-Hugoniot conditions, and entropy can be extended to the case of systems of conservation laws in a natural way.
+
+\begin{example}[Hyperbolic system]
+	The simplest case is a linear system giben by the flux function \(F\parentheses*{U} = AU\) with a constant matrix \(A \in \R^{N \times N}\).
+	Then \(D_U F\parentheses*{U} = A\) and the system reads
+	\[
+		\partial_t U + A\partial_x U = 0.
+	\]
+	Hyperbolicity then implies that the matrix \(A\) is diagonalizable with a regular transformation matrix \(T \in \R^{N \times N}\), such that
+	\[
+		TAT^{-1} = \Lambda = \diag\parentheses*{\lambda_1, \ldots, \lambda_N}
+	\]
+	where \(\lambda_1, \ldots, \lambda_N \in \R\) are eigenvalues of \(A\).
+	We can transform the solution vector \(U\parentheses*{x, t} \in \R^N\) to a new variable (sometimes called ``characteristic variable'')
+	\[
+		TU\parentheses*{x, t} =: W\parentheses*{x, t} \equiv \parentheses*{w_i\parentheses*{x, t}}_{i = 1, \ldots, N} \in \R^N
+	\]
+	for which the PDE system reads
+	\[
+		\partial_t W = T\partial_t U = -TA\partial_x U = -\Lambda T\partial_x U = -\Lambda\partial_x W \iff \partial_t W + \Lambda\partial_x W = 0.
+	\]
+	Since \(\Lambda\) is diagonal, the system decouples into \(N\) indepedent scalar equations
+	\[
+		\partial_t w_i + \lambda_i \partial_x w_i = 0, \quad i = 1, \ldots, N.
+	\]
+	That is, each component \(w_i\) is advected with advection speed \(\lambda_i\).
+	The initial condition for \(W\) is \(W^{\parentheses*{0}} = TU^{\parentheses*{0}}\), so that the solution of each component is
+	\[
+		w_i\parentheses*{x, t} = w_i^{\parentheses*{0}}\parentheses*{x - \lambda_i t}.
+	\]
+	From this the solution \(U\parentheses*{x, t}\) can be found by back-transforming \(U\parentheses*{x, t} = T^{-1}W\parentheses*{x, t}\).
+\end{example}
+
+
+\subsection{Similarity solution and Riemann problem}
+
+\begin{theorem}[Similarity solution]
+	If the intial condition satisfies
+	\[
+		U^{\parentheses*{0}}\parentheses*{x} = U^{\parentheses*{0}}\parentheses*{\alpha x}, \quad x \in \R,
+	\]
+	for all \(\alpha > 0\), then the conservation law admits a \emph{similarity} (or \emph{self-similar}) \emph{solution} that satisfies
+	\[
+		U\parentheses*{x, t} = U\parentheses*{\alpha x, \alpha t}, \quad \parentheses*{x, t} \in \R \times \R^+,
+	\]
+	for all \(\alpha > 0\).
+\end{theorem}
+
+\begin{proof}
+	Assuming that \(U\parentheses*{x, t}\) is a solution, we can simply check that \(U\parentheses*{\alpha x, \alpha x}\) is also a solution by inserting this into the conservation law and apply chain rule.
+\end{proof}
+
+\begin{remark}
+	\begin{enumerate}
+		\item A similarity solution \(U\parentheses*{x, t}\) is constant along rays from the origin in the \(\parentheses*{x, t}\)-diagram, that is, along the lines \(\frac{x}{t} = \text{const.}\) with \(t > 0\).
+		We have the representation
+		\[
+			U\parentheses*{x, t} = V\parentheses*{\frac{x}{t}} = V\parentheses*{\xi}
+		\]
+		with \(\xi = \frac{x}{t}\).
+		\item The solution is also called ``self-similar'', because it suffices to specify the solution at any time \(t > 0\) in order to know the solution at any other time.
+	\end{enumerate}
+\end{remark}
+
+Next we introduce the general Riemann problem.
+
+\begin{definition}[Riemann problem]
+	The \emph{Riemann problem} consists of the system of conservation laws
+	\[
+		\partial_t U + \partial_x F\parentheses*{U} = 0, \quad \text{in }\R \times \parentheses*{0, \infty}
+	\]
+	equipped with the discontinuous, piecewise constant initial data
+	\[
+		U^{\parentheses*{0}}\parentheses*{x} = \begin{cases}
+			U_L, & \text{if }x < 0,\\
+			U_R, & \text{if }x > 0,
+		\end{cases}
+	\]
+	for which the corresponding similarity solutions are sought.
+\end{definition}
+
+\begin{remark}
+	\begin{enumerate}
+		\item In general, the jump of the initial condition does not satisfy the Rankine-Hugoniot conditions.
+		The solution will thus be split into several waves due to the initial jump.
+		\item The solution to the Riemann problem provides helpful insight into general systems of conservation laws and will be useful for constructing numerical methods.
+	\end{enumerate}
+\end{remark}
+
+
+\subsection{Linear Riemann solution}
+
+
+\subsection{Nonlinear systems}
