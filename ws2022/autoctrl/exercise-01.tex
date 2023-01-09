@@ -1,0 +1,90 @@
+\documentclass{exercise}
+
+\input{preamble}
+
+\title{Übung 1}
+\author{Joshua Feld, 406718}
+\professor{Prof. Abel}
+\course{Regelungstechnik}
+
+\begin{document}
+	\maketitle
+
+
+	\section{}
+
+	\begin{quote}
+		Bei der skizzierten Geschwindigkeitsregelung eines Kraftfahrzeuges liefert ein Tachgenerator eine Spannung \(U_x\), die der Raddrehzahl \(N_R\) und damit der Geschwindigkeit \(V\) proportional ist.
+		In Abhängigkeit von der Regelabweichung liefert ein Regler, der proportionales Übertragungsverhalten haben soll, ein Signal \(U_y\), das auf den Öffnungswinkel \(\Theta\) der Drosselklappe wirkt.
+		Damit wird das Motormoment \(M_M\) beeinflusst, das außerdem noch von der Motordrehzahl \(N_M\) abhängt (mit steigender Motordrehzahl \(N_M\) nimmt das Motormoment \(N_M\) ab).
+
+		Zeichnen Sie einen Wirkungsplan für kleine Abweichungen on einem Arbeitspunkt.
+		Verwenden Sie als Ausgangsgröße die Abweichungsgröße \(x\) der Fahrzeuggeschwindigkeit.
+		Berücksichtigen Sie alle im Gerätebild aufgeführten Variablen.
+		Tragen Sie die Übergangsfunktionen in die Übertragungsblöcke ein.
+		Kennwerte an den Übertragungsblöcken sind nicht erforderlich.
+		\begin{center}
+			\begin{tikzpicture}
+				\filldraw[fill=red] (0,0) rectangle (5,5) node[pos=.5] {\emph{TODO}};
+ 			\end{tikzpicture}
+		\end{center}
+		Alle nicht gegebenen Massen werden vernachlässigt.
+		\begin{center}
+			\begin{tabular}{ll}
+				\(F_L\) & Luftwiderstand\\
+				\(F_R\) & Rollwiderstand\\
+				\(F_G\) & Hangantriebskraft\\
+				\(F_A\) & Antriebskraft\\
+				\(V = X\) & Fahrzeuggeschwindigkeit (\(X\): Regelgröße)\\
+				\(\Phi = Z\) & Straßenneigungswinkel (\(Z\): Störgröße)\\
+				\(G\) & Gewichtskraft\\
+				\(M\) & Fahrzeugmasse\\
+				\(W\) & Führungsgröße des Reglers\\
+				\(N_M\) & Motordrehzahl\\
+				\(M_M\) & Motormoment\\
+				\(N_R\) & Raddrehzahl\\
+				\(M_R\) & Moment an der Antriebsachse\\
+				\(U_x\) & Tachogeneratorspannung\\
+				\(U_y\) & Spannung am Reglerausgang\\
+				\(I\) & Spulenstrom\\
+				\(S_1\) & Position Schubgestänge\\
+				\(S_2\) & Position Eisenkern\\
+				\(\Theta = Y\) & Drosselklappenwinkel (\(Y\): Stellgröße)
+			\end{tabular}
+		\end{center}
+		\(M, G, F_R\) sind konstant.
+	\end{quote}
+
+	Wirkungspläne gelten für kleine Abweichungen von einem Arbeitspunkt.
+	Es werden daher lediglich Abweichungsgrößen (kleine Buchstaben) eingetragen.
+	Konstante Eingangsgrößen haben keinen Einfluss auf das zu modellierende System und tauchen deshalb nicht im Wirkungsplan auf.
+
+	Zur Darstellung von Zusammenhängen in Wirkungsplänen sind zu bestimmen:
+	\begin{enumerate}[label=\arabic*.]
+		\item Struktur: Abhängigkeit der Signale feststellen
+
+		Frage: Wovon hängt das betrachtete Signal \emph{direkt} ab?
+
+		Bsp.:
+		\begin{equation}\label{eq:1-1}
+			x = x\parentheses*{f_{\text{res}}, t}
+		\end{equation}
+		\item Vorzeichen: Wirkung tendenziell feststellen
+
+		Frage: Das Eingangssignal wird größer.
+		Wird das Ausgangssignal größer (positives Vorzeichen) oder kleiner (negatives Vorzeichen)?
+		\item Übergangsfunktion: Dynamisches Verhalten bestimmen
+
+		Frage: Wie ist der zeitliche Verlauf des Ausgangssignals, wenn sich das Eingangssignal sprungförmig ändert?
+
+		Bsp.: Die funktionale Abhängigkeit \ref{eq:1-1} wird durch die Newtonsche Bewegungsgleichung beschrieben
+		\[
+			M\dot{x} = f_{\text{res}} \iff \dot{x} = \frac{1}{M}f_{\text{res}} \iff x = \frac{1}{M}\int f_{\text{res}}\d t
+		\]
+	\end{enumerate}
+	\begin{center}
+		\begin{tikzpicture}
+			\filldraw[fill=red] (0,0) rectangle (5,5) node[pos=.5] {\emph{TODO}};
+		\end{tikzpicture}
+	\end{center}
+\end{document}

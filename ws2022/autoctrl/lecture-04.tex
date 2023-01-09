@@ -3,14 +3,71 @@
 
 \subsection{Allgemeines}
 
+Im vorangehenden Abschnitt sind wiederholt einzelne einfache Regelkreisglieder und ihre dynamischen Eigenschaften als Beispiele behandelt worden.
+Dies hatte vor allem das Ziel, die neu eingeführten Beschreibungsmittel zu erläutern.
+Im Folgenden soll eine systematische Übersicht über häufig auftretende, relativ einfach zu beschreibende Regelkreisglieder gegeben werden.
+Damit und mit den Tabellen \ref{tab:4-2} bis \ref{tab:4-4} soll besonders betont werden, dass die analytischen Ausdrücke für Differentialgleichung und Übertragungsfunktion, die Übergangsfunktion, die Pole und Nullstellen der Übetragungsfunktion, das Bode-Diagramm und die Ortskurve des Frequenzgangs prinzipiell gleichberechtigte Beschreibungsmittel sind.
+Dies bedeutet auch, dass das dynamische Verhalten ein und desselben Regelkreisgliedes durch unterschiedliche Mittel dargestellt und dass für unterschiedliche Anwendungsfälle die jeweils geeignetste Darstellungsform ausgewählt werden kann.
+
+Hier, wie auch im vorherigen Abschnitt, werden nur linear, zeitinvariante Übertragungsglieder mit einer Eingangs- und einer Ausgangsgröße behandelt, die durch lineare Differentialgleichungen mit konstanten reellen Koeffizienten, z.B. \eqref{eq:3-1} und einem damit in Reihe geschalteten Totzeitglied, z.B. \eqref{eq:3-109}, beschrieben werden können.
+Damit werden all hier behandelten Übertragungsglieder durch die allgemeine Differentialgleichung
+\begin{equation}\label{eq:4-1}
+	a_n y^{\parentheses*{n}}\parentheses*{t} + \cdots + a_1 \dot{y}\parentheses*{t} + a_0 y\parentheses*{t} = b_0 u\parentheses*{t - T_t} + b_1 \dot{u}\parentheses*{t - T_t} + \cdots + b_m u^{\parentheses*{m}}\parentheses*{t - T_t}
+\end{equation}
+oder durch den zugehörigen Frequenzgang
+\begin{equation}\label{eq:4-2}
+	G\parentheses*{j\omega} = \frac{\underline{y}}{\underline{u}} = \frac{b_0 + b_1 j\omega + \cdots + b_m \parentheses*{j\omega}^m}{a_n \parentheses*{j\omega}^n + \cdots + a_1 j\omega + a_0}e^{-j\omega T_t}
+\end{equation}
+beschrieben.
+Alle im Folgenden betrachteten und in den Tabellen \ref{tab:4-2} bis \ref{tab:4-4} dargestellten Übertragungsglieder sind Sonderformen der Gleichungen \eqref{eq:4-1} und \eqref{eq:4-2}.
+Um den Umfang der Tabellen zu begrenzen, sind nur häufig vorkommende Übertragungsglieder berücksichtigt worden.
+Die Graphiken für Übergangsfunktion, Ortskurve und Bode-Diagramm sollen den prinzipiellen Verlauf dieser Funktionen veranschaulichen.
+
 
 \subsection{Anmerkungen zu den Tabellen}
 
 
 \subsubsection{$P$, $I$, $D$}
 
+Übertragungsglieder mit proportionalem, integrierendem oder differenzierendem Verhalten sind in Abschnitt 3 behandelt worden.
+Sie sind in Regelstrecken, Mess- und Stellgeräten sowie in Reglern anzutreffen.
+Auf die Unterschiede im statischen Verhalten von \(P\)- und \(I\)-Reglern ist in Abschnitt 2 hingewiesen worden; hier ist noch zu ergänzen, dass \(D\)-Glieder als Regler im engeren Sinne nur selten eingesetzt werden.
+
 
 \subsubsection{$PI$, $PD$, $PID$}
+
+Übertragungsglieder mit \(PI\)-, \(PD\)- und \(PID\)-Verhalten treten hauptsächlich als Regler auf.
+Umgekehrt sind mit ganz wenigen Ausnahmen nahezu alle praktisch eingesetzten linearen Regler vom so genannten \(PID\)-Typ, d.h. sie lassen sich als Vereinfachungen des \(PID\)-Reglers auffassen.
+
+Das \(PD\)-Glied entsteht durch Parallelschalten eines proportional und eines differenzierend wirkenden Gliedes nach Bild \ref{fig:4-3}.
+Als \(PD\)-Regler (Proportional-Differential-Regler) eingesetzt, nutzt es beben der Regelabweichung auch noch deren Änderungsgeschwindigkeit zum Bilden der Stellgröße aus.
+Die Differentialgleichung dieser Parallelschaltung
+\begin{equation}
+	y = K_R \cdot u + K_D \cdot \dot{u}
+\end{equation}
+wird üblicherweise in der Form
+\[
+	y = K_R \parentheses*{u + T_v \cdot \dot{u}}
+\]
+geschrieben, mit der sogenannten Vorhaltzeit
+\[
+	T_v = \frac{K_D}{K_R}.
+\]
+Die Übergangsfunktion (Tabelle \ref{tab:4-2}) entsteht durch Addition der Übergangsfunktionen des \(P\)- und des \(D\)-Gliedes.
+
+Die Übertragungsfunktion des \(PD\)-Reglers
+\begin{equation}
+	G\parentheses*{s} = K_R\parentheses*{1 + sT_v}
+\end{equation}
+wird durch die Vorhaltzeit \(T_v\) und die entsprechende Nullstelle \(s_N = -\frac{1}{T_v}\) gekennzeichnet.
+Sie entspricht der inversen Übertragungsfunktion des \(PT_1\)-Gliedes.
+
+Der Frequenzgang
+\begin{equation}
+	G\parentheses*{j\omega} = K_R\parentheses*{1 + j\omega T_v}
+\end{equation}
+weist einen konstanten Realteil \(K_R\) und einen kreisfrequenzanhängigen Imaginärteil \(\omega K_R T_v\) auf, seine Ortskurve ist eine Parallele zur positiv-imaginären Achse.
+
 
 
 \subsubsection{$PT_1$, $PT_2$, $PT_n$}

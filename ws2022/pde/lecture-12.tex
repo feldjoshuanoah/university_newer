@@ -1,10 +1,163 @@
 \section{Finite volume methods}
 
+So far we have discussed numerical methods for conservation laws based on grid values, which had a finite difference character.
+Now we turn our attention to numerical schemes based on cell mean values, which will lead to finite volume methods.
+A prime application for finite volume methods is, for example, Euler's equations of gas dynamics, which is a system of conservation laws.
+Indeed, it contains the sought-after fields density \(\rho\parentheses*{x, t}\), velocity \(v\parentheses*{x, t}\), and thermodynamic pressure \(p\parentheses*{x, t}\) and the system in one spatial dimension reads
+\begin{align*}
+	\partial_t \rho + \partial_x \parentheses*{\rho v} &= 0,\\
+	\partial_t U + \partial_x F\parentheses*{U} = 0 :\iff \qquad\qquad \partial_t \parentheses*{\rho v} + \partial_x \parentheses*{\rho v^2 + p} &= 0,\\
+	\partial_t \parentheses*{\rho e + \rho\frac{v^2}{2}} + \partial_x \parentheses*{\parentheses*{\rho e + \rho\frac{v^2}{2} + p}v} &= 0.
+\end{align*}
+Here, the internal energy \(e \equiv e\parentheses*{\rho, p}\) is a function of (i.e., it is computed from) \(\rho\) and \(p\).
+The Jacobian \(D_U F\parentheses*{U}\) of the flux is diagonalizable with real eigenvalues \(\lambda_k\parentheses*{U}, k = 1, \ldots, N\), for any \(U \in \R^N, N = 3\) for \(\rho, p > 0\).
+
 
 \subsection{Conservative form}
 
+We begin with introducing the finite volume method, before studying some insightful examples.
+As we have done before, concepts and observations made for the advection equations will carry over to more general settings.
+
+\begin{definition}[Finite volume method]
+	Consider an initial value problem for \(U: \R \times \R^+ \to \R^N\)
+	\begin{align*}
+		\partial_t U + \partial_x F\parentheses*{U} &= 0, \quad \text{with }x \in \R, t > 0,\\
+		U\parentheses*{x, 0} &= U_0\parentheses*{x}, \quad \text{with }x \in \R
+	\end{align*}
+	where the flux \(F\) and the initial datum \(U_0\) are given.
+	Let the \(\parentheses*{x, t}\)-plane be discretized as before.
+	A time stepping method for \emph{cell mean values} that is of the form
+	\[
+		\bar{U}_j^{n + 1} = \bar{U}_j^n + \frac{\Delta t}{\Delta x}\parentheses*{\tilde{F}_{j - \frac{1}{2}}^n - \tilde{F}_{j + \frac{1}{2}}^n}
+	\]
+	is called \emph{finite volume method} (in conservation form); FV method for short.
+	Here, \(\tilde{F}\) is called the \emph{numerical flux}.
+\end{definition}
+
+\begin{example}
+	It turns out that all time stepping methods that we have introduced above can be written as finite volume methods.
+	For example, the upwind method for advection with \(a > 0\) can be written as a finite volume (FV) update with
+	\[
+		\tilde{F}_{j + \frac{1}{2}}^n = au_j^n,
+	\]
+	so that \(\tilde{F}_{j - \frac{1}{2}}^n = au_{j - 1}^n\) and we can indeed identify the upwind method.
+	For general nonlinear systems one can generalize this by
+	\[
+		\tilde{F}_{j + \frac{1}{2}}^n = F\parentheses*{U_j^n},
+	\]
+	but one has to change \(U_j^n \to U_{j + 1}^n\) for negative (state dependent) advection \(a < 0\).
+	Similarly, the Lax-Friedrichs can be written as FV-update with
+	\[
+		\tilde{F}_{j + \frac{1}{2}}^n = \frac{a}{2}\parentheses*{u_j^n + u_{j + 1}^n} + \frac{\Delta x}{2\Delta t}\parentheses*{u_j^n - u_{j + 1}^n},
+	\]
+	which is easily checked after inserting.
+	A possible nonlinear generalization is
+	\[
+		\tilde{F}_{j + \frac{1}{2}} n = \frac{1}{2}\parentheses*{F\parentheses*{U_j^n} + F\parentheses*{U_{j + 1}^n}} + \frac{\Delta x}{2\Delta t}\parentheses*{U_j^n - U_{j + 1}^n}.
+	\]
+	It turns out that this method is stable under the standard CFL condition, as we will see below.
+\end{example}
+
+\begin{remark}
+	\begin{enumerate}
+		\item The conservative finite-volume update follows without any approximation from the integral formulation of the conservation law.
+		Indeed, choosing the domain \(\brackets*{x_{j - \frac{1}{2}}, x_{j + \frac{1}{2}}} \times \brackets*{t_n, t_{n + 1}}\) the integral formulation states that
+		\begin{align*}
+			\int_{x_{j - \frac{1}{2}}}^{x_{j + \frac{1}{2}}}&U\parentheses*{x, t_{n + 1}}\d x - \int_{x_{j - \frac{1}{2}}}^{x_{j + \frac{1}{2}}}&U\parentheses*{x, t_n}\d x\\
+			&+ \int_{t_n}^{t_{n + 1}}F\parentheses*{U\parentheses*{x_{j + \frac{1}{2}}, t}}\d t - \int_{t_n}^{t_{n + 1}}F\parentheses*{U\parentheses*{x_{j - \frac{1}{2}}, t}}\d t = 0.
+		\end{align*}
+		We thus identify
+		\[
+			\bar{U}_j^n = \frac{1}{\Delta x}\int_{x_{j - \frac{1}{2}}}^{x_{j + \frac{1}{2}}}U\parentheses*{x, t_n}\d x \quad \text{and} \quad \tilde{F}_{j + \frac{1}{2}}^n = \frac{1}{\Delta t}\int_{t_n}^{t_{n + 1}}F\parentheses*{U\parentheses*{x_{j + \frac{1}{2}}, t}}\d t
+		\]
+		so that the FV update formula follows.
+		\begin{center}
+			\begin{tikzpicture}
+				\draw[<->] (0,4) node[right] {\(t\)} -- (0,0) -- (6,0) node[above] {\(x\)};
+				\draw (.125,1) -- (-.125,1) node[left] {\(t_n\)};
+				\draw (.125,3) -- (-.125,3) node[left] {\(t_{n + 1}\)};
+				\draw (2,.125) -- (2,-.125) node[below] {\(x_{j - \frac{1}{2}}\)};
+				\draw (3.5,.125) -- (3.5,-.125) node[below] {\(x_j\)};
+				\draw (5,.125) -- (5,-.125) node[below] {\(x_{j + \frac{1}{2}}\)};
+				\draw (2,1) rectangle (5,3);
+				\node[anchor=south] at (3.5,1) {\(\bar{U}_j^n\)};
+				\node[anchor=south] at (3.5,3) {\(\bar{U}_j^{n + 1}\)};
+				\draw[->] (1.5,2) node[left] {\(\tilde{F}_{j - \frac{1}{2}}^n\)} -- (2.5,2);
+				\draw[->] (4.5,2) -- (5.5,2) node[right] {\(\tilde{F}_{j + \frac{1}{2}}^n\)};
+			\end{tikzpicture}
+		\end{center}
+		\item The expression for the numerical flux \(\tilde{F}_{j + \frac{1}{2}}^n\) at time \(t_n\) cannot be used directly in the numerical method because it requires knowledge of the solution at location \(x_{j + \frac{1}{2}}\) in the entire time interval \(\brackets*{t_n, t_{n + 1}}\).
+		In practice we use numerical approximations for the numerical flux \(\tilde{F}_{j + \frac{1}{2}}^n\) at \(x_{j + \frac{1}{2}}\) that in general depend on ``nearby'' numerical cell mean values
+		\[
+			\bar{U}_{j - p}^n, \bar{U}_{j - p + 1}^n, \ldots, \bar{U}_{j + q}^n, \quad p, q \in \N.
+		\]
+		For example in the simplest case we use the direct neighbors so that
+		\[
+			\tilde{F}_{j + \frac{1}{2}}^n \equiv F_{j + \frac{1}{2}}^n\parentheses*{\bar{U}_j^n, \bar{U}_{j + 1}^n}.
+		\]
+		\item For equations from continuum physics FV updates automatically ensure mass, momentum, and energy conservation in the grid cells.
+		\item We recall that \(\bar{U}_{\Delta t} \equiv U_{\Delta t}\) denotes a (piecewise constant) grid function that is defined by the cell mean values \(\parentheses*{\bar{U}_j^n}_{j \in \text{grid}}\) at times \(t_n, n \ge 1\).
+		Sometimes, when the time level \(t_n\) is fixed, then we will also use the notation \(\bar{U}_{\Delta x}^n \equiv U_{\Delta x}^n := \bar{U}_{\Delta t}\parentheses*{\cdot, t_n}\) for the spatial grid function at time level \(n\).
+	\end{enumerate}
+
+	\begin{theorem}[Numerical Conservation]
+		The numerical approximation \(U_{\Delta x}^n\) (either with compact support or periodic) obtained by finite volume method satisfies
+		\[
+			\int_\R \bar{U}_{\Delta x}^n\d x = \sum_{j \in \text{grid}}\Delta x\bar{U}_j^n = \sum_{j \in \text{grid}}\Delta x\bar{U}_j^0 = \int_\R \bar{U}_{\Delta x}^0 \parentheses*{x}\d x,
+		\]
+		which means that the initial ``mass'' is conserved.
+	\end{theorem}
+
+	\begin{proof}
+		A direct computation using the FV update yields
+		\begin{align*}
+			\sum_{j \in \text{grid}}\Delta x\bar{U}_j^{n + 1} &= \sum_{j \in \text{grid}}\Delta x\parentheses*{\bar{U}_j^n + \frac{\Delta t}{\Delta x}\parentheses*{\tilde{F}_{j - \frac{1}{2}}^n - \tilde{F}_{j + \frac{1}{2}}^n}}\\
+			&= \sum_{j \in \text{grid}}\Delta x\bar{U}_j^n + \Delta t\sum_j \parentheses*{\tilde{F}_{j - \frac{1}{2}}^n - \tilde{F}_{j + \frac{1}{2}}^n}.
+		\end{align*}
+		The last term is a telescoping sum, thus
+		\[
+			\sum_{j \in \text{grid}}\parentheses*{\tilde{F}_{j - \frac{1}{2}}^n - \tilde{F}_{j + \frac{1}{2}}^n} = 0.
+		\]
+	\end{proof}
+\end{remark}
+
 
 \subsection{Theorem of Lax-Wendroff}
+
+To better understand theoretical properties of finite volume methods, we require some theoretical results.
+
+\begin{theorem}[Lax-Wendroff]
+	Consider the \(N\)-dimensional system of conservation laws \(\partial_t U + \partial_x F\parentheses*{U} = 0\). Suppose that a finite volume method is given whose numerical flux \(\tilde{F}\) is
+	\begin{enumerate}
+		\item \emph{consistent}, in the sense that
+		\[
+			\tilde{F}\parentheses*{U, \ldots, U} = F\parentheses*{U},
+		\]
+		\item Lipschitz-continuous in all arguments, that is,
+		\[
+			\norm*{\tilde{F}\parentheses*{\ldots, U, \ldots} - \tilde{F}\parentheses*{\ldots, V, \ldots}} \le L\norm*{U - V} \quad \forall U, V \in \R^N,
+		\]
+		with some \(L > 0\).
+	\end{enumerate}
+	Moreover, let the numerical solution \(\bar{U}_{\Delta x}^n\) at time \(t_n\) (either with compact support or periodic) be bounded total variation.
+	If \(\bar{U}_{\Delta x}^n\) converges in \(L^1\) to a function \(U\parentheses*{x, t_n}\) as \(\Delta x, \Delta t \to 0\), then \(U\) is a weak solution of the system of conservation laws.
+\end{theorem}
+
+\begin{proof}
+	Too technical, no time.
+\end{proof}
+
+\begin{remark}
+	\begin{enumerate}
+		\item The conservative form is crucial for the correct weak solution.
+		\item The actual convergence must be studied separately.
+		\item If a discrete entropy condition can be guaranteed, then the solution is also an entropy solution.
+	\end{enumerate}
+\end{remark}
+
+\begin{example}[Non-conservative methods]
+
+\end{example}
 
 
 \subsection{Godunov-method}

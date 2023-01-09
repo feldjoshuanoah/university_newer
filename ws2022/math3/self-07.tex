@@ -1,0 +1,108 @@
+\documentclass{exercise}
+
+\input{preamble}
+
+\title{Selbstrechenübung 7}
+\author{Joshua Feld (406718)}
+\professor{Prof. Torrilhon \& Dr. Speck}
+\course{Mathematische Grundlagen III}
+
+\begin{document}
+	\maketitle
+
+
+	\section{}
+
+	\begin{quote}
+		Sei \(\Omega \subseteq \R^n\) eine messbare Menge, d.h. \(\lambda\parentheses*{\Omega} = \int_\Omega \d\lambda < \infty\) und \(1 < q \le p < \infty\).
+		\begin{enumerate}
+			\item Zeigen Sie, dass wenn \(f \in L^p\parentheses*{\Omega}\) ist, dann ist \(\absolute*{f}^q \in L^{\frac{p}{q}}\parentheses*{\Omega}\).
+			\item Zeigen Sie, dass die Funktion \(g\parentheses*{x} = 1\) für \(x \in \Omega\) in \(L^{\frac{1}{1 - \frac{p}{q}}}\parentheses*{\Omega}\) ist.
+			\item Schließen Sie jetzt mithilfe der Ergebnisse aus a) und b), dass für \(f \in L^p\parentheses*{\Omega}\)
+			\[
+				\norm*{f}_q \le \lambda\parentheses*{\Omega}^{\frac{1}{q} - \frac{1}{p}}\norm*{f}_p
+			\]
+			ist, und folgern Sie dann \(L^p\parentheses*{\Omega} \subseteq L^q\parentheses*{\Omega}\).
+		\end{enumerate}
+	\end{quote}
+
+
+	\section{}
+
+	\begin{quote}
+		Consider the following functions on \(\Omega = \parentheses*{0, 1}\):
+		\begin{align*}
+			f: \Omega \to \R, &f\parentheses*{x} = x^{-\frac{1}{3}},\\
+			g: \Omega \to \R, &g\parentheses*{x} = e^x + \sqrt{x}.
+		\end{align*}
+		\begin{enumerate}
+			\item Give a function \(h\parentheses*{x}\), with \(h \ne f\) und \(h \simeq f\) concerning the equivalence relation
+			\[
+				f \simeq g \iff f = g\text{ a.e. on }\Omega.
+			\]
+			\item For which \(1 \le p \le \infty\) is \(f \in L^p\parentheses*{\Omega}\), for which \(p\) is \(g \in L^p\parentheses*{\Omega}\)?
+			\item For which \(p\) is \(f + g \in L^p\parentheses*{\Omega}\)?
+			\item Is \(f \cdot g \in L^1\parentheses*{\Omega}\)?
+			\item For which \(p\) is \(g' \in L^p\parentheses*{\Omega}\)?
+			\item For which \(p\) and \(g\) are \(g' \in L^p\parentheses*{\Omega}\)?
+		\end{enumerate}
+	\end{quote}
+
+
+	\section{}
+
+	\begin{quote}
+		Gegeben sei die Matrix
+		\[
+			A = \begin{pmatrix}
+				16 & 0 & 20\\
+				0 & 9 & 0\\
+				20 & 0 & 16
+			\end{pmatrix}.
+		\]
+		Die Eigenwerte von \(A\) sind \(\lambda_1 = 9\), mit dazugehörigem Eigenvektor \(\parentheses*{0, 1, 0}^\top\), \(\lambda_2 = 36\) mit dazugehörigem Eigenvektor \(\parentheses*{1, 0, 1}^\top\) und \(\lambda_3 = -4\) mit dezugehörigem Eigenvektor \(\parentheses*{1, 0, -1}^\top\).
+		\begin{enumerate}
+			\item Führen Sie einen Schritt der Vektoriteration mit dem Startvektor \(x_0\) in Richtung \(\parentheses*{1, 1, 1}^\top\) aus.
+			Was sind die ersten Näherungswerte für den Eigenwert und den Eigenvektor.
+			Zu welchem Eigenwert konvergiert die Methode?
+			\item Führen Sie einen Schritt der inversen Vektoriteration mit dem Startvektor \(x_0\) in Richtung \(\parentheses*{1, 1, 1}^\top\) und für den geschätzten Eigenwert \(\lambda = 8\) aus.
+			Was sind die ersten Näherungswerte für den Eigenwert.
+			Zu welchem Eigenwert konvergiert die Methode?
+		\end{enumerate}
+	\end{quote}
+
+
+	\section{}
+
+	\begin{quote}
+		\begin{enumerate}
+			\item Show that
+			\[
+				A = \begin{pmatrix}
+					-1 & -1 & 2\\
+					5 & 5 & -1\\
+					-1 & -1 & 2
+				\end{pmatrix}
+			\]
+			is not diagonalizable.
+			\item Apply Gershgorin's theorem directly to the matrix \(A\) to find estimates of the eigenvalues.
+			\item Note that \(A = BCB^{-1}\), with
+			\[
+				C = \begin{pmatrix}
+					3 & 1 & 0\\
+					0 & 3 & 0\\
+					0 & 0 & 0
+				\end{pmatrix}
+			\]
+			and
+			\[
+				B = \begin{pmatrix}
+					1 & 0 & 1\\
+					-2 & -1 & -1\\
+					1 & 0 & 0
+				\end{pmatrix}.
+			\]
+			Apply Gershgorin's theorem to this decomposition.
+		\end{enumerate}
+	\end{quote}
+\end{document}
