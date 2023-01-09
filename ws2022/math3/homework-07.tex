@@ -35,25 +35,24 @@
 
 	\begin{enumerate}
 		\item For any arbitrary \(n \in \N\), \(f_n\) is continuous over \(\brackets*{0, 1}\) and thus also measurable.
-		\item
+		\item With \(t = \frac{x}{n}\) the first hint helps us to find
 		\[
 			\int_0^1 \absolute*{f_n\parentheses*{x}}\d x = \int_0^1 \absolute*{\frac{n}{\sqrt{x}}\sin\parentheses*{\frac{x}{n}}} \le \int_0^1 \frac{n}{\sqrt{x}}\frac{x}{n}\d x = \int_0^1 \sqrt{x}\d x = \frac{2}{3}.
 		\]
+		Thus \(f_n \in L^1\parentheses*{\brackets*{0, 1}}\) for all \(n \in \N\).
 		\item
 		\begin{enumerate}
-			\item
+			\item Again, with \(t = \frac{x}{n}\) it follows from the second hint that
 			\[
-				\absolute*{f_n\parentheses*{x} - \sqrt{x}} = \sqrt{x}\absolute*{\frac{n}{x}\sin\parentheses*{\frac{x}{n}} - 1} \to 0.
+				\lim_{t \to 0^+}\absolute*{f_n\parentheses*{x} - \sqrt{x}} = \lim_{t \to 0^+}\sqrt{x}\absolute*{\frac{n}{x}\sin\parentheses*{\frac{x}{n}} - 1} = 0.
 			\]
-			\item
-			\[
-				\frac{n}{x}\sin\parentheses*{\frac{x}{n}} = \frac{n}{x}\parentheses*{\frac{x}{n}\sin^{\parentheses*{1}}\parentheses*{0} + \frac{1}{6}\parentheses*{\frac{x}{n}}^3 \sin^{\parentheses*{3}}\parentheses*{\xi}}, \quad \xi \in \brackets*{0, \frac{x}{n}}.
-			\]
+			\item Using a Taylor series expansion we obtain
 			\begin{align*}
 				\absolute*{f_n\parentheses*{x} - \sqrt{x}} &= \sqrt{x}\absolute*{\frac{n}{x}\sin\parentheses*{\frac{x}{n}} - 1}\\
-				&= \sqrt{x}\absolute*{\frac{n}{x}\parentheses*{\frac{x}{n}\sin^{\parentheses*{1}}\parentheses*{0} + \frac{1}{6}\parentheses*{\frac{x}{n}}^3 \sin^{\parentheses*{3}}\parentheses*{\xi}} - 1}\\
-				&\le \absolute*{\frac{1}{6n^2}}.
+				&= \sqrt{x}\absolute*{\frac{n}{x}\parentheses*{\frac{x}{n}\sin^{\parentheses*{1}}\parentheses*{0} + \frac{1}{6}\parentheses*{\frac{x}{n}}^3 \sin^{\parentheses*{3}}\parentheses*{\xi}} - 1} \quad \parentheses*{\xi \in \brackets*{0, \frac{x}{n}}}\\
+				&\le \absolute*{\frac{1}{6n^2}}
 			\end{align*}
+			and thus
 			\[
 				\lim_{n \to \infty}\sup_{x \in \brackets*{0, 1}}\absolute*{f_n\parentheses*{x} - \sqrt{x}} \le \lim_{n \to \infty}\absolute*{\frac{1}{6n^3}} = 0.
 			\]
@@ -90,9 +89,12 @@
 
 	\begin{enumerate}
 		\item
+		\item For \(g\) we have
 		\[
-			\int_1^2 g\parentheses*{x}\d x = \int_1^2 \sin^6 \parentheses*{x}\d x \le \int_1^2 \d x = 1 < \infty.
+			\int_1^2 \absolute*{g\parentheses*{x}}^p \d x = \int_1^2 \absolute*{\sin^6\parentheses*{x}}^p \d x \le \int_1^2 \d x = 1 < \infty
 		\]
+		for all \(p \ge 1\). Thus \(g \in L^p\parentheses*{\brackets*{1, 2}}\).
+		\item Using the Hölder inequality with \(f \in L^p\parentheses*{\brackets*{1, 2}}\) for \(1 \le p < 2\), and \(g \in L^p\parentheses*{\brackets*{1, 2}}\) for \(1 \le p\) provides the desired result immediately (\(\norm*{fg}_1 \le \norm*{f}_p \norm*{g}_p\)).
 		\item 
 	\end{enumerate}
 
@@ -128,7 +130,20 @@
 	\]
 	Using the given matrix \(T\) we obtain
 	\[
-		D = T^{-1}AT = \diag\parentheses*{9, 2, -5, 6} \implies \sigma\parentheses*{A} = \braces*{-5, 2, 6, 9}
+		D = T^{-1}AT = \begin{pmatrix}
+			9 & 0 & 0 & 0\\
+			0 & 2 & 0 & 0\\
+			0 & 0 & -5 & 0\\
+			0 & 0 & 0 & 6
+		\end{pmatrix} \implies \sigma\parentheses*{A} = \braces*{-5, 2, 6, 9}.
+	\]
+	For \(\mu \in \sigma\parentheses*{A}\) the theorem of Bauer-Fike in terms of the parameters \(\delta\) and \(\epsilon\) states in the \(1\)-norm
+	\[
+		\dist\parentheses*{\mu, \sigma\parentheses*{A}} = \min_{\lambda \in \sigma\parentheses*{A}}\absolute*{\mu - \lambda} \le \cond_1\parentheses*{T}\norm*{B}_1 = \norm*{T}_1 \norm*{T^{-1}}_1 = 16\parentheses*{\epsilon + \delta}
+	\]
+	and in the \(\infty\)-norm
+	\[
+		\dist\parentheses*{\mu, \sigma\parentheses*{A}} = \min_{\lambda \in \sigma\parentheses*{A}}\absolute*{\mu - \lambda} \le \cond_\infty\parentheses*{T}\norm*{B}_\infty = \norm*{T}_\infty \norm*{T^{-1}}_\infty \norm*{B}_\infty = 12\parentheses*{\epsilon + \delta}.
 	\]
 
 
@@ -150,9 +165,10 @@
 	\end{quote}
 
 	\begin{enumerate}
-		\item Da \(A\) symmetrisch ist, müssen die Eigenwerte reell sein. Für die gegebene Matrix erhalten wir die Geschgorin-Kreise
+		\item Da \(A\) symmetrisch ist, müssen die Eigenwerte reell sein.
+		Für die gegebene Matrix erhalten wir die Gerschgorin-Kreise
 		\[
-			D_1 = \braces*{\lambda \in \R : \absolute*{\lambda - 6} < 1}, \quad D_2 = \braces*{\lambda \in \R : \absolute*{\lambda - 2} < 1}, \quad D_3 = \braces*{\lambda \in \R : \absolute*{\lambda - 3} < 1}.
+			D_1 = \braces*{\lambda \in \R : \absolute*{\lambda - 6} < 1}, \quad D_2 = \braces*{\lambda \in \R : \absolute*{\lambda - 2} < 1}, \quad D_3 = \braces*{\lambda \in \R : \absolute*{\lambda - 3} < 2}.
 		\]
 		Nach dem Satz von Gerschgorin gilt für das Spektrum von \(A\) somit
 		\[

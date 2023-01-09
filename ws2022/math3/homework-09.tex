@@ -1,0 +1,75 @@
+\documentclass{exercise}
+
+\input{preamble}
+
+\title{Hausaufgabe 8}
+\author{René Dopichay (356986) \quad Joshua Feld (406718)\\Thilo Kloos (410343) \quad Shunta Takushima (430043)}
+\professor{Prof. Torrilhon \& Dr. Speck}
+\course{Mathematische Grundlagen III}
+
+\begin{document}
+	\maketitle
+
+
+	\section{}
+
+	\begin{quote}
+		
+	\end{quote}
+
+
+	\section{}
+
+	\begin{quote}
+		Calculate the total mass \(M\) of the helix \(\Gamma = \gamma\parentheses*{\brackets*{0, 2\pi}}\) with density \(\rho\) given as follows
+		\[
+			\gamma: \brackets*{0, 2\pi} \to \R^3, t \mapsto \gamma\parentheses*{t} = \parentheses*{\cos t, \sin t, ht} \quad \text{and} \quad \rho: \Gamma \to \R, \parentheses*{x, y, z} \mapsto \rho\parentheses*{x, y, z} = z.
+		\]
+	\end{quote}
+
+
+	\section{}
+
+	\begin{quote}
+		Gegeben sei das Vektorfeld \(f\) wie folgt
+		\[
+			f: \R^2 \to \R^2, \parentheses*{x, y} \mapsto f\parentheses*{x, y} = \begin{pmatrix}
+				xe^y\\
+				\sin\parentheses*{x} + y
+			\end{pmatrix},
+		\]
+		sowie die beiden Wege \(\Gamma_1\) und \(\Gamma_2\) von \(\parentheses*{0, 0}\) nach \(\parentheses*{1, 1}\):
+		\begin{center}
+			\begin{tikzpicture}
+				\draw[<->] (0,2.5) node[right] {\(y\)} -- (0,0) -- (2.5,0) node[above] {\(x\)};
+				\draw[->] (0,0) -- (2,0);
+				\draw[->] (2,0) -- (2,2);
+				\draw[dashed] (0,2) -- (2,2);
+				\draw (2,.125) -- (2,-.125) node[below] {\(1\)};
+				\draw (.125,2) -- (-.125,2) node[left] {\(1\)};
+			\end{tikzpicture}
+		\end{center}
+	\end{quote}
+
+	
+	\section{}
+
+	\begin{quote}
+		Benutzen Sie das QR-Verfahren mit Shift zur Berechnung der Eigenwerte der Matrix
+		\[
+			A = \begin{pmatrix}
+				3 & \varepsilon\\
+				\varepsilon & 1
+			\end{pmatrix}_{2 \times 2}.
+		\]
+		\begin{enumerate}
+			\item Berechnen Sie die QR-Zerlegung von \(A - \sigma_1 I := QR\) für beliebiges \(\sigma_1\).
+			\item Führen Sie nun einen Schritt von QR-Verfahren mit Shift \(\sigma_1\) durch, d.h. stellen Sie die QR-Zerlegung der Matrix \(A - \sigma_1 I := QR\) auf, und berechnen Sie die Transformierte mit Rück-Shift \(A_1 := RQ + \sigma_1 I\) für
+			\begin{enumerate}
+				\item \(\sigma_1 = 0\), d.h. ohne Shift,
+				\item \(\sigma_1 = 1\), d.h. mit Shift.
+				\item Wie ändert sich die Konvergenz der Nicht- bzw. Nebendiagonalelemente im Vergleich \(A_1\) für \(\sigma_1 = 0\) zu \(A_1\) für \(\sigma_1 = 1\) unter der Voraussetzung \(\varepsilon \ll 1\)?
+			\end{enumerate}
+		\end{enumerate}
+	\end{quote}
+\end{document}
