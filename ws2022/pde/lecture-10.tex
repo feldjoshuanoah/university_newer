@@ -157,7 +157,7 @@ We begin the study of the Riemann problem with the special case of a linear syst
 		\end{pmatrix},
 	\]
 	such that
-	\[
+	\begin{align*}
 		W^{\parentheses*{0}}\parentheses*{x} = \begin{pmatrix}
 			2\\
 			4
@@ -166,7 +166,7 @@ We begin the study of the Riemann problem with the special case of a linear syst
 			3\\
 			0
 		\end{pmatrix}, & \text{if }x > 0.
-	\]
+	\end{align*}
 	and the componentwise equations read
 	\begin{align*}
 		\partial_t w_1 - \partial_x w_1 &= 0,\\
@@ -206,7 +206,7 @@ We begin the study of the Riemann problem with the special case of a linear syst
 
 The observations from the previous example can be extended to any linear Riemann problem.
 
-\begin{theorem}[Linear Riemann solution]
+\begin{theorem}[Linear Riemann solution]\label{thm:10-7}
 	Consider a linear Riemann problem with flux \(F\parentheses*{U} = AU, A \in \R^{N \times N}\).
 	Suppose that the initial jump satisfies
 	\[

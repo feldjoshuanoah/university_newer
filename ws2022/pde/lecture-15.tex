@@ -1,10 +1,192 @@
 \section{Multi-dimensional problems}
 
+We can now generalize the concepts from one-dimensional spatial domains to the more realistic multi-dimensional case.
+
 
 \subsection{General form}
 
+Systems of hyperbolic conservation laws in multiple space dimensions \(x \in \Omega \subset \R^d\) for the unknown \(U: \Omega \times \R^+ \to \R^N\) have the form
+\[
+	\partial_t U + \partial_{x_1}F^{\parentheses*{1}}\parentheses*{U} + \cdots + \partial_{x_d}F^{\parentheses*{d}}\parentheses*{U} = 0,
+\]
+with flux functions \(F^{\parentheses*{i}}: \R^N \to \R^N, i = 1, \ldots, d\).
+Alternatively, we can simply write this as
+\[
+	\partial_t U + \div\mathcal{F}\parentheses*{U} = 0,
+\]
+with matrix-valued flux
+\[
+	\mathcal{F}: \R^N \to \R^{N \times d}, U \mapsto \mathcal{F}\parentheses*{U} = \parentheses*{F^{\parentheses*{1}}\parentheses*{U}, \ldots, F^{\parentheses*{d}}\parentheses*{U}},
+\]
+where the divergence acts on the columns.
+
+\begin{example}[Multi-dimensional equations]
+	 \begin{enumerate}
+	 	\item Consider a \emph{\(2\)-dimensional advection} in the direction \(\parentheses*{a, b} \in \R^2\).
+	 	The unknown is \(u: \R^2 \times \R^+ \to \R\) and the corresponding conservation law reads
+	 	\[
+	 		\partial_t u + a\partial_x u + b\partial_y u = 0, \quad \parentheses*{x, y} \in \R^2, t > 0, \quad u\parentheses*{x, y, 0} = u_0\parentheses*{x, y}.
+	 	\]
+	 	The exact solution is given again by dimension-wise translation/transport:
+	 	\[
+	 		u\parentheses*{x, y, t} = u_0\parentheses*{x - at, y - bt}.
+	 	\]
+	 	\item Consider now the \emph{\(2\)-dimensional Euler equations of gas dynamics} with unknown solution vector
+	 	\[
+	 		U = \parentheses*{\rho, \rho v_x, \rho v_y, E_{\text{tot}}},
+	 	\]
+	 	with density \(\rho\), velocity \(\parentheses*{v_x, v_y} \in \R^2\), and \emph{total energy}
+	 	\[
+	 		E_{\text{tot}} = \frac{1}{\gamma - 1}p + \frac{1}{2}\rho\parentheses*{v_x^2 + v_y^2}
+	 	\]
+	 	with pressure \(p\).
+	 	The flux functions in \(x\)- and \(y\)-direction are
+	 	\[
+	 		F^{\parentheses*{x}}\parentheses*{U} = F\parentheses*{U} = \begin{pmatrix}
+	 			\rho v_x\\
+	 			\rho v_x^2 + p\\
+	 			\rho v_x v_y\\
+	 			\parentheses*{E_{\text{tot}} + p}v_x
+	 		\end{pmatrix}, \quad F^{\parentheses*{y}}\parentheses*{U} = G\parentheses*{U} = \begin{pmatrix}
+	 			\rho v_x\\
+	 			\rho v_x v_y\\
+	 			\rho v_y^2 + p\\
+	 			\parentheses*{E_{\text{tot}} + p}v_y
+	 		\end{pmatrix}.
+	 	\]
+	 \end{enumerate}
+\end{example}
+
 
 \subsection{Splitting methods}
+
+A convenient approach to handle these multidimensional conservation laws is by considering each partial derivative as a separate operator.
+This then allows to take advantage of the general concept of operator splitting, which we describe next.
+Specifically, we consider a very general form of a partial differential equation
+\[
+	\partial_t u = \mathcal{A}\parentheses*{u} + \mathcal{B}\parentheses*{u},
+\]
+with ``evolution operators'' \(\mathcal{A}\) and \(\mathcal{B}\).
+
+\begin{example}
+	Practically all realistic applications have multiple operators.
+	For example:
+	\begin{enumerate}
+		\item multi-dimensional conservation laws, for example for \(d = 2\)
+		\[
+			\partial_t U + \partial_x F\parentheses*{U} + \partial_y G\parentheses*{U} = 0,
+		\]
+		where the operators are
+		\[
+			\mathcal{A}\parentheses*{u} = -\partial_x F\parentheses*{u}, \quad \mathcal{B}\parentheses*{u} = -\partial_y G\parentheses*{u}.
+		\]
+		\item \emph{relaxational balance laws} with some algebraic right-hand side \(P\parentheses*{U}\)
+		\[
+			\partial_t U + \partial_x F\parentheses*{U} = P\parentheses*{U},
+		\]
+		where the operators are
+		\[
+			\mathcal{A}\parentheses*{u} = -\partial_x F\parentheses*{u}, \quad \mathcal{B}\parentheses*{u} = P\parentheses*{u}.
+		\]
+		The simplest example for this case is an advection equation with decay
+		\[
+			\partial_t u + a\partial_x u = -\beta u.
+		\]
+		When equipped with an initial condition \(u_0: \R \to \R\), the exact solution is
+		\[
+			u\parentheses*{x, t} = u_0\parentheses*{x - at}e^{-\beta t}.
+		\]
+	\end{enumerate}
+\end{example}
+
+\begin{theorem}[Splitting methods]
+	Let \(\mathcal{A}\) and \(\mathcal{B}\) be linear operators.
+	A splitting method considers the two evolution equations
+	\begin{equation}\label{eq:15-1}
+		\partial_t v = \mathcal{A}\parentheses*{v}
+	\end{equation}
+	and
+	\begin{equation}\label{eq:15-2}
+		\partial_t v = \mathcal{B}\parentheses*{v}
+	\end{equation}
+	separately.
+	Let \(u\parentheses*{t}\) be the solution at time \(t\) of the full equation \(\partial_t u = \mathcal{A}\parentheses*{u} + \mathcal{B}\parentheses*{u}\).
+	Then the following two splitting variants are common:
+	\begin{enumerate}
+		\item \emph{Gudunov splitting}: \(u\parentheses*{t} \xrightarrow{\eqref{eq:15-1}\text{ with }\Delta t}u^*\parentheses*{t} \xrightarrow{\eqref{eq:15-2}\text{ with }\Delta t} \tilde{u}\parentheses*{t + \Delta t}\).
+
+		The local error satisfies
+		\[
+			\norm*{u\parentheses*{t + \Delta t} - \tilde{u}\parentheses*{t + \Delta t}} = \mathcal{O}\parentheses*{\Delta t^2}.
+		\]
+		\item \emph{Strang splitting}: \(u\parentheses*{t} \xrightarrow{\eqref{eq:15-1}\text{ with }\frac{\Delta t}{2}}u^*\parentheses*{t} \xrightarrow{\eqref{eq:15-2}\text{ with }\Delta t} u^{**}\parentheses*{t} \xrightarrow{\eqref{eq:15-1}\text{ with }\frac{\Delta t}{2}} \tilde{u}\parentheses*{t + \Delta t}\).
+
+		The local error satisfies
+		\[
+			\norm*{u\parentheses*{t + \Delta t} - \tilde{u}\parentheses*{t + \Delta t}} = \mathcal{O}\parentheses*{\Delta t^3}.
+		\]
+	\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+	Consider a Taylor expansion of the exact solution to the full equation
+	\[
+		u\parentheses*{t + \Delta t} = u\parentheses*{t} + \Delta t\partial_t u + \frac{\Delta t^2}{2}\partial_{tt}u + \cdots = \sum_{p = 0}^\infty \frac{\Delta t^p}{p!}\partial_t^p u\parentheses*{t}.
+	\]
+	As \(\mathcal{A}\) and \(\mathcal{B}\) are linear operators we have \(\partial_t u = \parentheses*{\mathcal{A} + \mathcal{B}}u\) and \(\partial_t^p u = \parentheses*{\mathcal{A} + \mathcal{B}}^p u\), and thus
+	\[
+		u\parentheses*{t + \Delta t} = \sum_{p = 0}^\infty \frac{\Delta t^p}{p!}\parentheses*{\mathcal{A} + \mathcal{B}}^p u\parentheses*{t}.
+	\]
+	For the soluitons \(\hat{u}\) and \(\hat{\hat{u}}\) to sub-problems \eqref{eq:15-1} and \eqref{eq:15-2}, respectively, we find
+	\[
+		\hat{u}\parentheses*{t + \Delta t} = \sum_{p = 0}^\infty \frac{\Delta t^p}{p!}\mathcal{A}^p \hat{u}\parentheses*{t} \quad \text{and} \quad \hat{\hat{u}}\parentheses*{t + \Delta t} = \sum_{p = 0}^\infty \frac{\Delta t^p}{p!}\mathcal{B}^p \hat{\hat{u}}\parentheses*{t},
+	\]
+	analogously.
+	The Godunov splitting method (i) first maps \(u\parentheses*{t}\) via \eqref{eq:15-1} to
+	\[
+		u^*\parentheses*{t} = \sum_{p = 0}^\infty \frac{\Delta t^p}{p!}\mathcal{A}^p u\parentheses*{t}
+	\]
+	and then this via \eqref{eq:15-2} to
+	\[
+		\tilde{u}\parentheses*{t + \Delta t} := \sum_{q = 0}^\infty \frac{\Delta t^q}{q!}\mathcal{B}^q u^*\parentheses*{t} = \sum_{q = 0}^\infty \frac{\Delta t^q}{q!}\mathcal{B}^q \sum_{p = 0}^\infty \frac{\Delta t^p}{p!}\mathcal{A}^p u\parentheses*{t} = \sum_{q = 0}^\infty \sum_{p = 0}^\infty \frac{\Delta t^q}{q!}\frac{\Delta t^p}{p!}\mathcal{A}^p \mathcal{B}^q u\parentheses*{t}.
+	\]
+	Comparison with the exact solution gives
+	\[
+		u\parentheses*{t + \Delta t} - \tilde{u}\parentheses*{t + \Delta t} = \frac{\Delta t^2}{2}\parentheses*{\mathcal{A}\mathcal{B} - \mathcal{B}\mathcal{A}}u\parentheses*{t} + \mathcal{O}\parentheses*{\Delta t^3},
+	\]
+	where the factor does not vanish since the operators do not commute.
+	The error for Strang splitting method (ii) follows analogously.
+\end{proof}
+
+\begin{remark}
+	\begin{enumerate}
+		\item Typically, the sub-problems \eqref{eq:15-1} and \eqref{eq:15-2} will not be solved exactly, but also with some numerical approximation.
+		That is, the splitting method adds an additional error to the usual discretization errors.
+		\item After \(n = \frac{T}{\Delta t}\) time steps the local errors add up to \(\mathcal{O}\parentheses*{\Delta t}\) for Gudonov splitting and \(\mathcal{O}\parentheses*{\Delta t^2}\) for Strang.
+		\item Very often the splitting error turns out to be small.
+	\end{enumerate}
+\end{remark}
+
+\begin{example}[Commuting vs. non-commuting operators]
+	Consider the relaxational balance law for \(u\parentheses*{x, t}\)
+	\[
+		\partial_t u + a\partial_x u = -\beta\parentheses*{x}u,
+	\]
+	with \(a \in \R\) and the linear operators
+	\[
+		\mathcal{A}\parentheses*{u} = -a\partial_x u \quad \text{and} \quad \mathcal{B}\parentheses*{u} = -\beta u.
+	\]
+	If the function \(\beta: \R \to \R\) is constant, we can easily compute the error constant of the Godunov splitting and find
+	\[
+		\parentheses*{\mathcal{A}\mathcal{B} - \mathcal{B}\mathcal{A}}u = -a\partial_x \parentheses*{-\beta u} - \parentheses*{-\beta}\parentheses*{-a\partial_x u} = 0,
+	\]
+	so that we have no \(\mathcal{O}\parentheses*{\Delta t^2}\) splitting error and the overall local error is actually \(\mathcal{O}\parentheses*{\Delta t^3}\).
+	However, for a non-constant \(\beta\parentheses*{x}\) we find
+	\[
+		\parentheses*{\mathcal{A}\mathcal{B} - \mathcal{B}\mathcal{A}}u = -a\partial_x \parentheses*{-\beta\parentheses*{x} u} - \parentheses*{-\beta\parentheses*{x}}\parentheses*{-a\partial_x u} = a\beta'\parentheses*{x}u \ne 0,
+	\]
+	hence there will be an \(\mathcal{O}\parentheses*{\Delta t^2}\) splitting error.
+\end{example}
 
 
 \subsection{Multi-dimensional advection}

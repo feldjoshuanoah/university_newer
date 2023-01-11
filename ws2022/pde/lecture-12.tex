@@ -156,11 +156,235 @@ To better understand theoretical properties of finite volume methods, we require
 \end{remark}
 
 \begin{example}[Non-conservative methods]
-
+	Consider the Burgers' equation with flux \(f\parentheses*{u} = \frac{1}{2}u^2\).
+	For a smooth solution \(u\), we have two equivalent formulations
+	\[
+		\partial_t u + \partial_x \parentheses*{\frac{1}{2}u^2} = 0 \iff \partial_t u + u\partial_x u = 0,
+	\]
+	so that we can consider two separate numerical methods for Burgers' equation.
+	Specifically, for the latter formulation we use the upwind scheme with (state dependent) velocity \(u_i^n\) instead of \(a\):
+	\begin{equation}\label{eq:12-1}
+		u_j^{n + 1} = u_j^n + \frac{u_j^n \Delta t}{\Delta x}\parentheses*{u_{j - 1}^n - u_j^n},
+	\end{equation}
+	with the convention that \(u_j^n \equiv \bar{u}_j^n\) for cell mean values.
+	For the first formulation we use an FV update with the upwind flux \(\tilde{F}_{j + \frac{1}{2}}^n\parentheses*{u_j^n, u_{j + 1}^n} = f\parentheses*{u_j^n}\) assuming \(u > 0\):
+	\begin{equation}\label{eq:12-2}
+		u_j^{n + 1} = u_j^n + \frac{\Delta t}{\Delta x}\parentheses*{\frac{1}{2}u_{j - 1}^2 - \frac{1}{2}\parentheses*{u_j^n}^2},
+	\end{equation}
+	using the same notational convention.
+	Note that \eqref{eq:12-1} cannot be written in conservative form, whereas \eqref{eq:12-2} is in conservative form by construction.
+	In fact, \eqref{eq:12-1} produces a wrong solution for shock waves.
 \end{example}
 
 
 \subsection{Godunov-method}
 
+Upwinding provides minimal diffusion for the advection equation.
+But for nonlinear systems upwinding is difficult, because of varying waves with multiple positive/negative speeds (``state dependent advection'').
+One idea to remedy this is based on the observation that the Riemann problem provides means to study the evolutuion of piecewise constant initial data, such as grid functions.
 
-\subsection{Approximate Riemann-solver}
+\begin{definition}[Godunov method]
+	Let \(\bar{U}_{\Delta t}\) be the piecewise constant grid function obtained from the cell mean values \(\bar{U}_j^n, j \in \text{grid}\), at times \(t_n, n \ge 0\).
+	Furthermore, let \(\parentheses*{x, t} \mapsto U^*\parentheses*{x, t; \bar{U}_j^n, \bar{U}_{j + 1}^n}\) be the solution of the local Riemann problem at the cell interface \(x_{j + \frac{1}{2}}\).
+	The finite volume Godunov flux is defined by
+	\[
+		\tilde{F}_{j + \frac{1}{2}}^n = \frac{1}{\Delta t}\int_{t_n}^{t_{n + 1}}F\parentheses*{U^*\parentheses*{x_{j + \frac{1}{2}}, t; \bar{U}_j^n, \bar{U}_{j + 1}^n}}\d t
+	\]
+	and the corresponding finite volume update is called \emph{Godunov method}.
+\end{definition}
+
+\begin{remark}
+	\begin{enumerate}
+		\item The Godunov flux follows from the definition of the integral form and replaces the exact solution by the solution of the local Riemann problem at each cell interface.
+		\item At every time step the positions of the waces of the local Riemann problems look like this:
+		\begin{center}
+			\begin{tikzpicture}
+				\filldraw[fill=red] (0,0) rectangle (5,5) node[pos=.5] {\emph{TODO}};
+			\end{tikzpicture}
+		\end{center}
+		Within the time interval \(\brackets*{t_n, t_{n + 1}}\) the waves may interact with one cell \(\brackets*{x_{j - \frac{1}{2}}, x_{j + \frac{1}{2}}}\), but should not reach the neighboring interface.
+		This gives a time step constraint.
+		If \(\lambda_p^{\parentheses*{j, n}} = \lambda_p\parentheses*{\bar{U}_j^n}, p = 1, \ldots, N\) denote the \emph{local} eigenvalues (i.e., characteristic speeds) of the flux Jacobian \(D_U F\) for the cell mean value \(\bar{U}_j^n\) in cell \(\brackets*{x_{j - \frac{1}{2}}, x_{j + \frac{1}{2}}}\), then for each cell the fastest wave should not reach the end of its cell:
+		\[
+			\max_{p = 1, \ldots, N}\absolute*{\lambda_p^{\parentheses*{j, n}}}\Delta t \le \Delta x.
+		\]
+		The fastest speed in the entire grid is \(\lambda^{\text{max}, \parentheses*{n}} := \max_{j \in \text{grid}}\parentheses*{\max_{p = 1, \ldots, N}\absolute*{\lambda_p^{\parentheses*{j, n}}}}\) and the global constraint thus reads
+		\[
+			\frac{\lambda^{\text{max}, \parentheses*{n}}\Delta t}{\Delta x} \le 1,
+		\]
+		which is analogous to the CFL condition.
+		\item We have seen that the solution of the Riemann problem is constant along rays form the origin (\(\frac{x}{t} = \text{const.}\)), in particular, along \(x = 0\), which can be viewed as corresponding to the cell interface \(x_{j + \frac{1}{2}}\).
+		Let \(U_L := \bar{U}_j^n\) and \(U_R := \bar{U}_{j + 1}^n\).
+		Then we find
+		\[
+			U^*\parentheses*{U_L, U_R} := U^*\parentheses*{x_{j + \frac{1}{2}}, t; U_L, U_R} = \text{const.}
+		\]
+		and we obtain the \emph{Gondunov flux} in this case as
+		\[
+			\tilde{F}_{j + \frac{1}{2}}^n\parentheses*{U_L, U_R} = \frac{1}{\Delta t}\int_{t_n}^{t_{n + 1}}F\parentheses*{U^*\parentheses*{U_L, U_R}}\d t = F\parentheses*{U^*\parentheses*{U_L, U_R}}.
+		\]
+		However, this representation might be computationally expensive for nonlinear equations, since one has to find \(U^*\).
+	\end{enumerate}
+\end{remark}
+
+\begin{example}[Godunov flux for linear systems]
+	Let's consider a linear system with \(F\parentheses*{U} = AU\) where \(A \in \R^{N \times N}\) with eigenvalues \(\lambda_p\) and eigenvectors \(r_p, p = 1, \ldots, N\).
+	For the Riemann problem with an initial condition given by a jump from \(U_L\) to \(U_R\) at the interface \(x_{j + \frac{1}{2}}\), we know from Theorem \ref{thm:10-7} that if the initial jump is decomposed as
+	\[
+		U_R - U_L = \sum_{p = 1}^N \alpha_p r_p,
+	\]
+	based on the jump sizes \(\alpha_p \in \R\), then the solution to the Riemann problem reads
+	\[
+		U^*\parentheses*{x, t; U_L, U_R} = U_L + \sum_{\lambda_p < \frac{x - x_{j + \frac{1}{2}}}{t}}\alpha_p r_p = U_R - \sum_{\lambda_p > \frac{x - x_{j + \frac{1}{2}}}{t}}\alpha_p r_p,
+	\]
+	which needs to be evaluated at \(x = x_{j + \frac{1}{2}}\) for the numerical flux.
+	Hence the first expression gives
+	\begin{align*}
+		\tilde{F}_{j + \frac{1}{2}}\parentheses*{U_L, U_R} &= F\parentheses*{U^*\parentheses*{x_{j + \frac{1}{2}}, t; U_L, U_R}}\\
+		&= AU_L + \sum_{\lambda_p < 0}\alpha_p Ar_p\\
+		&= AU_L + \sum_{\lambda_p < 0}\alpha_p \lambda_p r_p,
+	\end{align*}
+	while the second yields
+	\[
+		\tilde{F}_{j + \frac{1}{2}}\parentheses*{U_L, U_R} = AU_R - \sum_{\lambda_p > 0}\alpha_p \lambda_p r_p
+	\]
+	accordingly.
+	Next, we introduce \(\parentheses*{\lambda_p}^- := \min\parentheses*{\lambda_p, 0}\) as well as \(\parentheses*{\lambda_p}^+ := \max\parentheses*{\lambda_p, 0}\), and, using the matrix decomposition \(A = T^{-1}\Lambda T\) with \(\Lambda = \diag\parentheses*{\lambda_1, \ldots, \lambda_N}\), the matrices
+	\[
+		A^\pm = T^{-1}\Lambda^\pm T, \quad \text{where} \quad \Lambda^\pm = \diag\parentheses*{\parentheses*{\lambda_1}^\pm, \ldots, \parentheses*{\lambda_N}^\pm}.
+	\]
+	Then we find
+	\[
+		\tilde{F}_{j + \frac{1}{2}}\parentheses*{U_L, U_R} = AU_L + \sum_{p = 1}^N \alpha_p \parentheses*{\lambda_p}^- r_p = AU_L + A^- \parentheses*{U_R - U_L}
+	\]
+	and analogously
+	\[
+		\tilde{F}_{j + \frac{1}{2}}\parentheses*{U_L, U_R} = AU_R - A^+ \parentheses*{U_R - U_L}.
+	\]
+	Consequently, we obtain
+	\[
+		\tilde{F}_{j + \frac{1}{2}}\parentheses*{U_L, U_R} = \frac{1}{2}A\parentheses*{U_R + U_L} - \frac{1}{2}\absolute*{A}\parentheses*{U_R - U_L},
+	\]
+	where we have used the matrix modulus:
+	\[
+		\absolute*{A} = A^+ - A^- = T^{-1}\absolute*{\Lambda}T, \quad \absolute*{\Lambda} = \diag\parentheses*{\absolute*{\lambda_1}, \ldots, \absolute*{\lambda_N}}.
+	\]
+	The complete FV update therefore reads
+	\begin{align*}
+		\bar{U}_j^{n + 1} &= \bar{U}_j^n + \frac{\Delta t}{\Delta x}\parentheses*{\tilde{F}_{j - \frac{1}{2}}^n - \tilde{F}_{j + \frac{1}{2}}^n}\\
+		&= \bar{U}_j^n + \frac{\Delta t}{\Delta x}A^+ \parentheses*{\bar{U}_{j - 1}^n - \bar{U}_j^n} + \frac{\Delta t}{\Delta x}A^- \parentheses*{\bar{U}_j^n - \bar{U}_{j + 1}^n},
+	\end{align*}
+	which is upwinding separately for the left- and right-moving waves.
+	Alternatively, the update can be written as
+	\[
+		\bar{U}_j^{n + 1} = \bar{U}_j^n + \frac{\Delta t}{2\Delta x}A\parentheses*{\bar{U}_{j - 1}^n - \bar{U}_{j + 1}^n} + \frac{\Delta t}{2\Delta x}\absolute*{A}\parentheses*{\bar{U}_{j - 1}^n - 2\bar{U}_j^n + \bar{U}_{j + 1}^n},
+	\]
+	which resembles Lax-Wendroff, but with different diffusion.
+\end{example}
+
+
+\subsection{Approximate Riemann solver}
+
+Unless the conservation law is linear, solving the local Riemann problems at each interface can be very costly in practice.
+It thus seems desirable to use an approximation.
+
+\begin{definition}[Approximate Riemann solver]\label{def:12-11}
+	An \emph{approximate Riemann solver} considers a simplified flux function \(\hat{F}^{\parentheses*{j + \frac{1}{2}}}: \R^N \to \R^N\) at each grid cell interface \(x_{j + \frac{1}{2}}\) and solves the local Riemann problems for the equations
+	\[
+		\partial_t U + \partial_x \hat{F}^{\parentheses*{j + \frac{1}{2}}}\parentheses*{U} = 0
+	\]
+	instead.
+	The final numerical flux for the FV-update can then be chosen as one of the following
+	\begin{enumerate}
+		\item \(\tilde{F}_{j + \frac{1}{2}}\parentheses*{U_L, U_R} = \hat{F}^{\parentheses*{j + \frac{1}{2}}}\parentheses*{\hat{U}^*\parentheses*{U_L, U_R}} - \hat{F}^{\parentheses*{j + \frac{1}{2}}}\parentheses*{U_L} + F\parentheses*{U_L}\),
+		\item \(\tilde{F}_{j + \frac{1}{2}}\parentheses*{U_L, U_R} = \hat{F}^{\parentheses*{j + \frac{1}{2}}}\parentheses*{\hat{U}^*\parentheses*{U_L, U_R}} - \hat{F}^{\parentheses*{j + \frac{1}{2}}}\parentheses*{U_R} + F\parentheses*{U_R}\),
+		\item \(\tilde{F}_{j + \frac{1}{2}}\parentheses*{U_L, U_R} = F\parentheses*{\hat{U}^*\parentheses*{U_L, U_R}}\),
+	\end{enumerate}
+	where \(\hat{U}^* \equiv \hat{U}_{j + \frac{1}{2}}^*\) is the \emph{approximate Riemann solution} at cell interface \(x_{j + \frac{1}{2}}\).
+\end{definition}
+
+\begin{remark}
+	\begin{enumerate}
+		\item All these numerical fluxes are consistent, in the sense that \(\tilde{F}\parentheses*{U, U} = F\parentheses*{U}\), and also Lipschitz-continuous.
+		\item The versions (i) and (ii) are often simpler, because the Riemann solution is only used in the approximate flux function.
+		But they may not yield the same result.
+	\end{enumerate}
+\end{remark}
+
+A natural question now is, how to select a simplified flux?
+
+\begin{definition}[Linear approximate Riemann solver]
+	A \emph{linear approximate Riemann solver} for the flux function \(F\parentheses*{U}\) at cell interface \(x_{j + \frac{1}{2}}\) is given by
+	\[
+		\hat{F}^{\parentheses*{j + \frac{1}{2}}}\parentheses*{U} = \hat{A}\parentheses*{U_L, U_R}U
+	\]
+	with a suitable matrix function \(\hat{A}: \R^N \times \R^N \to \R^{N \times N}\), if
+	\begin{enumerate}
+		\item the matrix \(\hat{A}\parentheses*{U_L, U_R}\) is diagonalizable with real eigenvalues, for all relevant \(U_L, U_R \in \R^N\), and
+		\item the matrix \(\hat{A}\parentheses*{U, U}\) is a ``reasonable'' approximation to the Jacobian \(D_U F\parentheses*{U}\).
+	\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Roe-solver]
+	If we choose the matrix \(\hat{A}\) such that
+	\[
+		\hat{A}\parentheses*{U_L, U_R}\parentheses*{U_R - U_L} = F\parentheses*{U_R} - F\parentheses*{U_L}
+	\]
+	at the cell interface \(x_{j + \frac{1}{2}}\), then the matrix is called \emph{Roe-matrix} and the numerical fluxes (i), (ii), (iii) given in Definition \ref{def:12-11} are identical to
+	\[
+		\tilde{F}_{j + \frac{1}{2}}\parentheses*{U_L, U_R} = F\parentheses*{U_L} + \hat{A}\parentheses*{U_L, U_R}^- \parentheses*{U_R - U_L} = F\parentheses*{U_R} - \hat{A}\parentheses*{U_L, U_R}^+ \parentheses*{U_R - U_L}.
+	\]
+\end{theorem}
+
+\begin{proof}
+	The identity of the fluxes (i), (ii), (iii) follows from
+	\begin{align*}
+		\tilde{F}\parentheses*{U_L, U_R} &= \hat{F}^{\parentheses*{j + \frac{1}{2}}}\parentheses*{\hat{U}^*} - \hat{F}^{\parentheses*{j + \frac{1}{2}}}\parentheses*{U_L} + F\parentheses*{U_L}\\
+		&= \hat{A}\parentheses*{\hat{U}^* - U_L} + F\parentheses*{U_L}\\
+		&= F\parentheses*{\hat{U}^*} - F\parentheses*{U_L} + F\parentheses*{U_L}\\
+		&= F\parentheses*{\hat{U}^*}
+	\end{align*}
+	using the Roe-matrix property, and reversing the argument
+	\begin{align*}
+		\tilde{F}\parentheses*{U_L, U_R} &= F\parentheses*{\hat{U}^*} - F\parentheses*{U_R} + F\parentheses*{U_R}\\
+		&= \hat{F}^{\parentheses*{j + \frac{1}{2}}}\parentheses*{\hat{U}^*} - \hat{F}^{\parentheses*{j + \frac{1}{2}}}\parentheses*{U_R} + F\parentheses*{U_R}.
+	\end{align*}
+	Furthermore, the flux
+	\[
+		\hat{F}^{\parentheses*{j + \frac{1}{2}}}\parentheses*{\hat{U}^*} = \hat{A}\hat{U}^*
+	\]
+	is nothing but the linear Godunov flux from the example above.
+\end{proof}
+
+\begin{remark}
+	\begin{enumerate}
+		\item A Roe-matrix must be constructed for a concrete system of conservation laws separately.
+		Typically, it has the form
+		\[
+			\hat{A}\parentheses*{U_L, U_R} = D_U F\parentheses*{U^{\parentheses*{\text{avg}}}\parentheses*{U_L, U_R}}
+		\]
+		for some \emph{average state} \(U^{\parentheses*{avg}}\).
+		\item The Roe solver remains expensive, because at every interface the matrix \(\hat{A}\) must be build (i.e., assembled) and its complete Eisner system computed.
+	\end{enumerate}
+\end{remark}
+
+\begin{example}[Local Lax-Friedrichs flux]
+	It also makes sense to consider the averaged numerical flux
+	\[
+		\tilde{F}_{j + \frac{1}{2}}\parentheses*{U_L, U_R} = \frac{1}{2}\parentheses*{F\parentheses*{U_L} + F\parentheses*{U_R}} - \frac{1}{2}\absolute*{\hat{A}}\parentheses*{U_R - U_L},
+	\]
+	where
+	\[
+		\absolute*{\hat{A}}\parentheses*{U_R - U_L} = \sum_{p = 1}^N \alpha_p \absolute*{\hat{\lambda}_p}\hat{r}_p, \quad \text{with} \quad \sum_{p = 1}^N \alpha_p \hat{r}_p = U_R - U_L.
+	\]
+	This can be further simplified by using the maximal eigenvalue
+	\[
+		\sum_{p = 1}^N \alpha_p \absolute*{\hat{\lambda}_p}\hat{r}_p \approx \lambda^\text{max} \sum_{p = 1}^N \alpha_p \hat{r}_p = \lambda^\text{max} \parentheses*{U_R - U_L},
+	\]
+	which then yields the numerical flux
+	\[
+		\tilde{F}_{j + \frac{1}{2}}\parentheses*{U_L, U_R} = \frac{1}{2}\parentheses*{F\parentheses*{U_L}, F\parentheses*{U_R}} - \frac{1}{2}\lambda^\text{max} \parentheses*{U_R - U_L}.
+	\]
+	This flux is called \emph{local Lax-Friedrichs flux}.
+	The maximal speed \(\lambda^\text{max}\) has to be estimated from the local Jacobian \(D_U F\parentheses*{U}\) between \(U_L\) and \(U_R\).
+\end{example}
