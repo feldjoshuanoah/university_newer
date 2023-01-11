@@ -191,5 +191,191 @@ with ``evolution operators'' \(\mathcal{A}\) and \(\mathcal{B}\).
 
 \subsection{Multi-dimensional advection}
 
+Based on these operator splitting concepts, below we list several basic ideas to discretize the \(2\)-dimensional advection equation
+\[
+	\partial_t u + a\partial_x u + b\partial_y u = 0, \quad \parentheses*{x, y} \in \R^2, t > 0, \quad u\parentheses*{x, y, 0} = u_0\parentheses*{x, y},
+\]
+with \(a, b > 0\).
+We consider a simple Cartesian grid in \(\R^2\) with grid sizes \(\Delta x\) and \(\Delta y\), grid points \(\parentheses*{x_i, y_i}\), and discretized point values
+\[
+	u_{i, j}^n = u\parentheses*{x_i, y_j, t_n}.
+\]
+Based on what we have seen for conservation laws in one spatial variable, the following approaches appear natural:
+\begin{enumerate}
+	\item We could use the upwind discretization for each derivative, that is, separately for each coordinate:
+	\[
+		u_{i, j}^{n + 1} = u_{i,j}^n + \frac{a\Delta t}{\Delta x}\parentheses*{u_{i - 1, j}^n - u_{i, j}^n} + \frac{b\Delta t}{\Delta y}\parentheses*{u_{i, j - 1}^n - u_{i, j}^n}.
+	\]
+	This approach is sometimes called \emph{additive splitting}.
+	\item Alternatively, we can use upwind in a standard Godunov timestep splitting method (\emph{multiplicative splitting}).
+	That is,
+	\[
+		u_{i, j}^* = u_{i, j}^n + \frac{a\Delta t}{\Delta x}\parentheses*{u_{i - 1, j}^n - u_{i, j}^n}, \quad u_{i, j}^{n + 1} = u_{i, j}^* + \frac{b\Delta t}{\Delta y}\parentheses*{u_{i, j - 1}^* - u_{i, j}^*},
+	\]
+	which eventually gives
+	\begin{align*}
+		u_{i, j}^{n + 1} = &u_{i, j} + \frac{a\Delta t}{\Delta x}\parentheses*{u_{i - 1, j}^n - u_{i, j}^n} + \frac{b\Delta t}{\Delta y}\parentheses*{u_{i, j - 1}^n - u_{i, j}^n}\\
+		&+ \frac{ab\Delta t^2}{\Delta x\Delta y}\parentheses*{u_{i - 1, j - 1}^n - u_{i, j - 1}^n - u_{i - 1, j}^n + u_{i, j}^n}.
+	\end{align*}
+	\item Using the Lax-Wendroff approach, which is based on the solution's Taylor expansion
+	\[
+		u\parentheses*{x, y, t + \Delta t} = u\parentheses*{x, y, t} + \Delta t\partial_t u + \frac{1}{2}\Delta t^2 \partial_{tt}u + \mathcal{O}\parentheses*{\Delta t^3},
+	\]
+	we replace the time derivatives with spatial derivatives using the relations
+	\[
+		\partial_t u = -a\partial_x u - b\partial_y u, \quad \partial_{tt}u = -a\partial_x \parentheses*{\partial_t u} - b\partial_y \parentheses*{\partial_t u} = a^2 \partial_{xx}u + b\partial_{yy}u + 2ab\partial_{xy}u.
+	\]
+	Using central finite difference approximations for all derivatives we obtain
+	\begin{align*}
+		u_{i, j}^{n + 1} = &u_{i, j}^n + \frac{a\Delta t}{2\Delta x}\parentheses*{u_{i - 1, j}^n - u_{i + 1, j}^n} + \frac{b\Delta t}{2\Delta y}\parentheses*{u_{i, j - 1}^n - u_{i, j + 1}^n}\\
+		&+ \frac{a^2 \Delta t^2}{2\Delta x^2}\parentheses*{u_{i - 1, j}^n - 2u_{i, j}^n + u_{i + 1, j}^n} + \frac{b^2 \Delta t^2}{2\Delta y^2}\parentheses*{u_{i, j - 1}^n - 2u_{i, j}^n - u_{i, j + 1}^n}\\
+		&+ \frac{ab\Delta t^2}{4\Delta x\Delta y}\parentheses*{u_{i - 1, j - 1}^n - u_{i, j - 1}^n - u_{i - 1, j}^n + u_{i, j}^n}.
+	\end{align*}
+	This is almost like two super-imposed 1D-LW, but includes one cross derivative.
+	\item Similar to the Godunov method, the \emph{corner transport} method considers the exact evolution of the piecewise constant grid function in 2D.
+	\begin{center}
+		\begin{tikzpicture}
+			\filldraw[fill=red] (0,0) rectangle (5,5) node[pos=.5] {\emph{TODO}};
+		\end{tikzpicture}
+	\end{center}
+	For the advection equation, the exact solution is \(\tilde{u}\parentheses*{x, y, t_n + \Delta t} = u_{\Delta x, \Delta y}^n\parentheses*{x - a\Delta t, y - b\Delta t}\), which we integrate to obtain new cell mean values
+	\begin{align*}
+		u_{i, j}^{n + 1} = &\frac{1}{\Delta x\Delta y}\int_{x_{i - \frac{1}{2}}}^{x_{i + \frac{1}{2}}}\int_{y_{j - \frac{1}{2}}}^{y_{j + \frac{1}{2}}}u_{\Delta x, \Delta y}^n\parentheses*{x - a\Delta t, y - b\Delta t}\d y\d x\\
+		= &u_{i, j}^n + \frac{a\Delta t}{2\Delta x}\parentheses*{u_{i - 1, j}^n - u_{i + 1, j}^n} + \frac{b\Delta t}{2\Delta y}\parentheses*{u_{i, j - 1}^n - u_{i, j + 1}^n}\\
+		&+ \frac{ab\Delta t^2}{\Delta x\Delta y}\parentheses*{u_{i - 1, j - 1}^n - u_{i, j - 1}^n - u_{i - 1, j}^n + u_{i, j}^n}.
+	\end{align*}
+	This is the same as upwind and splitting, because the operators commute.
+\end{enumerate}
+We summarize basic properties of these numerical schemes below.
+
+\begin{theorem}[Two-dimensional advection]
+	For \(2\)-dimensional advection with \(a, b > 0\) the following consistency orders and linear stability conditions hold:
+	\begin{enumerate}
+		\item \emph{pure upwind}: order \(p = 1\), and \(0 \le \nu_x + \nu_y \le 1\),
+		\item \emph{upwind splitting} and \emph{corner transport}: order \(p = 1\), and \(0 \le \max\parentheses*{\nu_x, \nu_y} \le 1\),
+		\item \emph{2D Lax-Wendroff}: order \(p = 2\), and \(\nu_x^2 + \nu_y^2 \le 1\),
+	\end{enumerate}
+	with Courant numbers \(\nu_x + \frac{a\Delta t}{\Delta x}\) and \(\nu_y = \frac{b\Delta t}{\Delta y}\), respectively.
+\end{theorem}
+
+\begin{proof}[Idea of Proof]
+	Consistency can be checked, as usual, based on Taylor expansions.
+	For the stability one uses the von-Neumann approach, in 2D, that is the representation \(u_{i, j}^n = \sum_{k = 1}^N \sum_{\ell = 1}^N \hat{u}_{k, \ell}^n e^{i\parentheses*{k\pi x_i + \ell\pi y_i}}\).
+\end{proof}
+
+\begin{remark}
+	\begin{enumerate}
+		\item The stability conditions can be visualized in a \(\parentheses*{\nu_x, \nu_y}\)-plot.
+		\begin{center}
+			\begin{tikzpicture}
+				\filldraw[fill=red] (0,0) rectangle (5,5) node[pos=.5] {\emph{TODO}};
+			\end{tikzpicture}
+		\end{center}
+		\item The Lax-Wendroff (LW) method also allows \(a, b < 0\), but if upwinding is implemented by respecting the advection direction in 1D (see earlier sections), then upwind with Godunov splitting has the best stability condition
+		\[
+			\max\parentheses*{\absolute*{\nu_x}, \absolute*{\nu_y}} \le 1.
+		\]
+	\end{enumerate}
+\end{remark}
+
 
 \subsection{General FV-methods in 2D}
+
+Let \(\mathcal{T}\) be a regular grid that covers \(\Omega \in \R^d\), based in cells or \emph{finite volumes} \(\braces*{K_i}_{i = 1, \ldots, n}\), that are triangles, quadrilaterals, or general polygons in 2D; similarly tetrahedrons, hexagons, etc. in 3D.
+We consider as numerical discretization the cell mean value
+\[
+	\bar{U}_{K_i}\parentheses*{t} := \frac{1}{\absolute*{K_i}}\int_{K_i}U\parentheses*{x, t}\d x,
+\]
+using \(\absolute*{K_i}\) to denote the finite volume's ``measure'' or size (i.e., its area in 2D, its volume in 3D, etc.).
+Integrating the conservation law
+\[
+	\partial_t U + \div\mathcal{F}\parentheses*{U} = 0
+\]
+over each finite volume \(K_i\) and dividing by \(\absolute*{K_i}\), we obtain the integral formulations
+\[
+	\frac{\d}{\d t}\bar{U}_{K_i} = -\frac{1}{\absolute*{K_i}}\int_{K_i}\div\mathcal{F}\parentheses*{U}\d x = -\frac{1}{\absolute*{K_i}}\int_{\partial K_i}\mathcal{F}\parentheses*{U}\bm{n}\d s \equiv -\frac{1}{\absolute*{K_i}}\int_{\partial K_i}F_{\bm{n}}\parentheses*{U}\d s,
+\]
+based on the flux through the boundary \(K_i\) with normal vector \(\bm{n} \in \R^d\).
+Here \(F_{\bm{n}}: \R^N \to \R^N\) denotes the \emph{quasi-1D flux function} given by
+\[
+	F_{\bm{n}}\parentheses*{U} := \mathcal{F}\parentheses*{U}\bm{n} = \sum_{j = 1}^d n_j F^{\parentheses*{j}}\parentheses*{U}.
+\]
+In particular, for two spatial dimensions (i.e., \(d = 2\)) it is common to approximate the flux integral by a sum over the cell edges using a midpoint quadrature
+\[
+	\frac{1}{\absolute*{K_i}}\int_{\partial K_i}F_{\bm{n}}\parentheses*{U}\d s \approx \frac{1}{\absolute*{K_i}}\sum_{j\text{ edges}}\norm*{\bm{e}_j}\left.F_{\bm{n}_j}\parentheses*{U}\right|_{\text{midpoint of }\bm{e}_j},
+\]
+where \(\bm{n}_j\) is the normal edge \(\bm{e}_j\) of the finite volume \(K_i\).
+\begin{center}
+	\begin{tikzpicture}
+		\filldraw[fill=red] (0,0) rectangle (5,5) node[pos=.5] {\emph{TODO}};
+	\end{tikzpicture}
+\end{center}
+
+\begin{definition}[Semi-discrete, two-dimensional FVM]
+	For the time-dependent cell mean values \(\bar{U}_{K_i}\parentheses*{t}\) on cells \(\braces*{K_i}_{i = 1, \ldots, N}\), the \emph{first order semi-discretization} of a system of conservation laws is given by
+	\[
+		\frac{\d}{\d t}\bar{U}_{K_i}\parentheses*{t} = -\sum_{j\text{ edges}}\frac{\norm*{\bm{e}_j}}{\absolute*{K_i}}\tilde{F}_{\bm{n}_j}\parentheses*{\bar{U}_{K_i}\parentheses*{t}, \bar{U}_{\tilde{K}^{\parentheses*{j}}}\parentheses*{t}},
+	\]
+	which is based on a consistent numerical flux \(\tilde{F}_{\bm{n}_j}\) for the projected, quasi-1D flux \(F_{\bm{n}_j}\) in the direction of \(\bm{n}_j\) for each edge \(\bm{e}_j\) of cell \(K_i\).
+	Moreover, the consistent numerical flux depends on the cell mean value of cell \(K_i\) and on the cell mean value of the neighboring cell \(\tilde{K}^{\parentheses*{j}}\) across the edge \(\bm{e}_j\).
+\end{definition}
+
+\begin{remark}
+	\begin{enumerate}
+		\item The numerical flux function is constructed essentially as for a one-dimensional Riemann problem consisting of the two adjacent cell mean values.
+		\begin{center}
+			\begin{tikzpicture}
+				\filldraw[fill=red] (0,0) rectangle (5,5) node[pos=.5] {\emph{TODO}};
+			\end{tikzpicture}
+		\end{center}
+		\item To increase the spatial accuracy the solution in each cell can be reconstructed, for example, as a linear function using the neighboring values.
+		A multi-dimensional generalization of the min-mod limiter would, for example, select the reconstruction with the smallest absolute slope.
+	\end{enumerate}
+\end{remark}
+
+\begin{example}[Cartesian FV in 2D]
+	Consider the uniform rectangles with cell center at \(\parentheses*{x_i, y_i}\) size \(\Delta x \times \Delta y\).
+	Obviously, \(\absolute*{K} = \Delta x\Delta y\) and each cell as four edges
+	\[
+		\bm{e}_1 = \begin{pmatrix}
+			0\\
+			\Delta y
+		\end{pmatrix}, \quad \bm{e}_2 = \begin{pmatrix}
+			-\Delta x\\
+			0
+		\end{pmatrix}, \quad \bm{e}_3 = \begin{pmatrix}
+			0\\
+			-\Delta y
+		\end{pmatrix}, \quad \bm{e}_4 = \begin{pmatrix}
+			\Delta x\\
+			0
+		\end{pmatrix}
+	\]
+	with corresponding normal vectors
+	\[
+		\bm{n}_1 = \begin{pmatrix}
+			1\\
+			0
+		\end{pmatrix}, \quad \bm{n}_2 = \begin{pmatrix}
+			0\\
+			1
+		\end{pmatrix}, \quad \bm{n}_3 = \begin{pmatrix}
+			-1\\
+			0
+		\end{pmatrix}, \quad \bm{n}_4 = \begin{pmatrix}
+			0\\
+			-1
+		\end{pmatrix}.
+	\]
+	We write for the cell mean value
+	\[
+		\bar{U}_K = \bar{U}_{i, j}
+	\]
+	and the evaluation of the above method gives
+	\begin{align*}
+		\frac{\d}{\d t}\bar{U}_{i, j} &= -\left(\frac{\Delta y}{\Delta x\Delta y}\tilde{F}\parentheses*{\bar{U}_{i, j}, \bar{U}_{i + 1, j}} + \frac{\Delta x}{\Delta x\Delta y}\tilde{G}\parentheses*{\bar{U}_{i, j}, \bar{U}_{i, j + 1}}\right.\\
+		&\qquad\quad \left.-\frac{\Delta y}{\Delta x\Delta y}\tilde{F}\parentheses*{\bar{U}_{i, j}, \bar{U}_{i - 1, j}} - \frac{\Delta x}{\Delta x\Delta y}\tilde{G}\parentheses*{\bar{U}_{i, j}, \bar{U}_{i, j - 1}}\right)\\
+		&= -\frac{1}{\Delta x}\parentheses*{\tilde{F}_{i + \frac{1}{2}, j} - \tilde{F}_{i - \frac{1}{2}, j}} - \frac{1}{\Delta y}\parentheses*{\tilde{G}_{i + \frac{1}{2}, j} - \tilde{G}_{i - \frac{1}{2}, j}}.
+	\end{align*}
+	Notice that this corresponds to one-dimensional methods applied to each coordinate.
+\end{example}
