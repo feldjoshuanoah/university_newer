@@ -1,0 +1,137 @@
+\documentclass[english]{exercise}
+
+\input{preamble}
+
+\title{Exercise 6}
+\author{Joshua Feld (406718)}
+\professor{Prof. Kobbelt}
+\course{Data Analysis and Visualization}
+
+\begin{document}
+	\maketitle
+
+
+	\section{}
+
+	\begin{quote}
+		Assume the scene consists of a set of triangles.
+		\begin{enumerate}
+			\item Why can't we order these triangles such that closer triangles come before triangles further away?
+			\item The \(z\)-buffer can be described as a map. What are domain and image of this map?
+			\item Can the \(z\)-buffer-method deal with transparent objects? Explain your reasoning.
+		\end{enumerate}
+	\end{quote}
+
+	\begin{enumerate}
+		\item Possible conterexample: three triangles \(t_1, t_2, t_3\), such that \(t_1\) lies partly before \(t_2\) and partly behind \(t_3\).
+		Similarly, \(t_2\) lies partly before \(t_3\).
+		\item The \(z\)-buffer assigns each pixel a depth value.
+		if the screen has width \(W \in \N\) and height \(H \in \N\), the domain is \(\brackets*{1, W} \times \brackets*{1, H}\).
+		The depth values are always positive and possible inifinte, so \(\R^+ \cup \braces*{\infty}\) is an appropriate range.
+		With further knowledge about the concrete image discretization, the range could be further restricted.
+		\item No.
+		To properly render transparent objects, we need to know the order of the objects.
+		Since the \(z\)-buffer-method iterates in a random order over the triangles, we don't obtain this ordering.
+	\end{enumerate}
+
+
+	\section{}
+
+	\begin{quote}
+		Let \(A := \parentheses*{0, 0}\), \(B := \parentheses*{6, 0}\), and \(C := \parentheses*{0, 4}\) be points in the plane.
+		We denote the coefficients of the barycentric combination \(\alpha A + \beta B + \gamma C\) as the row \(\parentheses*{\alpha, \beta, \gamma}\).
+		\begin{enumerate}
+			\item Compute and plot the points associated to these coefficients:
+			\begin{align*}
+				&\parentheses*{\frac{1}{3}, \frac{1}{3}, \frac{1}{3}}, && \parentheses*{0, \frac{1}{2}, \frac{1}{2}}, && \parentheses*{\frac{2}{3}, \frac{1}{3}, 0}, && \parentheses*{\frac{5}{6}, \frac{1}{6}, 0}, && \parentheses*{\frac{11}{12}, \frac{1}{12}, 0},\\
+				&\parentheses*{\frac{1}{2}, \frac{1}{4}, \frac{1}{4}}, && \parentheses*{-1, 1, 1}, && \parentheses*{1, 1, -1}, && \parentheses*{1, -1, 1}, && \parentheses*{3, -1, -1}.
+			\end{align*}
+			\item Compute the barycentric coefficients for any point \(\parentheses*{x, y}\).
+			\item How can we compute barycentric coefficients of \(P\) for arbitrary points \(A\), \(B\), and \(C\)?
+			Is this always possible?
+			Argu both algebraically and geometrically.
+		\end{enumerate}
+	\end{quote}
+
+	\begin{enumerate}
+		\item Drawing gives:
+		\begin{center}
+		    \begin{tikzpicture}
+		        \filldraw[fill=white!80!black,draw=black] (0,0) rectangle (8,4.5) node[pos=.5] {Platzhalter};
+		    \end{tikzpicture}
+		\end{center}
+		\item In extended coordinates, we obtain the linear system of equations
+		\[
+			\begin{pmatrix}
+				x\\
+				y\\
+				1
+			\end{pmatrix} = \alpha\begin{pmatrix}
+				0\\
+				0\\
+				1
+			\end{pmatrix} + \beta\begin{pmatrix}
+				6\\
+				0\\
+				1
+			\end{pmatrix} + \gamma\begin{pmatrix}
+				0\\
+				4\\
+				1
+			\end{pmatrix},
+		\]
+		which gives \(\alpha = 1 - \beta - \gamma\), \(\beta 0 \frac{x}{6}\), and \(\gamma = \frac{y}{4}\).
+		\item In general, we can choose \(A\) to be the coordinate origin.
+		Then, we need to write \(\vec{AP}\) as a linear combination \(\beta\vec{AB} + \gamma\vec{AC}\).
+		This is always possible if and only if \(\vec{AB}\) and \(\vec{AC}\) are linear independent, i. e. exactly if \(\parentheses*{A, B, C}\) forms a non-degenerate triangle.
+	\end{enumerate}
+
+
+	\section{}
+
+	\begin{quote}
+		The color from a light source can be represented by a map \(\lambda: \R^+ \to \R^+\), assigning each wavelength an intensity.
+		\begin{enumerate}
+			\item Are there colours that cannot be described by a single wavelength?
+			\item How is the map \(\lambda\) modified when the light reflects from an object?
+			\item The eye contains three cones \(s, m, l\) responding to wavelengths.
+			Each can be described by a map \(\R^+ \to \R^+\).
+			What is a plausible way to obtain the aggregated activation of each cone?
+			(Hint: The result should lie in \(\R\).)
+			\item Which considerations for choosing colors are supported by https://colorbrewer2.org?
+			Are there other important considerations?
+		\end{enumerate}
+	\end{quote}
+
+	\begin{enumerate}
+		\item Yes, each combination of wavelengths is perceived as a colour again.
+		Examples are grayscales and shades of magenta (mix of red and violet).
+		\item The object has a reflectance function (dependent on light and viewer directions) \(\rho: \R^+ \to \brackets*{0, 1}\), assigning each wavelength the proportion of reflected light.
+		The reflected light is represented by
+		\[
+			\lambda\rho: \R^+ \to \R^+, w \mapsto \lambda\parentheses*{w}\rho\parentheses*{w}.
+		\]
+		\item We need to combine the individual wavelength responses.
+		This is done via integration:
+		\[
+			\int_{\R^+}\lambda\parentheses*{w}s\parentheses*{w}\d w.
+		\]
+		With the three cones, the signal \(\lambda\) is transformed into a tuple of three real numbers.
+		\item The website offers the following choices:
+		\begin{itemize}
+			\item How many colors?
+			\item What type of data should be represented? (homogeneous scale, emphasising midrange and extreme values, purely qualitative)
+			\item Only variations of a single color?
+			\item Safe for red-green color blindness?
+			\item Can it be printed?
+			\item Can it be copied?
+		\end{itemize}
+		Further considerations could be:
+		\begin{itemize}
+			\item Which feeling do they provoke?
+			\item Are they distracting?
+			\item Is there a risk of optical illusions?
+			\item Should colors be used at all?
+		\end{itemize}
+	\end{enumerate}
+\end{document}

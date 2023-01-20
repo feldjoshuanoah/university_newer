@@ -1,0 +1,141 @@
+\documentclass[english]{exercise}
+
+\input{preamble}
+
+\title{Hausaufgabe 11}
+\author{René Dopichay (356986) \quad Joshua Feld (406718)\\Thilo Kloos (410343) \quad Shunta Takushima (430043)}
+\professor{Prof. Torrilhon \& Dr. Speck}
+\course{Mathematische Grundlagen III}
+
+\begin{document}
+	\maketitle
+
+
+	\section{}
+
+	\begin{quote}
+		Verify Gauss' theorem for the region \(R\) bounded by the paraboloid \(P\) and the plane \(Z\)
+		\[
+			P = \braces*{\parentheses*{x, y, z} \in \R^3 : z = x^2 + y^2} \quad \text{and} \quad Z = \braces*{\parentheses*{x, y, z} \in \R^3 : z = 1}
+		\]
+		where the vector field \(F\) is given as follows
+		\[
+			F: \R^3 \to \R^3, \parentheses*{x, y, z} \mapsto F\parentheses*{x, y, z} := \parentheses*{xz, yz, 3z^2}^\top.
+		\]
+	\end{quote}
+
+	The region \(R\) bounded by the paraboloid \(P\) and plane \(Z\) can be described in cylindrical coordinates as
+	\[
+		0 \le r \le 1, \quad 0 \le \theta \le 2\pi, \quad r^2 \le z \le 1.
+	\]
+	To verify Gauss' theorem we need to show that
+	\[
+		\iiint_R \parentheses*{\nabla \cdot F}\d\lambda_3 = \iint_{\partial R}F \cdot \d\sigma.
+	\]
+	We first compute the integral on the left-hand side.
+	Because we transferred from cartesian to cylindrical coordinates, we need use \(\d x\d y\d z = r\d z\d\theta\d r\), with which we obtain
+	\begin{align*}
+		\iiint_R \parentheses*{\nabla \cdot F}\d\lambda_3 &= \int_0^1 \int_0^{2\pi}\int_{r^2}^1 \parentheses*{\frac{\partial F_x\parentheses*{x, y, z}}{\partial x} + \frac{\partial F_y\parentheses*{x, y, z}}{\partial y} + \frac{\partial F_z\parentheses*{x, y, z}}{\partial z}}r\d z\d\theta\d r\\
+		&= \int_0^1 \int_0^{2\pi}\int_{r^2}^1 8zr\d z\d\theta\d r\\
+		&= \int_0^1 \int_0^{2\pi}4r\parentheses*{1 - r^4}\d\theta\d r\\
+		&= \int_0^1 8\pi r\parentheses*{1 - r^4}\d r\\
+		&= \brackets*{4\pi r^2 \parentheses*{1 - \frac{1}{3}r^4}}_0^1 = \frac{8\pi}{3}.
+	\end{align*}
+	For the second integral we need to parametrize the disk and the paraboloid, of which the boundary \(\partial R\) is composed.
+	We get
+	\begin{align*}
+		\Phi_Z\parentheses*{r, \theta} &= \parentheses*{r\cos\theta, r\sin\theta, 1}, \quad \nu_Z = \parentheses*{0, 0, 1}^\top,\\
+		\Phi_P\parentheses*{r, \theta} &= \parentheses*{r\cos\theta, r\sin\theta, r^2}, \quad \nu_P = \parentheses*{2r^2 \cos\theta, 2r^2 \sin\theta, -r}^\top,
+	\end{align*}
+	with \(0 \le r \le 1, 0 \le \theta \le 2\pi\).
+	Plugging this in yields
+	\begin{align*}
+		\iint_{\partial R}F \cdot \d\sigma &= \int_0^1 \int_0^{2\pi}\begin{pmatrix}
+			0\\
+			0\\
+			3
+		\end{pmatrix} \cdot \begin{pmatrix}
+			0\\
+			0\\
+			1
+		\end{pmatrix}r\d\theta\d r + \int_0^1 \begin{pmatrix}
+			r^3 \cos\theta\\
+			r^3 \sin\theta\\
+			3r^4
+		\end{pmatrix} \cdot \begin{pmatrix}
+			2r^2 \cos\theta\\
+			2r^2 \sin\theta\\
+			-r
+		\end{pmatrix}\d\theta\d r\\
+		&= \int_0^1 \int_0^{2\pi}3r\d\theta\d r + \int_0^1 \int_0^{2\pi}\parentheses*{2r^5 \cos^2\parentheses*{\theta} + 2r^5 \sin^2\parentheses*{\theta} - 3r^5}\d\theta\d r\\
+		&= 
+ 	\end{align*}
+
+
+
+	\section{}
+
+	\begin{quote}
+		Prove the first and the second Green's identity by proceeding the following tasks
+		\begin{enumerate}
+			\item First, for \(V \subseteq \R^3, \phi \in C^1\parentheses*{V} f \in C^1\parentheses*{V; \R^3}\) prove the identity
+			\[
+				\div\parentheses*{\phi f} = \angles*{\nabla\phi, f} + \phi\div f.
+			\]
+			Then, deduce that for \(M \subset V\), we have that
+			\[
+				\int_M \phi\div f\d x = \int_{\partial M}\phi f \cdot \nu\d\sigma - \int_M \angles*{\nabla\phi, f}\d x.
+			\]
+			\item Now, by means of a) show that for \(\phi \in C^1\parentheses*{V}, \psi \in C^2\parentheses*{V}, M \subset V\), it holds that
+			\[
+				\int_M \phi\Delta\psi\d x = \int_{\partial M}\phi\frac{\partial\psi}{\partial\nu}\d\sigma - \int_M \angles*{\nabla\phi, \nabla\psi}\d x.
+			\]
+			The above is called the first Green's identity.
+			\item Hence, infer from b) that for \(\phi \in C^2\parentheses*{V}, \psi \in C^2\parentheses*{V}, M \subset V\), it holds that
+			\[
+				\int_M \parentheses*{\phi\Delta\psi - \psi\Delta\phi}\d x = \int_{\partial M}\parentheses*{\phi\frac{\partial\psi}{\partial\nu} - \psi\frac{\partial\phi}{\partial\nu}}\d\sigma.
+			\]
+			The above is called the second Green's identity.
+		\end{enumerate}
+	\end{quote}
+
+
+	\section{}
+
+	\begin{quote}
+		We will show that the standard Newton method for optimization
+		\begin{equation}\label{eq:3-1}
+			x^{\parentheses*{k + 1}} = x^{\parentheses*{k}} + \alpha_k d^{\parentheses*{k}}, \quad d^{\parentheses*{k}} = -\parentheses*{\nabla^2 f\parentheses*{x^{\parentheses*{k}}}}^{-1}\nabla f\parentheses*{x^{\parentheses*{k}}}
+		\end{equation}
+		will not converge for all starting points \(x^{\parentheses*{0}}\).
+		Let \(f: \R \to \R, x \mapsto \sqrt{1 + x^2}\) be given.
+		\begin{enumerate}
+			\item Derive the sets of all starting points, for which the method \eqref{eq:3-1} with \(\alpha_k = 1\) converges.
+			\item Set \(\alpha_k = \frac{1}{2}\) and perform three steps of the algorithm with starting point \(x^{\parentheses*{0}} = -\frac{3}{2}\).
+			\item Interpret the results of a) and b).
+		\end{enumerate}
+	\end{quote}
+
+
+	\section{}
+
+	Consider
+	\[
+		f: \R^2 \to \R, \parentheses*{x, y} \mapsto f\parentheses*{x, y} := x^2 + xy + y^2.
+	\]
+	\begin{enumerate}
+		\item Perform an approximate line search with the backtracking algorithm, which is a stepsize control algorithm with Armijo condition
+		\begin{align*}
+			\text{(i)} \quad & \text{Input} && x^{\parentheses*{k}}, \alpha_{\text{max}} > 0, \beta \in \parentheses*{0, 1}\\
+			\text{(ii)} \quad & \text{Initialize} && \alpha_k = \alpha_{\text{max}}\\
+			\text{(iii)} \quad & \text{While} && \text{(Armijo cond. for }\alpha_k\text{ not fulfilled)}\\
+			& \text{(iii.1)} \quad \text{Decrease step size} && \alpha_k \gets \beta\alpha_k\\
+			\text{(iv)} \quad & \text{Return} && \alpha_k
+		\end{align*}
+		on \(f\parentheses*{x, y}\) from \(x^{\parentheses*{0}} = \parentheses*{1, 1}^\top\) in the direction \(d^{\parentheses*{0}} = -\nabla f\parentheses*{x^{\parentheses*{0}}}\) using a first Wolfe condition parameter \(c_1 = 10^{-4}\).
+		In each step, start with a maximum step size \(\alpha_{\text{max}} = 2\) and shrink the step size with the factor \(\beta = \frac{1}{2}\) until the Armijo condition is fulfilled.
+		\item Is the second Wolfe condition with \(c_2 = 0.9\) for \(\alpha_0 = \frac{1}{2}\) fulfilled in the setup of a)?
+		\item Imagine that the second Wolfe condition in b) would not be fulfilled.
+		Which parameter in a) would you change, such that the backtracking algorithm returns an \(\alpha\) that satisfies the second Wolfe condition?
+	\end{enumerate}
+\end{document}

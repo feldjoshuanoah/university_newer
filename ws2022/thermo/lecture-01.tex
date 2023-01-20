@@ -1,56 +1,94 @@
-\section{From Microscopic to Macroscopic Behavior}
-
-We explore the fundamental differences between microscopic and macroscopic systems, note that bouncing balls come to rest and hot objects cool, and discuss how the behavior of macroscopic systems is related to the behavior of their microscopic constituents.
-Computer simulations are introduced to demonstrate the general qualitative behavior of macroscopic systems.
+\section{Equilibrium and entropy}
 
 
-\subsection{Introduction}
+\subsection{Thermodynamic systems}
 
-Our goal is to understand the properties of macroscopic systems, that is, systems of many electrons, atoms, molecules, photons, or other constituents.
-Examples of familiar macroscopic objects include systems such as air in your room, a glass of water, a coin, and a rubber band -- examples of a gas, liquid, solid, and polymer, respectively.
-Less familiar macroscopic systems include superconductors, cell membranes, the brain, the stock market, and neutron stars.
+\begin{definition}[System]
+	A \emph{system} is  a finite quantity of matter or a prescribed region of space.
+\end{definition}
 
-We will find that the type of questions we ask about macroscopic systems differ in important ways from the questions we ask about systems that we treat microscopically.
-For example, consider the air in your room.
-Have you ever wondered about the trajectory of a particular molecule in the air?
-Would knowing that trajectory be helpful in understanding the properties of air?
-Instead of questions such as these, examples of questions that we do ask about macroscopic systems include the following:
+\begin{definition}[Boundary]
+	The actual or hypothetical envelope enclosing the system is the \emph{boundary} of the system.
+\end{definition}
+
+\begin{remark}
+	\begin{enumerate}
+		\item The boundary may be fixed or it may move, as and when a system containing a gas is compressed or expanded.
+		\item The boundary may be real or imaginary.
+		It is not difficult to envisage a real boundary but an example of imaginary boundary would be one drawn around a system consisting of the fresh mixture about to enter the cylinder of an internal combustion engine together with the remanants of the last cylinder charge after the exhaust process.
+	\end{enumerate}
+\end{remark}
+
+\begin{definition}[Closed/Open/Isolated/Adiabatic system]
+	\begin{enumerate}
+		\item If the boundary of the system is impervious to the flow of matter, it is called a \emph{closed system}.
+		\item An \emph{open system} is one in which matter flows into or out of the system.
+		\item An \emph{isolated system} is that system which exchanges neither energy nor matter with any other system or with environment.
+		\item An \emph{adiabatic system} is one which is thermally insulated for its surroundings.
+		It can, however, exchange work with its surroundings.
+		If it does not it becomes an isolated system.
+	\end{enumerate}
+\end{definition}
+
+\begin{definition}[Phase]
+	A \emph{phase} is a quantity of matter which is homogeneous throughout in chemical composition and physical structure.
+\end{definition}
+
+\begin{definition}[Homo-/Heterogeneous system]
+	\begin{enumerate}
+		\item A system which consists of a single phase is termed as \emph{homogeneous system}.
+		\item A system which consists of two or more phases is called a \emph{heterogeneous system}.
+	\end{enumerate}
+\end{definition}
+
+\subsection{Macroscopic and microscopic points of view}
+
+Thermodynamic studies are undertaken by the following two different approaches.
 \begin{enumerate}
-	\item How does the pressure of a gas depend on the temperature and the volume of its container?
-	\item How das a refrigerator work?
-	How can we make it more efficient?
-	\item How much energy do we need to add to a kettle of water to change it to steam?
-	\item Why are the properties of water different from those of steam, even though water and steam consist of the same type of molecules?
-	\item How and why does liquid freeze into a particular crystalline structure?
-	\item Why does helium have a superfluid phase at very low temperatures?
-	Why do some materials exhibit zero resistance to electrical current at sufficiently low temperatures?
-	\item In general, how do the properties of a system emerge from its constituents?
-	\item How fast does the current in a river have to be before its flow changes from laminar to turbulent?
-	\item What will the weather be tomorrow?
+	\item Macroscopic approach -- (Macro means big or total)
+	\item Microscopic approach -- (Micro means small)
 \end{enumerate}
-These questions can be roughly classified into three groups.
-Questions 1 - 3 are concerned with macroscopic properties such as pressure, volume, and temperature and processes related to heating and work.
-These questions are relevant to thermodynamics which provides a framework for relating the macroscopic properties of a system to one another.
-Thermodynamics is concerned only with macroscopic quantities and ignores the microscopic variables that characterize individual molecules.
-For example, we will find that understanding the maximum efficiency of a refrigerator does not require a knowledge of the particular liquid used as the coolant.
-Many of the applications of thermodynamics are to engines, for example, the internal combustion engine and the steam turbine.
+These approaches are discussed (in a comparative way) below:
 
-Questions 4 - 7 relate to understanding the behavior of macroscopic systems starting from the atomic nature of matter.
-For example, we know that water consists of molecules of hydrogen and oxygen.
-We also know that the laws of classical and quantum mechanics determine the behavior of molecules at the microscopic level.
-The goal of statistical mechanics is to begin with the microscopic laws of physics that govern the behavior of the constituents of the system and deduce the properties of the system as a whole.
-Statistical mechanics is a bridge between the microscopic and macroscopic worlds.
+\emph{TODO}
 
-Question 8 also relates to a macroscopic system, but temperature is not relevant in this case.
-Moreover, turbulent flow continually changes in time.
-Question 9 concerns macroscopic phenomena that change with time.
-Although there has been progress in our understanding of time-dependent phenomena such as turbulent flow and hurricanes, our understanding of such phenomena is much less advanced than our understanding of time-independent systems.
-For this reason we will focus our attention on systems whose macroscopic properties are independent of time and consider questions such as those in Questions 1 - 7.
+\subsection{Thermodynamic equilibrium}
+
+\begin{definition}[Thermodynamic equilibrium]
+	A system is in \emph{thermodynamic equilibrium} if the temperature and pressure at all points are same -- there should be no velocity gradient -- the chemical equilibrium is also necessary.
+\end{definition}
+
+\begin{remark}
+	Systems under temperature and pressure equilibrium but not under chemical equilibrium are simetimes said to be in \emph{metastable equilibirium conditions}.
+	It is only under thermodynamic equilibrium conditions that the properties of a system can be fixed.
+\end{remark}
+
+Thus for attaining a state of thermodynamic equilibrium the following three types of equilibrium states must be achieved:
+
+\begin{definition}[Thermal/mechanical/chemical equilibrium]
+	\begin{enumerate}
+		\item \emph{Thermal equilibrium}: The temperature of the system does not change with time and has the same value at all points of the system.
+		\item \emph{Mechanical equilibrium}: There are no unbalanced forces within the system or between the surroundings.
+		The pressure in the system is the same at all points and does not change with respect to time.
+		\item \emph{Chemical equilibrium}: No chemical reaction takes place in the system and the chemical composition which is the same throughout the system does not vary with time.
+	\end{enumerate}
+\end{definition}
+
+\subsection{Porperties of systems}
+
+\begin{definition}[Property]
+	A \emph{property} of a system is a characteristic of the system which depends upon its state, but not upon how the state is reached.
+	There are two sorts of properties:
+	\begin{enumerate}
+		\item \emph{Intensive properties} do not depend on the mass of the system.
+		\item \emph{Extensive properties} depend on the mass of the system.
+	\end{enumerate}
+\end{definition}
+
+\begin{example}
+	Temeprature and pressure are intensive properties, while volume is an extensive property.
+	Extensive properties are often divided by mass associated with them to obtain the intesive properties.
+	For example, if the volume if a system of mass \(m\) is \(V\), then the specific volume of matter within the system is \(\frac{V}{m} = v\) which is an intensive property.
+\end{example}
 
 
-\subsection{Some Qualitative Observations}
-
-We begin our discussion of macroscopic systems by considering a glass of hot water.
-We know that if we place a glass of hot water into a large cold room, the hot water cools until its temperature equals that of the room.
-This simple observation illustrates two important properties associated with macroscopic systems -- the importance of temperature and the ``arrow'' of time.
-Temperature is familiar because it is associated with the physiological sensations of hot and cold and is important in our everyday experience.

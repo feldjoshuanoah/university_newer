@@ -1,0 +1,322 @@
+\documentclass{exercise}
+
+\input{preamble}
+
+\title{Hausaufgabe 11}
+\author{René Dopichay (356986) \quad Joshua Feld (406718)\\Thilo Kloos (410343) \quad Shunta Takushima (430043)}
+\professor{Prof. Torrilhon \& Dr. Speck}
+\course{Mathematische Grundlagen III}
+
+\begin{document}
+	\maketitle
+
+
+	\section{}
+
+	\begin{quote}
+		Gegeben Sei die Fläche \(F \subset \R^3\)
+		\[
+			F = \braces*{\parentheses*{e^\alpha, \alpha\cos\parentheses*{\beta}, \alpha\sin\parentheses*{\beta}} : \alpha \in \brackets*{0, 1}, \beta \in \left[0, 2\pi\right[}
+		\]
+		und das Vektorfeld \(f\) mit \(f\parentheses*{x, y, z} = \parentheses*{x\sqrt{y^2 + z^2}, y, z}\).
+		\begin{enumerate}
+			\item Berechnen Sie die Oberflächennormale \(\nu\) zu \(F\).
+			Die Oberflächennormale \(\nu\) sei mit einer positiven ersten Komponente definiert.
+			\item Bestimmen Sie \(\int_F f \cdot \nu\d\sigma\).
+		\end{enumerate}
+	\end{quote}
+
+	\begin{enumerate}
+		\item Wir berechnen zunächst
+		\[
+			\tilde{\nu} = \frac{\partial F}{\partial\alpha} \times \frac{\partial F}{\partial\beta} = \begin{pmatrix}
+				e^{\alpha}\\
+				\cos\beta\\
+				\sin\beta
+			\end{pmatrix} \times \begin{pmatrix}
+				0\\
+				-\alpha\sin\beta\\
+				\alpha\cos\beta
+			\end{pmatrix} = \begin{pmatrix}
+				\alpha\\
+				-\alpha\cos\parentheses*{\beta}e^\alpha\\
+				-\alpha\sin\parentheses*{\beta}e^\alpha
+			\end{pmatrix},
+		\]
+		wobei wir im letzten Schritt genutzt haben, dass \(\cos^2\parentheses*{\beta} + \sin^2\parentheses*{\beta} = 1\) gilt.
+		Dies gilt es nun noch zu normieren, was uns die tatsächliche Oberflächennormale
+		\begin{align*}
+			\nu &= \frac{\tilde{\nu}}{\norm*{\tilde{\nu}}}\\
+			&= \frac{1}{\sqrt{\alpha^2 + \alpha^2 \cos^2\parentheses*{\beta}e^{2\alpha} + \alpha^2 \sin^2\parentheses*{\beta}e^{2\alpha}}}\begin{pmatrix}
+				\alpha\\
+				-\alpha\cos\parentheses*{\beta}e^\alpha\\
+				-\alpha\sin\parentheses*{\beta}e^\alpha
+			\end{pmatrix}\\
+			&= \frac{1}{\alpha\sqrt{1 + e^{2\alpha}}}\begin{pmatrix}
+				\alpha\\
+				-\alpha\cos\parentheses*{\beta}e^\alpha\\
+				-\alpha\sin\parentheses*{\beta}e^\alpha
+			\end{pmatrix}\\
+			&= \frac{1}{\sqrt{1 + e^{2\alpha}}}\begin{pmatrix}
+				1\\
+				-\cos\parentheses*{\beta}e^\alpha\\
+				-\sin\parentheses*{\beta}e^\alpha
+			\end{pmatrix}.
+		\end{align*}
+		\item
+		\begin{align*}
+			\int_F f \cdot \nu\d\sigma &= \int_0^1 \int_0^{2\pi}f\parentheses*{F\parentheses*{\alpha, \beta}} \cdot \tilde{\nu}\d\beta\d\alpha\\
+			&= \int_0^1 \int_0^{2\pi} \begin{pmatrix}
+				e^\alpha \sqrt{\alpha^2 \cos^2\parentheses*{\beta} + \alpha^2 \sin^2\parentheses*{\beta}}\\
+				\alpha\cos\parentheses*{\beta}\\
+				\alpha\sin\parentheses*{\beta}
+			\end{pmatrix} \cdot \begin{pmatrix}
+				\alpha\\
+				-\alpha\cos\parentheses*{\beta}e^\alpha\\
+				-\alpha\sin\parentheses*{\beta}e^\alpha
+			\end{pmatrix}\d\beta\d\alpha\\
+			&= \int_0^1 \int_0^{2\pi} \alpha^2 e^\alpha - \underbrace{\parentheses*{\alpha^2 \cos^2\parentheses*{\beta}e^\alpha + \alpha^2 \sin^2\parentheses*{\beta}e^\alpha}}_{= a^2 e^a} \d\beta\d\alpha = 0
+		\end{align*}
+	\end{enumerate}
+
+
+	\section{}
+
+	\begin{quote}
+		Given is the vector field \(f\) with
+		\[
+			f: \R^2 \to \R^2, \parentheses*{x, y} \mapsto f\parentheses*{x, y} = \parentheses*{x + y, y^2},
+		\]
+		and let \(B \subset \R^2\) be a triangle with vertices at \(\parentheses*{0, 0}\), \(\parentheses*{1, 0}\), and \(\parentheses*{1, 2}\).
+		Verify the Gauss theorem by calculating the two integrals \(\int_{\partial B}f \cdot \nu\d s\) and \(\int_B \div f\d A\) and comparing them.
+	\end{quote}
+
+	The area \(B\) is bounded by the curves
+	\begin{align*}
+		\gamma_1\parentheses*{t} &= \begin{pmatrix}
+			t\\
+			0
+		\end{pmatrix}, \quad t \in \brackets*{0, 1}, \quad \norm*{\gamma_1'} = 1, \quad \nu_1 = \frac{1}{\norm{\gamma_1'}}\begin{pmatrix}
+			\frac{\d}{\d t}\gamma_{1, 2}\parentheses*{t}\\
+			-\frac{\d}{\d t}\gamma_{1, 1}\parentheses*{t}
+		\end{pmatrix} = \begin{pmatrix}
+			0\\
+			-1
+		\end{pmatrix},\\
+		\gamma_2\parentheses*{t} &= \begin{pmatrix}
+			1\\
+			t
+		\end{pmatrix}, \quad t \in \brackets*{0, 2}, \quad \norm*{\gamma_2'} = 1, \quad \nu_2 = \frac{1}{\norm{\gamma_2'}}\begin{pmatrix}
+			\frac{\d}{\d t}\gamma_{2, 2}\parentheses*{t}\\
+			-\frac{\d}{\d t}\gamma_{2, 1}\parentheses*{t}
+		\end{pmatrix} = \begin{pmatrix}
+			1\\
+			0
+		\end{pmatrix},\\
+		\gamma_3\parentheses*{t} &= \begin{pmatrix}
+			1 - t\\
+			2 - 2t
+		\end{pmatrix}, \quad t \in \brackets*{0, 1}, \quad \norm*{\gamma_3'} = \sqrt{5}, \quad \nu_3 = \frac{1}{\norm*{\gamma_3'}}\begin{pmatrix}
+			\frac{\d}{\d t}\gamma_{3, 2}\parentheses*{t}\\
+			-\frac{\d}{\d t}\gamma_{3, 1}\parentheses*{t}
+		\end{pmatrix} = \frac{1}{\sqrt{5}}\begin{pmatrix}
+			-2\\
+			1
+		\end{pmatrix}.
+	\end{align*}
+	We can now calculate
+	\begin{align*}
+		\int_{\partial B} f \cdot \nu\d s &= \int_{\gamma_1}f \cdot \nu_1 \d s + \int_{\gamma_2}f \cdot \nu_2 \d s + \int_{\gamma_3}f \cdot \nu_3 \d s\\
+		&= \int_0^1 \begin{pmatrix}
+			t\\
+			0
+		\end{pmatrix}^\top \begin{pmatrix}
+			0\\
+			-1
+		\end{pmatrix}\d t + \int_0^2 \begin{pmatrix}
+			1 + t\\
+			t^2
+		\end{pmatrix}^\top \begin{pmatrix}
+			1\\
+			0
+		\end{pmatrix}\d t + \int_0^1 \begin{pmatrix}
+			3\parentheses*{1 - t}\\
+			4\parentheses*{t^2 - 2t + 1}
+		\end{pmatrix}^\top \begin{pmatrix}
+			-2\\
+			1
+		\end{pmatrix}\d t\\
+		&= \int_0^2 \parentheses*{1 + t}\d t + 2\int_0^1 \parentheses*{2t^2 - t - 1}\d t = \frac{7}{3}
+	\end{align*}
+	and
+	\begin{align*}
+		\int_B \div f\d A &= \int_0^1 \int_0^{2\pi}\div\begin{pmatrix}
+			x + y\\
+			y^2
+		\end{pmatrix}\d y\d x\\
+		&= \int_0^1 \int_0^{2x}\parentheses*{1 + 2y}\d y\d x\\
+		&= \int_0^1 4x^2 + 2x\d x = \frac{7}{3}.
+	\end{align*}
+	Since \(\int_{\partial B}f \cdot \nu\d s = \int_B \div f\d A\) the Gauss theorem is verified.
+
+
+	\section{}
+
+	\begin{quote}
+		Compute the gradient \(\nabla f\parentheses*{x}\) and Hessian \(\nabla^2 f\parentheses*{x}\) of the Rosenbrock function
+		\[
+			f\parentheses*{x} = 100\parentheses*{x_2 - x_1^2}^2 + \parentheses*{1 - x_1}^2.
+		\]
+		Prove that \(x^* = \parentheses*{1, 1}^\top\) is the only local minimizer of this function, by showing that the gradient of \(f\) vanishes only at \(x^*\) while the Hessian matrix at that point is positive definite.
+	\end{quote}
+
+	The gradient is
+	\[
+		\nabla f\parentheses*{x} = \begin{pmatrix}
+			\frac{\partial f}{\partial x_1}\\
+			\frac{\partial f}{\partial x_2}
+		\end{pmatrix} = \begin{pmatrix}
+			-400x_1\parentheses*{x_2 - x_1^2} - 2\parentheses*{1 - x_1}\\
+			200\parentheses*{x_2 - x_1^2}
+		\end{pmatrix}.
+	\]
+	For the Hessian matrix we obtain
+	\[
+		\nabla^2 f\parentheses*{x} = \begin{pmatrix}
+			\frac{\partial^2 f}{\partial x_1^2} & \frac{\partial^2 f}{\partial x_1 \partial x_2}\\
+			\frac{\partial^2 f}{\partial x_2 \partial x_1} & \frac{\partial^2 f}{\partial x_2^2}
+		\end{pmatrix} = \begin{pmatrix}
+			-400\parentheses*{x_2 - 3x_1^2} + 2 & -400x_1\\
+			-400x_1 & 200
+		\end{pmatrix}.
+	\]
+	We first want to obtain the roots of the gradient \(\nabla f\parentheses*{x}\), which gives us a nonlinear system of equations
+	\begin{align*}
+		-400x_1\parentheses*{x_2 - x_1^2} - 2\parentheses*{1 - x_1} &= 0,\\
+		200\parentheses*{x_2 - x_1^2} &= 0.
+	\end{align*}
+	From the second equation we get \(x_2 = x_1^2\).
+	Inserting this into the first equation leaves us with
+	\[
+		-400x_1\parentheses*{x_1^2 - x_1^2} - 2\parentheses*{1 - x_1} = 2\parentheses*{x_1 - 1} = 0 \iff x_1 = 1.
+	\]
+	Thus again using \(x_2 = x_1^2\) we know that \(x^* = \parentheses*{1, 1}^\top\) is the only valid candidate for a local minimizer of this function.
+	Using Sylvester's criterion we can show that the Hessian matrix at that point is positive definite because all leading principal minors are positive
+	\[
+		H_1 = 802 > 0, \quad H_2 = \begin{vmatrix}
+			802 & -400\\
+			-400 & 200
+		\end{vmatrix} = 802 \cdot 200 - \parentheses*{-400} \cdot \parentheses*{-400} = 400
+	\]
+	Because the Hessian matrix at \(x^*\) is positive definite, we have a local minimizer of \(f\) which is in fact the only one because it is the only root of the gradient.
+
+
+	\section{}
+
+	\begin{quote}
+		Sei die Funktion \(f\)
+		\[
+			f: \R^2 \to \R, \parentheses*{x, y} \mapsto f\parentheses*{\bm{x}} = f\parentheses*{x, y} := \begin{pmatrix}
+				x\\
+				y
+			\end{pmatrix}^\top \begin{pmatrix}
+				2 & 1\\
+				1 & 4
+			\end{pmatrix}\begin{pmatrix}
+				x\\
+				y
+			\end{pmatrix} + 3.
+		\]
+		\begin{enumerate}
+			\item Bestimmen Sie die Matrix \(A \in \R^{2 \times 2}\) so, dass
+			\[
+				\nabla f\parentheses*{\bm{x}} = 2A\bm{x}, \quad \nabla^2 f\parentheses*{\bm{x}} = 2A.
+			\]
+			\item Hat die Funktion \(f\) ein globales Minimum \(\bm{x}^*\)?
+		\end{enumerate}
+	\end{quote}
+
+	Wir formen zunächst die Funktionsgleichung in eine Form um, mit der sich einfacher rechnen lässt.
+	Wir erhalten
+	\[
+		f\parentheses*{x, y} = \begin{pmatrix}
+			x\\
+			y
+		\end{pmatrix}^\top \begin{pmatrix}
+			2 & 1\\
+			1 & 4
+		\end{pmatrix}\begin{pmatrix}
+			x\\
+			y
+		\end{pmatrix} + 3 = \begin{pmatrix}
+			2x + y\\
+			x + 4y
+		\end{pmatrix}^\top \begin{pmatrix}
+			x\\
+			y
+		\end{pmatrix} + 3 = 2x^2 + 2xy + 4y^2 + 3
+	\]
+	\begin{enumerate}
+		\item Für den Gradient und die Hessematrix gilt
+		\begin{align*}
+			\nabla f\parentheses*{\bm{x}} &= \begin{pmatrix}
+				\frac{\partial f\parentheses*{\bm{x}}}{\partial x}\\
+				\frac{\partial f\parentheses*{\bm{x}}}{\partial y}
+			\end{pmatrix} = \begin{pmatrix}
+				4x + 2y\\
+				2x + 8y
+			\end{pmatrix} = 2\begin{pmatrix}
+				2x + y\\
+				x + 4y
+			\end{pmatrix} = 2\begin{pmatrix}
+				2 & 1\\
+				1 & 4
+			\end{pmatrix}\begin{pmatrix}
+				x\\
+				y
+			\end{pmatrix}\\
+			\nabla^2 f\parentheses*{\bm{x}} &= \begin{pmatrix}
+				\frac{\partial^2 f\parentheses*{\bm{x}}}{\partial^2 x} & \frac{\partial^2 f\parentheses*{\bm{x}}}{\partial x\partial y}\\
+				\frac{\partial^2 f\parentheses*{\bm{x}}}{\partial y\partial x} & \frac{\partial^2 f\parentheses*{\bm{x}}}{\partial^2 y}
+			\end{pmatrix} = \begin{pmatrix}
+				4 & 2\\
+				2 & 8
+			\end{pmatrix} = 2\begin{pmatrix}
+				2 & 1\\
+				1 & 4
+			\end{pmatrix},
+		\end{align*}
+		d.h. wir erhalten die Matrix \(A = \begin{pmatrix}
+			2 & 1\\
+			1 & 4
+		\end{pmatrix}\) für die die geforderten Bedingungen gelten.
+		\item Wir suchen die Nullstellen des Gradienten, was uns das folgende Gleichungssystem beschert
+		\[
+			\parentheses*{\begin{array}{cc|c}
+				4 & 2 & 0\\
+				2 & 8 & 0
+			\end{array}} \xrightarrow{I - 2 \cdot II} \parentheses*{\begin{array}{cc|c}
+				0 & -14 & 0\\
+				2 & 8 & 0
+			\end{array}},
+		\]
+		woraus folgt, dass \(\bm{x}^* = \parentheses*{0, 0}^\top\) unser einziger Kandidat für ein globales Minimum ist.
+		Mit dem Kriterium von Sylvester können wir zeigen, dass die Hessematrix positiv definit ist, denn alle Hauptminoren sind positiv:
+		\begin{align*}
+			H_1 &= 4 > 0,\\
+			H_2 &= \begin{vmatrix}
+				4 & 2\\
+				2 & 8
+			\end{vmatrix} = 4 \cdot 8 - 2 \cdot 2 = 28 > 0.
+		\end{align*}
+		Weil die Matrix positiv definit ist, haben wir also ein lokales Minimum.
+		Da die Matrix für alle \(x, y\) die Gestalt
+		\[
+			\begin{pmatrix}
+				4 & 2\\
+				2 & 8
+			\end{pmatrix}
+		\]
+		hat (und damit immer positiv definit ist), folgt automatisch, dass unser lokales Minimum auch das gesuchte globale Minimum ist.
+	\end{enumerate}
+\end{document}
